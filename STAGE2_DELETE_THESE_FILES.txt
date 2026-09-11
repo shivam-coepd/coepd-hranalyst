@@ -1,0 +1,8 @@
+src/middleware.ts
+src/lib/middleware.ts
+src/lib/supabase/middleware.ts
+src/lib/server.ts
+src/lib/client.ts
+
+These duplicate/deprecated helpers are removed in the merged Stage 2 project.
+Next.js 16 uses src/proxy.ts and the canonical Supabase helpers live in src/lib/supabase/.

@@ -1,0 +1,2 @@
+"use server"; import { redirect } from "next/navigation"; import { createJob } from "@/services/jobs/create-job.service"; type State={success:boolean;message:string};
+export async function createJobAction(_:State,fd:FormData):Promise<State>{try{const o=Object.fromEntries(fd.entries()) as any;for(const k of ["experienceMaxMonths","salaryMin","salaryMax","assignedPlacementHr"])if(o[k]==="")delete o[k];const j=await createJob(o);redirect(`/admin/jobs/${j.id}`)}catch(e){return{success:false,message:e instanceof Error?e.message:"Unable to create job"}}}
