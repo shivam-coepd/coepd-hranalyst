@@ -1,50 +1,37 @@
-export const INTERNAL_REJECTION_REASONS =
-[
+export const INTERNAL_REJECTION_REASONS = [
   {
-    code:
-      "mandatory_skill_gap",
+    code: "mandatory_skill_gap",
 
-    label:
-      "Mandatory skill gap",
+    label: "Mandatory skill gap",
   },
 
   {
-    code:
-      "experience_mismatch",
+    code: "experience_mismatch",
 
-    label:
-      "Experience mismatch",
+    label: "Experience mismatch",
   },
 
   {
-    code:
-      "domain_mismatch",
+    code: "domain_mismatch",
 
-    label:
-      "Domain mismatch",
+    label: "Domain mismatch",
   },
 
   {
-    code:
-      "invalid_cv",
+    code: "invalid_cv",
 
-    label:
-      "Invalid or incomplete CV",
+    label: "Invalid or incomplete CV",
   },
 
   {
-    code:
-      "information_mismatch",
+    code: "information_mismatch",
 
-    label:
-      "Information mismatch",
+    label: "Information mismatch",
   },
 
   {
-    code:
-      "other",
+    code: "other",
 
-    label:
-      "Other",
+    label: "Other",
   },
 ] as const;

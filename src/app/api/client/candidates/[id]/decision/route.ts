@@ -1,47 +1,30 @@
-import {
-  NextRequest,
-  NextResponse,
-} from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-import {
-  decideClientCandidate,
-} from "@/services/client/client-decision.service";
+import { decideClientCandidate } from "@/services/client/client-decision.service";
+import { routeError } from "@/lib/http/route-error";
 
 export async function POST(
-  request:
-    NextRequest,
+  request: NextRequest,
   context: {
-    params:
-      Promise<{
-        id: string;
-      }>;
-  }
+    params: Promise<{
+      id: string;
+    }>;
+  },
 ) {
-
   try {
+    const { id } = await context.params;
 
-    const {
-      id,
-    } =
-      await context.params;
+    const body = await request.json();
 
-    const body =
-      await request.json();
+    const result = await decideClientCandidate({
+      submissionCandidateId: id,
 
-    const result =
-      await decideClientCandidate({
-        submissionCandidateId:
-          id,
+      decision: body.decision,
 
-        decision:
-          body.decision,
+      reasonCode: body.reasonCode,
 
-        reasonCode:
-          body.reasonCode,
-
-        reason:
-          body.reason,
-      });
+      reason: body.reason,
+    });
 
     return NextResponse.json(
       {
@@ -50,24 +33,9 @@ export async function POST(
       },
       {
         status: 200,
-      }
-    );
-
-  } catch (error) {
-
-    const message =
-      error instanceof Error
-        ? error.message
-        : "Unable to save decision";
-
-    return NextResponse.json(
-      {
-        success: false,
-        error: message,
       },
-      {
-        status: 400,
-      }
     );
+  } catch (error) {
+    return routeError(error);
   }
 }

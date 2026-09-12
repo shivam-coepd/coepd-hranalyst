@@ -126,6 +126,6 @@
   }
   html {
     @apply font-sans;
-    @apply scroll-behavior-smooth;
+    scroll-behavior: smooth;
   }
 }

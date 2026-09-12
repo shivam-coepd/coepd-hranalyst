@@ -3,11 +3,12 @@ import { getJobById } from "@/repositories/jobs.repository";
 import { getChecklistForJob } from "@/repositories/checklists.repository";
 import JobSubmitAction from "@/components/jobs/job-submit-action";
 import ChecklistWorkflow from "@/components/checklists/checklist-workflow";
-
 export default async function Page({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{
+    id: string;
+  }>;
 }) {
   await requireAdmin();
   const { id } = await params;
@@ -33,7 +34,7 @@ export default async function Page({
       <ChecklistWorkflow
         jobId={job.id}
         jobStatus={job.status}
-        initialChecklist={checklist as any}
+        initialChecklist={checklist as never}
       />
     </main>
   );

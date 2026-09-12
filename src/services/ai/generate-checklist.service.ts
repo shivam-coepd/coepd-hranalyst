@@ -1,99 +1,70 @@
 import "server-only";
 
-import {
-  zodTextFormat,
-} from "openai/helpers/zod";
+import { zodTextFormat } from "openai/helpers/zod";
 
-import {
-  openai,
-} from "@/lib/openai/client";
+import { getOpenAIClient } from "@/lib/openai/client";
 
-import {
-  GeneratedChecklistSchema,
-} from "./checklist.schema";
+import { GeneratedChecklistSchema } from "./checklist.schema";
 
 import {
   buildChecklistPrompt,
   CHECKLIST_PROMPT_VERSION,
 } from "./prompts/checklist.prompt";
 
-export async function generateChecklistFromJD(
-  job: {
-    jobTitle: string;
-    roleType: string;
-    locationType: string;
-    location?: string | null;
+export async function generateChecklistFromJD(job: {
+  jobTitle: string;
+  roleType: string;
+  locationType: string;
+  location?: string | null;
 
-    experienceMinMonths: number;
+  experienceMinMonths: number;
 
-    experienceMaxMonths?:
-      number | null;
+  experienceMaxMonths?: number | null;
 
-    jdText: string;
-  }
-) {
-
-  const model =
-    process.env
-      .OPENAI_CHECKLIST_MODEL;
+  jdText: string;
+}) {
+  const model = process.env.OPENAI_CHECKLIST_MODEL;
 
   if (!model) {
-    throw new Error(
-      "OPENAI_CHECKLIST_MODEL is not configured"
-    );
+    throw new Error("OPENAI_CHECKLIST_MODEL is not configured");
   }
 
-  const response =
-    await openai.responses.parse({
+  const response = await getOpenAIClient().responses.parse({
+    model,
 
-      model,
+    input: [
+      {
+        role: "system",
 
-      input: [
-        {
-          role: "system",
-
-          content:
-            "You are an expert recruitment analyst who converts job descriptions into factual CV screening criteria.",
-        },
-
-        {
-          role: "user",
-
-          content:
-            buildChecklistPrompt(
-              job
-            ),
-        },
-      ],
-
-      text: {
-        format:
-          zodTextFormat(
-            GeneratedChecklistSchema,
-            "job_checklist"
-          ),
+        content:
+          "You are an expert recruitment analyst who converts job descriptions into factual CV screening criteria.",
       },
-    });
+
+      {
+        role: "user",
+
+        content: buildChecklistPrompt(job),
+      },
+    ],
+
+    text: {
+      format: zodTextFormat(GeneratedChecklistSchema, "job_checklist"),
+    },
+  });
 
   if (!response.output_parsed) {
-    throw new Error(
-      "AI checklist generation returned no structured output"
-    );
+    throw new Error("AI checklist generation returned no structured output");
   }
 
   return {
-    checklist:
-      response.output_parsed,
+    checklist: response.output_parsed,
 
-    responseId:
-      response.id,
+    responseId: response.id,
 
     model,
 
-    promptVersion:
-      CHECKLIST_PROMPT_VERSION,
+    promptVersion: CHECKLIST_PROMPT_VERSION,
 
-    usage:
-      response.usage,
+    usage: response.usage,
   };
 }

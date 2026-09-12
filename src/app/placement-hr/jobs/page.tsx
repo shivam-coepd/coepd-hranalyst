@@ -1,2 +1,37 @@
-import Link from "next/link"; import { requireRole } from "@/lib/auth/guards"; import { getJobs } from "@/repositories/jobs.repository";
-export default async function Page(){const u=await requireRole(["placement_hr","admin","super_admin"]);const r=await getJobs({assignedHrId:u.roles.includes("placement_hr")?u.id:undefined});return <main className="p-8"><div className="flex justify-between"><h1 className="text-3xl font-bold">Jobs</h1><Link className="rounded bg-slate-950 px-4 py-2 text-white" href="/placement-hr/jobs/new">Create job</Link></div><div className="mt-6 space-y-3">{r.jobs.map(j=><Link key={j.id} href={`/placement-hr/jobs/${j.id}`} className="block rounded border p-4"><b>{j.job_title}</b><div className="text-sm text-slate-600">{j.job_code} · {j.status}</div></Link>)}</div></main>}
+import Link from "next/link";
+import { requireRole } from "@/lib/auth/guards";
+import { getJobs } from "@/repositories/jobs.repository";
+export default async function Page() {
+  const u = await requireRole(["placement_hr", "admin", "super_admin"]);
+  const isAdmin = u.roles.some((r) => r === "admin" || r === "super_admin");
+  const r = await getJobs({
+    assignedHrId: !isAdmin ? u.id : undefined,
+  });
+  return (
+    <main className="p-8">
+      <div className="flex justify-between">
+        <h1 className="text-3xl font-bold">Jobs</h1>
+        <Link
+          className="rounded bg-slate-950 px-4 py-2 text-white"
+          href="/placement-hr/jobs/new"
+        >
+          Create job
+        </Link>
+      </div>
+      <div className="mt-6 space-y-3">
+        {r.jobs.map((j) => (
+          <Link
+            key={j.id}
+            href={`/placement-hr/jobs/${j.id}`}
+            className="block rounded border p-4"
+          >
+            <b>{j.job_title}</b>
+            <div className="text-sm text-slate-600">
+              {j.job_code} · {j.status}
+            </div>
+          </Link>
+        ))}
+      </div>
+    </main>
+  );
+}

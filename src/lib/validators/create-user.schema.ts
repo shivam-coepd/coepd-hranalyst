@@ -29,26 +29,3 @@ export const createUserSchema = z
   });
 
 export type CreateUserInput = z.infer<typeof createUserSchema>;
-
-
-// import { z } from "zod";
-
-// export const createUserSchema = z.object({
-//   firstName: z.string().trim().min(2),
-//   lastName: z.string().trim().min(2),
-
-//   email: z.string().trim().email(),
-
-//   phone: z.string().trim().optional(),
-
-//   role: z.enum([
-//     "admin",
-//     "placement_hr",
-//     "client_hr",
-//     "student",
-//   ]),
-
-//   enrollmentId: z.string().trim().optional(),
-
-//   companyId: z.string().uuid().optional(),
-// });

@@ -1,69 +1,44 @@
 import "server-only";
 
-import {
-  consumeRateLimit,
-} from "./rate-limit.service";
+import { consumeRateLimit } from "./rate-limit.service";
 
-import {
-  getClientIp,
-} from "@/lib/http/client-ip";
+import { getClientIp } from "@/lib/http/client-ip";
 
-export async function
-enforceApiRateLimit({
+export async function enforceApiRateLimit({
   request,
   route,
   userId,
   limit = 120,
   windowSeconds = 60,
 }: {
-  request:
-    Request;
-  route:
-    string;
-  userId?:
-    string | null;
-  limit?:
-    number;
-  windowSeconds?:
-    number;
+  request: Request;
+  route: string;
+  userId?: string | null;
+  limit?: number;
+  windowSeconds?: number;
 }) {
+  const ip = getClientIp(request);
 
-  const ip =
-    getClientIp(
-      request
-    );
+  const identifier = userId ? `user:${userId}` : `ip:${ip}`;
 
-  const identifier =
-    userId
-      ? `user:${userId}`
-      : `ip:${ip}`;
+  const result = await consumeRateLimit({
+    namespace: `api:${route}`,
 
-  const result =
-    await consumeRateLimit({
-      namespace:
-        `api:${route}`,
+    identifier,
 
-      identifier,
+    limit,
 
-      limit,
-
-      windowSeconds,
-    });
+    windowSeconds,
+  });
 
   if (!result.allowed) {
-
-    const error =
-      new Error(
-        "Rate limit exceeded"
-      );
+    const error = new Error("Rate limit exceeded");
 
     (
-      error as
-      Error & {
+      error as Error & {
         status?: number;
       }
-    ).status =
-      429;
+    ).status = 429;
 
     throw error;
   }

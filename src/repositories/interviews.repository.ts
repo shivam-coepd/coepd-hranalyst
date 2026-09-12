@@ -1,21 +1,12 @@
 import "server-only";
 
-import {
-  supabaseAdmin,
-} from "@/lib/supabase/admin";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
-export async function
-getInterviewById(
-  interviewId: string
-) {
-
-  const {
-    data,
-    error,
-  } =
-    await supabaseAdmin
-      .from("interviews")
-      .select(`
+export async function getInterviewById(interviewId: string) {
+  const { data, error } = await supabaseAdmin
+    .from("interviews")
+    .select(
+      `
         id,
         interview_code,
         application_id,
@@ -42,7 +33,8 @@ getInterviewById(
           id,
           job_code,
           job_title,
-          role_type
+          role_type,
+          assigned_placement_hr
         ),
 
         companies (
@@ -74,34 +66,23 @@ getInterviewById(
           reason,
           rescheduled_at
         )
-      `)
-      .eq(
-        "id",
-        interviewId
-      )
-      .single();
+      `,
+    )
+    .eq("id", interviewId)
+    .single();
 
   if (error) {
-    throw new Error(
-      error.message
-    );
+    throw new Error(error.message);
   }
 
   return data;
 }
 
-export async function
-getClientInterviews(
-  companyId: string
-) {
-
-  const {
-    data,
-    error,
-  } =
-    await supabaseAdmin
-      .from("interviews")
-      .select(`
+export async function getClientInterviews(companyId: string) {
+  const { data, error } = await supabaseAdmin
+    .from("interviews")
+    .select(
+      `
         id,
         interview_code,
         round_number,
@@ -125,44 +106,26 @@ getClientInterviews(
           candidate_snapshot,
           current_mock_score
         )
-      `)
-      .eq(
-        "company_id",
-        companyId
-      )
-      .is(
-        "deleted_at",
-        null
-      )
-      .order(
-        "scheduled_at",
-        {
-          ascending:
-            true,
-        }
-      );
+      `,
+    )
+    .eq("company_id", companyId)
+    .is("deleted_at", null)
+    .order("scheduled_at", {
+      ascending: true,
+    });
 
   if (error) {
-    throw new Error(
-      error.message
-    );
+    throw new Error(error.message);
   }
 
   return data ?? [];
 }
 
-export async function
-getStudentInterviews(
-  studentId: string
-) {
-
-  const {
-    data,
-    error,
-  } =
-    await supabaseAdmin
-      .from("interviews")
-      .select(`
+export async function getStudentInterviews(studentId: string) {
+  const { data, error } = await supabaseAdmin
+    .from("interviews")
+    .select(
+      `
         id,
         interview_code,
         application_id,
@@ -193,27 +156,16 @@ getStudentInterviews(
           id,
           student_id
         )
-      `)
-      .eq(
-        "applications.student_id",
-        studentId
-      )
-      .is(
-        "deleted_at",
-        null
-      )
-      .order(
-        "scheduled_at",
-        {
-          ascending:
-            true,
-        }
-      );
+      `,
+    )
+    .eq("applications.student_id", studentId)
+    .is("deleted_at", null)
+    .order("scheduled_at", {
+      ascending: true,
+    });
 
   if (error) {
-    throw new Error(
-      error.message
-    );
+    throw new Error(error.message);
   }
 
   return data ?? [];

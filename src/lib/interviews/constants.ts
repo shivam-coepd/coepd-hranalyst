@@ -7,16 +7,11 @@ export const INTERVIEW_TYPES = [
   "other",
 ] as const;
 
-export type InterviewType =
-  (typeof INTERVIEW_TYPES)[number];
+export type InterviewType = (typeof INTERVIEW_TYPES)[number];
 
-export const INTERVIEW_MODES = [
-  "online",
-  "offline",
-] as const;
+export const INTERVIEW_MODES = ["online", "offline"] as const;
 
-export type InterviewMode =
-  (typeof INTERVIEW_MODES)[number];
+export type InterviewMode = (typeof INTERVIEW_MODES)[number];
 
 export const INTERVIEW_STATUSES = [
   "scheduled",
@@ -29,11 +24,8 @@ export const INTERVIEW_STATUSES = [
   "client_no_show",
 ] as const;
 
-export type InterviewStatus =
-  (typeof INTERVIEW_STATUSES)[number];
+export type InterviewStatus = (typeof INTERVIEW_STATUSES)[number];
 
-export const DEFAULT_INTERVIEW_DURATION_MINUTES =
-  60;
+export const DEFAULT_INTERVIEW_DURATION_MINUTES = 60;
 
-export const DEFAULT_TIMEZONE =
-  "Asia/Kolkata";
+export const DEFAULT_TIMEZONE = "Asia/Kolkata";

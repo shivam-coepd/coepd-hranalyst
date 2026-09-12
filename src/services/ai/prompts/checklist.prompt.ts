@@ -1,5 +1,4 @@
-export const CHECKLIST_PROMPT_VERSION =
-  "checklist-v1";
+export const CHECKLIST_PROMPT_VERSION = "checklist-v1";
 
 interface JobPromptInput {
   jobTitle: string;
@@ -14,9 +13,7 @@ interface JobPromptInput {
   jdText: string;
 }
 
-export function buildChecklistPrompt(
-  job: JobPromptInput
-) {
+export function buildChecklistPrompt(job: JobPromptInput) {
   return `
 You are assisting the HRAnalyst Placement Wing.
 

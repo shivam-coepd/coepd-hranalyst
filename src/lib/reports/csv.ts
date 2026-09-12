@@ -1,76 +1,34 @@
-function escapeCsv(
-  value:
-    unknown
-) {
-
-  if (
-    value === null ||
-    value === undefined
-  ) {
+function escapeCsv(value: unknown) {
+  if (value === null || value === undefined) {
     return "";
   }
 
-  const text =
-    String(value);
+  const raw = String(value);
+  const text = /^[\s\u0000-\u001f]*[=+@-]|^[\t\r\n]/.test(raw)
+    ? `'${raw}`
+    : raw;
 
-  if (
-    /[",\n\r]/.test(
-      text
-    )
-  ) {
-    return `"${text.replace(
-      /"/g,
-      '""'
-    )}"`;
+  if (/[",\n\r]/.test(text)) {
+    return `"${text.replace(/"/g, '""')}"`;
   }
 
   return text;
 }
 
-export function
-buildCsv(
-  rows:
-    Record<
-      string,
-      unknown
-    >[]
-) {
-
-  if (
-    rows.length === 0
-  ) {
+export function buildCsv(rows: Record<string, unknown>[]) {
+  if (rows.length === 0) {
     return "";
   }
 
-  const headers =
-    Object.keys(
-      rows[0]
-    );
+  const headers = Object.keys(rows[0]);
 
-  const lines =
-    [
-      headers
-        .map(
-          escapeCsv
-        )
-        .join(","),
+  const lines = [
+    headers.map(escapeCsv).join(","),
 
-      ...rows.map(
-        row =>
-          headers
-            .map(
-              header =>
-                escapeCsv(
-                  row[
-                    header
-                  ]
-                )
-            )
-            .join(",")
-      ),
-    ];
+    ...rows.map((row) =>
+      headers.map((header) => escapeCsv(row[header])).join(","),
+    ),
+  ];
 
-  return lines.join(
-    "\r\n"
-  );
+  return lines.join("\r\n");
 }

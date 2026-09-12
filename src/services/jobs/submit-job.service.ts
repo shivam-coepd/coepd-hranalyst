@@ -72,7 +72,7 @@ export async function submitJobForChecklist(jobId: string) {
     }),
 
     supabaseAdmin.from("audit_logs").insert({
-      actor_user_id: user.id,
+      actor_id: user.id,
 
       entity_type: "job",
 
@@ -80,11 +80,11 @@ export async function submitJobForChecklist(jobId: string) {
 
       action: "JOB_SUBMITTED_FOR_CHECKLIST",
 
-      old_data: {
+      old_values: {
         status: "draft",
       },
 
-      new_data: {
+      new_values: {
         status: "pending_checklist",
         submitted_for_checklist_at: now,
       },

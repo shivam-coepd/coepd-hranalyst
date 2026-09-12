@@ -1,146 +1,60 @@
-import {
-  NextRequest,
-  NextResponse,
-} from "next/server";
+import { routeError } from "@/lib/http/route-error";
+import { NextRequest, NextResponse } from "next/server";
 
-import {
-  registerOffer,
-} from "@/services/offers/offer.service";
+import { registerOffer } from "@/services/offers/offer.service";
+import { requireRole } from "@/lib/auth/guards";
 
-export async function POST(
-  request:
-    NextRequest
-) {
-
+export async function POST(request: NextRequest) {
   try {
+    await requireRole(["placement_hr", "admin", "super_admin"]);
+    const formData = await request.formData();
 
-    const formData =
-      await request.formData();
+    const file = formData.get("file");
 
-    const file =
-      formData.get(
-        "file"
-      );
-
-    if (
-      !(file instanceof File)
-    ) {
-      throw new Error(
-        "Offer letter PDF is required"
-      );
+    if (!(file instanceof File)) {
+      throw new Error("Offer letter PDF is required");
     }
 
     const input = {
-      applicationId:
-        String(
-          formData.get(
-            "applicationId"
-          ) ?? ""
-        ),
+      applicationId: String(formData.get("applicationId") ?? ""),
 
-      feedbackId:
-        String(
-          formData.get(
-            "feedbackId"
-          ) ?? ""
-        ),
+      feedbackId: String(formData.get("feedbackId") ?? ""),
 
-      designation:
-        String(
-          formData.get(
-            "designation"
-          ) ?? ""
-        ),
+      designation: String(formData.get("designation") ?? ""),
 
-      department:
-        String(
-          formData.get(
-            "department"
-          ) ?? ""
-        ) || undefined,
+      department: String(formData.get("department") ?? "") || undefined,
 
-      employmentType:
-        String(
-          formData.get(
-            "employmentType"
-          ) ?? ""
-        ) || undefined,
+      employmentType: String(formData.get("employmentType") ?? "") || undefined,
 
       joiningLocation:
-        String(
-          formData.get(
-            "joiningLocation"
-          ) ?? ""
-        ) || undefined,
+        String(formData.get("joiningLocation") ?? "") || undefined,
 
-      annualCtc:
-        formData.get(
-          "annualCtc"
-        )
-          ? Number(
-              formData.get(
-                "annualCtc"
-              )
-            )
-          : undefined,
+      annualCtc: formData.get("annualCtc")
+        ? Number(formData.get("annualCtc"))
+        : undefined,
 
-      currency:
-        String(
-          formData.get(
-            "currency"
-          ) ?? "INR"
-        ),
+      currency: String(formData.get("currency") ?? "INR"),
 
-      joiningDate:
-        String(
-          formData.get(
-            "joiningDate"
-          ) ?? ""
-        ) || undefined,
+      joiningDate: String(formData.get("joiningDate") ?? "") || undefined,
 
-      offerDate:
-        String(
-          formData.get(
-            "offerDate"
-          ) ?? ""
-        ) || undefined,
+      offerDate: String(formData.get("offerDate") ?? "") || undefined,
 
       offerValidUntil:
-        String(
-          formData.get(
-            "offerValidUntil"
-          ) ?? ""
-        ) || undefined,
+        String(formData.get("offerValidUntil") ?? "") || undefined,
 
-      probationPeriodMonths:
-        formData.get(
-          "probationPeriodMonths"
-        )
-          ? Number(
-              formData.get(
-                "probationPeriodMonths"
-              )
-            )
-          : undefined,
+      probationPeriodMonths: formData.get("probationPeriodMonths")
+        ? Number(formData.get("probationPeriodMonths"))
+        : undefined,
 
-      noticeBuyoutAvailable:
-        formData.get(
-          "noticeBuyoutAvailable"
-        ) === "true",
+      noticeBuyoutAvailable: formData.get("noticeBuyoutAvailable") === "true",
 
-      notes:
-        String(
-          formData.get(
-            "notes"
-          ) ?? ""
-        ) || undefined,
+      notes: String(formData.get("notes") ?? "") || undefined,
     };
 
-    const result =
-      await registerOffer({
-        input,
-        file,
-      });
+    const result = await registerOffer({
+      input,
+      file,
+    });
 
     return NextResponse.json(
       {
@@ -149,23 +63,9 @@ export async function POST(
       },
       {
         status: 201,
-      }
-    );
-
-  } catch (error) {
-
-    return NextResponse.json(
-      {
-        success: false,
-
-        error:
-          error instanceof Error
-            ? error.message
-            : "Unable to upload offer",
       },
-      {
-        status: 400,
-      }
     );
+  } catch (error) {
+    return routeError(error);
   }
 }

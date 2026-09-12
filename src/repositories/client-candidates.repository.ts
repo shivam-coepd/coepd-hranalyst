@@ -1,24 +1,12 @@
 import "server-only";
 
-import {
-  supabaseAdmin,
-} from "@/lib/supabase/admin";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
-export async function
-getClientCandidate(
-  submissionCandidateId:
-    string
-) {
-
-  const {
-    data,
-    error,
-  } =
-    await supabaseAdmin
-      .from(
-        "submission_candidates"
-      )
-      .select(`
+export async function getClientCandidate(submissionCandidateId: string) {
+  const { data, error } = await supabaseAdmin
+    .from("submission_candidates")
+    .select(
+      `
         id,
         application_id,
         student_id,
@@ -66,17 +54,13 @@ getClientCandidate(
           id,
           status
         )
-      `)
-      .eq(
-        "id",
-        submissionCandidateId
-      )
-      .single();
+      `,
+    )
+    .eq("id", submissionCandidateId)
+    .single();
 
   if (error) {
-    throw new Error(
-      error.message
-    );
+    throw new Error(error.message);
   }
 
   return data;

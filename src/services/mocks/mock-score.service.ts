@@ -1,6 +1,4 @@
-import {
-  calculateMockScore,
-} from "./calculate-mock-score";
+import { calculateMockScore } from "./calculate-mock-score";
 
 export function buildMockScore({
   communicationScore,
@@ -11,25 +9,19 @@ export function buildMockScore({
   technicalScore: number;
   domainScore: number;
 }) {
+  const overallScore = calculateMockScore({
+    communication: communicationScore,
 
-  const overallScore =
-    calculateMockScore({
-      communication:
-        communicationScore,
+    technical: technicalScore,
 
-      technical:
-        technicalScore,
-
-      domain:
-        domainScore,
-    });
+    domain: domainScore,
+  });
 
   return {
     communicationScore,
     technicalScore,
     domainScore,
     overallScore,
-    scoringVersion:
-      "mock-score-v1",
+    scoringVersion: "mock-score-v1",
   };
 }

@@ -1,304 +1,191 @@
-import type {
-  AccountStatus,
-} from "@/lib/constants/account-status";
+import type { AccountStatus } from "@/lib/constants/account-status";
 
-import type {
-  UserRole,
-} from "@/lib/constants/roles";
-
+import type { UserRole } from "@/lib/constants/roles";
 
 export interface BaseTimestamps {
+  created_at: string;
 
-  created_at:
-    string;
-
-  updated_at:
-    string;
+  updated_at: string;
 }
 
+export interface Profile extends BaseTimestamps {
+  id: string;
 
-export interface Profile
-  extends BaseTimestamps {
+  first_name: string | null;
 
-  id:
-    string;
+  last_name: string | null;
 
-  first_name:
-    string | null;
+  email: string;
 
-  last_name:
-    string | null;
+  phone: string | null;
 
-  email:
-    string;
+  avatar_url: string | null;
 
-  phone:
-    string | null;
+  account_status: AccountStatus;
 
-  avatar_url:
-    string | null;
+  approved_at: string | null;
 
-  account_status:
-    AccountStatus;
+  approved_by: string | null;
 
-  approved_at:
-    string | null;
+  rejected_at: string | null;
 
-  approved_by:
-    string | null;
+  rejected_by: string | null;
 
-  rejected_at:
-    string | null;
+  rejection_reason: string | null;
 
-  rejected_by:
-    string | null;
+  suspended_at: string | null;
 
-  rejection_reason:
-    string | null;
+  suspended_by: string | null;
 
-  suspended_at:
-    string | null;
+  suspension_reason: string | null;
 
-  suspended_by:
-    string | null;
-
-  suspension_reason:
-    string | null;
-
-  last_login_at:
-    string | null;
+  last_login_at: string | null;
 }
-
 
 export interface Role {
+  id: string;
 
-  id:
-    string;
+  name: UserRole;
 
-  name:
-    UserRole;
+  display_name: string;
 
-  display_name:
-    string;
+  description: string | null;
 
-  description:
-    string | null;
+  is_system: boolean;
 
-  is_system:
-    boolean;
+  created_at: string;
 
-  created_at:
-    string;
-
-  updated_at:
-    string;
+  updated_at: string;
 }
 
+export interface Company extends BaseTimestamps {
+  id: string;
 
-export interface Company
-  extends BaseTimestamps {
+  name: string;
 
-  id:
-    string;
+  legal_name: string | null;
 
-  name:
-    string;
+  code: string | null;
 
-  legal_name:
-    string | null;
+  domain: string | null;
 
-  code:
-    string | null;
+  website: string | null;
 
-  domain:
-    string | null;
+  industry: string | null;
 
-  website:
-    string | null;
+  size: string | null;
 
-  industry:
-    string | null;
+  registration_number: string | null;
 
-  size:
-    string | null;
+  gst_number: string | null;
 
-  registration_number:
-    string | null;
+  linkedin_url: string | null;
 
-  gst_number:
-    string | null;
+  primary_email: string | null;
 
-  linkedin_url:
-    string | null;
+  primary_phone: string | null;
 
-  primary_email:
-    string | null;
+  address: string | null;
 
-  primary_phone:
-    string | null;
+  city: string | null;
 
-  address:
-    string | null;
+  state: string | null;
 
-  city:
-    string | null;
+  country: string | null;
 
-  state:
-    string | null;
+  postal_code: string | null;
 
-  country:
-    string | null;
+  logo: string | null;
 
-  postal_code:
-    string | null;
+  verification_status: "pending" | "verified" | "rejected";
 
-  logo:
-    string | null;
+  verification_method: string | null;
 
-  verification_status:
-    "pending"
-    | "verified"
-    | "rejected";
+  verification_notes: string | null;
 
-  verification_method:
-    string | null;
+  verified_at: string | null;
 
-  verification_notes:
-    string | null;
+  verified_by: string | null;
 
-  verified_at:
-    string | null;
+  is_active: boolean;
 
-  verified_by:
-    string | null;
+  created_by: string | null;
 
-  is_active:
-    boolean;
+  deleted_at: string | null;
 
-  created_by:
-    string | null;
-
-  deleted_at:
-    string | null;
-
-  deleted_by:
-    string | null;
+  deleted_by: string | null;
 }
 
+export interface StudentProfile extends BaseTimestamps {
+  id: string;
 
-export interface StudentProfile
-  extends BaseTimestamps {
+  user_id: string;
 
-  id:
-    string;
+  enrollment_id: string;
 
-  user_id:
-    string;
+  verification_status: "pending" | "verified" | "rejected";
 
-  enrollment_id:
-    string;
+  verification_source: string | null;
 
-  verification_status:
-    "pending"
-    | "verified"
-    | "rejected";
+  verification_reference: string | null;
 
-  verification_source:
-    string | null;
+  verification_at: string | null;
 
-  verification_reference:
-    string | null;
+  verified_by: string | null;
 
-  verification_at:
-    string | null;
+  verification_reason: string | null;
 
-  verified_by:
-    string | null;
+  first_name: string | null;
 
-  verification_reason:
-    string | null;
+  last_name: string | null;
 
-  first_name:
-    string | null;
+  phone: string | null;
 
-  last_name:
-    string | null;
+  headline: string | null;
 
-  phone:
-    string | null;
+  summary: string | null;
 
-  headline:
-    string | null;
+  location: string | null;
 
-  summary:
-    string | null;
+  city: string | null;
 
-  location:
-    string | null;
+  state: string | null;
 
-  city:
-    string | null;
+  country: string | null;
 
-  state:
-    string | null;
+  postal_code: string | null;
 
-  country:
-    string | null;
+  qualification: string | null;
 
-  postal_code:
-    string | null;
+  graduation_year: number | null;
 
-  qualification:
-    string | null;
+  specialization: string | null;
 
-  graduation_year:
-    number | null;
+  total_experience_months: number;
 
-  specialization:
-    string | null;
+  current_company: string | null;
 
-  total_experience_months:
-    number;
+  current_designation: string | null;
 
-  current_company:
-    string | null;
+  current_ctc: number | null;
 
-  current_designation:
-    string | null;
+  current_ctc_currency: string | null;
 
-  current_ctc:
-    number | null;
+  notice_period_days: number | null;
 
-  current_ctc_currency:
-    string | null;
+  preferred_role: string | null;
 
-  notice_period_days:
-    number | null;
+  preferred_location: string | null;
 
-  preferred_role:
-    string | null;
+  willing_to_relocate: boolean | null;
 
-  preferred_location:
-    string | null;
+  linkedin_url: string | null;
 
-  willing_to_relocate:
-    boolean | null;
+  github_url: string | null;
 
-  linkedin_url:
-    string | null;
+  portfolio_url: string | null;
 
-  github_url:
-    string | null;
+  profile_completion: number;
 
-  portfolio_url:
-    string | null;
-
-  profile_completion:
-    number;
-
-  profile_status:
-    "active"
-    | "inactive"
-    | "placed"
-    | "archived";
+  profile_status: "active" | "inactive" | "placed" | "archived";
 }

@@ -5,11 +5,7 @@ export default async function ClientLayout({
 }: {
   children: React.ReactNode;
 }) {
-  await requireRole([
-    "client_hr",
-    "admin",
-    "super_admin",
-  ]);
+  await requireRole(["client_hr", "admin", "super_admin"]);
 
   return children;
 }

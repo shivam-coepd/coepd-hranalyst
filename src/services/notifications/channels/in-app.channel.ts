@@ -1,11 +1,9 @@
 import "server-only";
 
-import {
-  supabaseAdmin,
-} from "@/lib/supabase/admin";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
-export async function
-sendInAppNotification({
+export async function sendInAppNotification({
+  notificationId,
   userId,
   eventType,
   title,
@@ -15,74 +13,46 @@ sendInAppNotification({
   actionUrl,
   severity,
 }: {
-  userId:
-    string;
-  eventType:
-    string;
-  title:
-    string;
-  message:
-    string;
-  entityType?:
-    string | null;
-  entityId?:
-    string | null;
-  actionUrl?:
-    string | null;
-  severity?:
-    "info"
-    | "success"
-    | "warning"
-    | "error";
+  notificationId: string;
+  userId: string;
+  eventType: string;
+  title: string;
+  message: string;
+  entityType?: string | null;
+  entityId?: string | null;
+  actionUrl?: string | null;
+  severity?: "info" | "success" | "warning" | "error";
 }) {
+  const { data, error } = await supabaseAdmin
+    .from("notifications")
+    .upsert({
+      id: notificationId,
+      user_id: userId,
 
-  const {
-    data,
-    error,
-  } =
-    await supabaseAdmin
-      .from("notifications")
-      .insert({
-        user_id:
-          userId,
+      event_type: eventType,
 
-        event_type:
-          eventType,
+      title,
 
-        title,
+      message,
 
-        message,
+      entity_type: entityType ?? null,
 
-        entity_type:
-          entityType ??
-          null,
+      entity_id: entityId ?? null,
 
-        entity_id:
-          entityId ??
-          null,
+      action_url: actionUrl ?? null,
 
-        action_url:
-          actionUrl ??
-          null,
-
-        severity:
-          severity ??
-          "info",
-      })
-      .select("id")
-      .single();
+      severity: severity ?? "info",
+    })
+    .select("id")
+    .single();
 
   if (error) {
-    throw new Error(
-      error.message
-    );
+    throw new Error(error.message);
   }
 
   return {
-    provider:
-      "supabase",
+    provider: "supabase",
 
-    providerMessageId:
-      data.id,
+    providerMessageId: data.id,
   };
 }

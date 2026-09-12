@@ -1,105 +1,47 @@
-import {
-  NextRequest,
-  NextResponse,
-} from "next/server";
+import { routeError } from "@/lib/http/route-error";
+import { NextRequest, NextResponse } from "next/server";
 
-import {
-  requireAdmin,
-} from "@/lib/auth/guards";
+import { requireAdmin } from "@/lib/auth/guards";
 
-import {
-  updateUatResult,
-} from "@/services/uat/uat.service";
-
+import { updateUatResult } from "@/services/uat/uat.service";
 
 export async function PATCH(
-  request:
-    NextRequest,
+  request: NextRequest,
   context: {
-    params:
-      Promise<{
-        runId:
-          string;
+    params: Promise<{
+      runId: string;
 
-        testCode:
-          string;
-      }>;
-  }
+      testCode: string;
+    }>;
+  },
 ) {
-
   try {
-
     await requireAdmin();
 
+    const { runId, testCode } = await context.params;
 
-    const {
-      runId,
-      testCode,
-    } =
-      await context.params;
+    const body = await request.json();
 
-
-    const body =
-      await request.json();
-
-
-    if (
-      ![
-        "passed",
-        "failed",
-        "blocked",
-        "not_run",
-      ].includes(
-        body.status
-      )
-    ) {
-      throw new Error(
-        "Invalid UAT status"
-      );
+    if (!["passed", "failed", "blocked", "not_run"].includes(body.status)) {
+      throw new Error("Invalid UAT status");
     }
 
-
     await updateUatResult({
-
       runId,
 
       testCode,
 
-      status:
-        body.status,
+      status: body.status,
 
-      actualResult:
-        body.actualResult,
+      actualResult: body.actualResult,
 
-      evidence:
-        body.evidence,
-
+      evidence: body.evidence,
     });
-
 
     return NextResponse.json({
-      success:
-        true,
+      success: true,
     });
-
   } catch (error) {
-
-    return NextResponse.json(
-      {
-
-        success:
-          false,
-
-        error:
-          error instanceof Error
-            ? error.message
-            : "Unable to update UAT result",
-
-      },
-      {
-        status:
-          400,
-      }
-    );
+    return routeError(error);
   }
 }

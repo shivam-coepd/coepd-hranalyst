@@ -1,0 +1,8 @@
+{
+  "20260909_stage10_client_interviews.sql": "202609090010_stage10_client_interviews.sql",
+  "20260909_stage11_feedback_offer_placement.sql": "202609090011_stage11_feedback_offer_placement.sql",
+  "20260909_stage12_notifications_analytics.sql": "202609090012_stage12_notifications_analytics.sql",
+  "20260909_stage13_security_consolidation.sql": "202609090013_stage13_security_consolidation.sql",
+  "20260909_stage14_performance_indexes.sql": "202609090014_stage14_performance_indexes.sql",
+  "20260909_stage15_production_release.sql": "202609090015_stage15_production_release.sql"
+}

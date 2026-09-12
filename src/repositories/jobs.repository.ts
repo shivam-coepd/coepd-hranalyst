@@ -49,8 +49,8 @@ export async function getJobs({
 
         companies (
           id,
-          company_name,
-          logo_url
+          name,
+          logo
         )
       `,
       {
@@ -111,10 +111,10 @@ export async function getJobById(jobId: string) {
         *,
         companies (
           id,
-          company_name,
-          company_domain,
-          website_url,
-          logo_url,
+          name,
+          domain,
+          website,
+          logo,
           verification_status,
           is_active
         ),
@@ -131,7 +131,7 @@ export async function getJobById(jobId: string) {
           first_name,
           last_name,
           email
-        )
+        ),
 
         job_status_history(id,old_status,new_status,reason,changed_at,changed_by)
       `,

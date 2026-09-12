@@ -1,70 +1,41 @@
-import {
-  mailTransport,
-  getMailFrom,
-} from "../src/lib/email/smtp";
+import { mailTransport, getMailFrom } from "../src/lib/email/smtp";
 
-
-const recipient =
-  process.env
-    .SMTP_TEST_RECIPIENT;
-
+const recipient = process.env.SMTP_TEST_RECIPIENT;
 
 if (!recipient) {
-  throw new Error(
-    "SMTP_TEST_RECIPIENT is required"
-  );
+  throw new Error("SMTP_TEST_RECIPIENT is required");
 }
 
-
 async function main() {
+  const result = await mailTransport.sendMail({
+    from: getMailFrom(),
 
-  const result =
-    await mailTransport
-      .sendMail({
+    to: recipient,
 
-        from:
-          getMailFrom(),
+    subject: "HRAnalyst Production SMTP Test",
 
-        to:
-          recipient,
+    text: "HRAnalyst Placement Wing production SMTP configuration is working.",
 
-        subject:
-          "HRAnalyst Production SMTP Test",
-
-        text:
-          "HRAnalyst Placement Wing production SMTP configuration is working.",
-
-        html:
-          `
+    html: `
           <p>
             HRAnalyst Placement Wing production SMTP configuration is working.
           </p>
           `,
-
-      });
-
+  });
 
   console.log(
     JSON.stringify(
       {
-        messageId:
-          result.messageId,
+        messageId: result.messageId,
       },
       null,
-      2
-    )
+      2,
+    ),
   );
 }
 
+main().catch((error) => {
+  console.error(error);
 
-main()
-  .catch(
-    error => {
-
-      console.error(
-        error
-      );
-
-      process.exit(1);
-    }
-  );
+  process.exit(1);
+});

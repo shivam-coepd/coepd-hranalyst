@@ -1,74 +1,51 @@
 import "server-only";
 
-import {
-  mailTransport,
-  getMailFrom,
-} from "@/lib/email/smtp";
+import { mailTransport, getMailFrom } from "@/lib/email/smtp";
 
-export async function
-sendEmail({
+export async function sendEmail({
   to,
   subject,
   html,
   ics,
 }: {
-  to:
-    string;
-  subject:
-    string;
-  html:
-    string;
-  ics?:
-    string | null;
+  to: string;
+  subject: string;
+  html: string;
+  ics?: string | null;
 }) {
-
-  if (
-    process.env.EMAIL_ENABLED ===
-    "false"
-  ) {
+  if (process.env.EMAIL_ENABLED === "false") {
     return {
-      provider:
-        "smtp-disabled",
+      provider: "smtp-disabled",
 
-      providerMessageId:
-        null,
+      providerMessageId: null,
     };
   }
 
-  const result =
-    await mailTransport
-      .sendMail({
-        from:
-          getMailFrom(),
+  const result = await mailTransport.sendMail({
+    from: getMailFrom(),
 
-        to,
+    to,
 
-        subject,
+    subject,
 
-        html,
+    html,
 
-        attachments:
-          ics
-            ? [
-                {
-                  filename:
-                    "interview.ics",
+    attachments: ics
+      ? [
+          {
+            filename: "interview.ics",
 
-                  content:
-                    ics,
+            content: ics,
 
-                  contentType:
-                    "text/calendar; charset=utf-8; method=REQUEST",
-                },
-              ]
-            : [],
-      });
+            contentType: "text/calendar; charset=utf-8; method=REQUEST",
+          },
+        ]
+      : [],
+  });
 
   return {
-    provider:
-      "smtp",
+    provider: "smtp",
 
-    providerMessageId:
-      result.messageId,
+    providerMessageId: result.messageId,
   };
 }

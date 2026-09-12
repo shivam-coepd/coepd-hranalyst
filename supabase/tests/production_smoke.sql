@@ -20,11 +20,11 @@ begin
 
 
     if v_schema_version <>
-       '15.0'
+       '17.0'
     then
 
         raise exception
-        'Expected schema version 15.0, found %',
+        'Expected schema version 17.0, found %',
         v_schema_version;
 
     end if;
@@ -91,7 +91,7 @@ begin
         from public.application_state_transitions
 
         where from_status =
-              'offer_received'
+              'offer_accepted'
 
           and to_status =
               'placed'
@@ -99,7 +99,7 @@ begin
     ) then
 
         raise exception
-        'Final placement transition missing';
+        'Accepted-offer placement transition missing';
 
     end if;
 

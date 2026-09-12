@@ -23,8 +23,8 @@ export async function getStudentApplications() {
           workplace_type,
 
           companies (
-            company_name,
-            logo_url
+            name,
+            logo
           )
         )
       `,

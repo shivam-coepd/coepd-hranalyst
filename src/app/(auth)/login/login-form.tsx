@@ -9,17 +9,15 @@ const initialState = {
 };
 
 export default function LoginForm() {
-  const [state, formAction, pending] =
-    useActionState(loginAction, initialState);
+  const [state, formAction, pending] = useActionState(
+    loginAction,
+    initialState,
+  );
 
   return (
     <form action={formAction} className="mt-6 space-y-5">
-
       <div>
-        <label
-          htmlFor="email"
-          className="mb-2 block text-sm font-medium"
-        >
+        <label htmlFor="email" className="mb-2 block text-sm font-medium">
           Email
         </label>
 
@@ -35,10 +33,7 @@ export default function LoginForm() {
       </div>
 
       <div>
-        <label
-          htmlFor="password"
-          className="mb-2 block text-sm font-medium"
-        >
+        <label htmlFor="password" className="mb-2 block text-sm font-medium">
           Password
         </label>
 
@@ -65,7 +60,6 @@ export default function LoginForm() {
       >
         {pending ? "Signing in..." : "Sign in"}
       </button>
-
     </form>
   );
 }

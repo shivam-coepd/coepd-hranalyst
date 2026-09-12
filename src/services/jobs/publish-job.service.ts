@@ -31,7 +31,7 @@ export async function publishJob(
 
         companies (
           id,
-          company_name,
+          name,
           verification_status,
           is_active
         )
@@ -86,7 +86,7 @@ export async function publishJob(
   const posterPayload = {
     title: job.job_title,
 
-    company: company.company_name,
+    company: company.name,
 
     role_type: job.role_type,
 
@@ -95,9 +95,8 @@ export async function publishJob(
     exp:
       checklist.exp_required ||
       formatExperience(
-        job.experience_min_months,
-
-        job.experience_max_months,
+        job.experience_min_months ?? 0,
+        job.experience_max_months ?? 0,
       ),
 
     location: job.location,
@@ -180,7 +179,7 @@ export async function publishJob(
     }),
 
     supabaseAdmin.from("audit_logs").insert({
-      actor_user_id: user.id,
+      actor_id: user.id,
 
       entity_type: "job",
 
@@ -188,11 +187,11 @@ export async function publishJob(
 
       action: "JOB_PUBLISHED",
 
-      old_data: {
+      old_values: {
         status: "pending_checklist",
       },
 
-      new_data: {
+      new_values: {
         status: "published",
 
         checklist_id: checklist.id,

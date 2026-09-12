@@ -5,11 +5,7 @@ export default async function PlacementHRLayout({
 }: {
   children: React.ReactNode;
 }) {
-  await requireRole([
-    "placement_hr",
-    "admin",
-    "super_admin",
-  ]);
+  await requireRole(["placement_hr", "admin", "super_admin"]);
 
   return children;
 }

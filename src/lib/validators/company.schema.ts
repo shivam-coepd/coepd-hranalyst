@@ -41,35 +41,3 @@ export const companySchema = z.object({
   postalCode: z.string().trim().max(30).optional(),
 });
 export type CompanyInput = z.infer<typeof companySchema>;
-
-// import { z } from "zod";
-
-// export const companySchema = z.object({
-//   companyName: z.string().trim().min(2, "Company name is required").max(255),
-
-//   legalName: z.string().trim().max(255).optional(),
-
-//   companyDomain: z.string().trim().max(255).optional(),
-
-//   websiteUrl: z
-//     .string()
-//     .url("Enter a valid website URL")
-//     .optional()
-//     .or(z.literal("")),
-
-//   industry: z.string().trim().max(150).optional(),
-
-//   companySize: z.string().trim().optional(),
-
-//   primaryEmail: z.string().email().optional().or(z.literal("")),
-
-//   primaryPhone: z.string().trim().max(30).optional(),
-
-//   city: z.string().trim().max(100).optional(),
-
-//   state: z.string().trim().max(100).optional(),
-
-//   country: z.string().trim().max(100).optional(),
-// });
-
-// export type CompanyInput = z.infer<typeof companySchema>;

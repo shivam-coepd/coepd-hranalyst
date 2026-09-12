@@ -14,6 +14,11 @@
     "db:types": "npx supabase gen types typescript --linked --schema public > src/types/database.ts",
     "db:test:integrity": "npx supabase db query --linked --file supabase/tests/production_integrity.sql",
     "typecheck": "tsc --noEmit",
+    "verify:links": "node scripts/check-local-links.mjs",
+    "test": "vitest run",
+    "test:e2e": "node scripts/run-e2e.mjs",
+    "db:test:local": "node scripts/test-migrations.mjs",
+    "db:types:local": "node scripts/test-migrations.mjs --generate-types",
     "perf:seed": "tsx performance/seed.ts",
     "perf:cleanup": "tsx performance/cleanup.ts",
     "perf:feed": "tsx performance/job-feed.load.ts",
@@ -22,6 +27,7 @@
     "perf:readiness": "tsx performance/readiness.load.ts",
     "perf:payload": "tsx performance/feed-payload.ts",
     "perf:seed-notifications": "tsx performance/seed-notifications.ts",
+    "perf:notifications": "tsx performance/notification-worker.load.ts",
     "perf:all": "tsx performance/run-all.ts"
   },
   "dependencies": {
@@ -51,18 +57,22 @@
     "zod": "^4.5.4"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
+    "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "^4",
     "@types/autocannon": "^7.12.7",
-    "@types/node": "^20",
+    "@types/node": "^24.13.4",
     "@types/nodemailer": "^8.0.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autocannon": "^8.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
+    "prettier": "^3.9.6",
     "tailwindcss": "^4",
     "tsx": "^4.23.13",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^5.0.0"
   },
   "allowScripts": {
     "esbuild@0.28.2": true,

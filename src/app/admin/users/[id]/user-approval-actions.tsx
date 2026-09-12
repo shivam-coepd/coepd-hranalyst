@@ -2,10 +2,7 @@
 
 import { useState } from "react";
 
-import {
-  approveUserAction,
-  rejectUserAction,
-} from "./actions";
+import { approveUserAction, rejectUserAction } from "./actions";
 
 export default function UserApprovalActions({
   userId,
@@ -19,8 +16,7 @@ export default function UserApprovalActions({
   async function approve() {
     setLoading(true);
 
-    const result =
-      await approveUserAction(userId);
+    const result = await approveUserAction(userId);
 
     setLoading(false);
 
@@ -30,8 +26,7 @@ export default function UserApprovalActions({
   }
 
   async function reject() {
-    const reason =
-      window.prompt("Enter rejection reason");
+    const reason = window.prompt("Enter rejection reason");
 
     if (!reason) {
       return;
@@ -39,11 +34,7 @@ export default function UserApprovalActions({
 
     setLoading(true);
 
-    const result =
-      await rejectUserAction(
-        userId,
-        reason
-      );
+    const result = await rejectUserAction(userId, reason);
 
     setLoading(false);
 
@@ -58,7 +49,6 @@ export default function UserApprovalActions({
 
   return (
     <div className="flex gap-3">
-
       <button
         onClick={reject}
         disabled={loading}
@@ -74,7 +64,6 @@ export default function UserApprovalActions({
       >
         Approve
       </button>
-
     </div>
   );
 }

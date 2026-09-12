@@ -6,6 +6,20 @@
 
 begin;
 
+-- Later permission upserts target the canonical code column. The foundation's
+-- lower(code) index alone cannot arbitrate ON CONFLICT (code).
+create unique index if not exists permissions_code_exact_uidx on public.permissions(code);
+
+create table if not exists public.company_status_history (
+  id uuid primary key default gen_random_uuid(),
+  company_id uuid not null references public.companies(id) on delete cascade,
+  old_status varchar(30), new_status varchar(30) not null, reason text,
+  changed_by uuid references public.profiles(id),
+  changed_at timestamptz not null default now()
+);
+create index if not exists company_status_history_company_idx
+  on public.company_status_history(company_id, changed_at desc);
+
 -- ------------------------------------------------------------
 -- 0. ACCOUNT STATUS AUDIT FIELDS
 -- ------------------------------------------------------------

@@ -1,66 +1,40 @@
 "use client";
 
-import {
-  useEffect,
-} from "react";
+import { useEffect } from "react";
 
-import {
-  createClient,
-} from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 
-export function
-useNotificationRealtime({
+export function useNotificationRealtime({
   userId,
   onNotification,
 }: {
-  userId:
-    string;
-  onNotification:
-    () => void;
+  userId: string;
+  onNotification: () => void;
 }) {
+  useEffect(() => {
+    const supabase = createClient();
 
-  useEffect(
-    () => {
+    const channel = supabase
+      .channel(`notifications:${userId}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
 
-      const supabase =
-        createClient();
+          schema: "public",
 
-      const channel =
-        supabase
-          .channel(
-            `notifications:${userId}`
-          )
-          .on(
-            "postgres_changes",
-            {
-              event:
-                "INSERT",
+          table: "notifications",
 
-              schema:
-                "public",
+          filter: `user_id=eq.${userId}`,
+        },
+        () => {
+          onNotification();
+        },
+      )
+      .subscribe();
 
-              table:
-                "notifications",
-
-              filter:
-                `user_id=eq.${userId}`,
-            },
-            () => {
-              onNotification();
-            }
-          )
-          .subscribe();
-
-      return () => {
-        supabase
-          .removeChannel(
-            channel
-          );
-      };
-    },
-    [
-      userId,
-      onNotification,
-    ]
-  );
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [userId, onNotification]);
 }

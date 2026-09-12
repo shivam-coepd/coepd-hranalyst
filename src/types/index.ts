@@ -6,10 +6,6 @@ export type {
   StudentProfile,
 } from "@/lib/types/foundational";
 
-export type {
-  UserRole,
-} from "@/lib/constants/roles";
+export type { UserRole } from "@/lib/constants/roles";
 
-export type {
-  AccountStatus,
-} from "@/lib/constants/account-status";
+export type { AccountStatus } from "@/lib/constants/account-status";

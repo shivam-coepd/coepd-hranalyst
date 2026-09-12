@@ -12,18 +12,26 @@ if (!url || !key || !email || !password || password.length < 12) {
 }
 
 const admin = createClient(url, key, {
-  auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false },
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false,
+    detectSessionInUrl: false,
+  },
 });
 
-const { data: created, error: createError } = await admin.auth.admin.createUser({
-  email,
-  password,
-  email_confirm: true,
-  user_metadata: { first_name: "Super", last_name: "Admin" },
-});
+const { data: created, error: createError } = await admin.auth.admin.createUser(
+  {
+    email,
+    password,
+    email_confirm: true,
+    user_metadata: { first_name: "Super", last_name: "Admin" },
+  },
+);
 
 if (createError || !created.user) {
-  throw new Error(createError?.message ?? "Unable to create bootstrap Super Admin");
+  throw new Error(
+    createError?.message ?? "Unable to create bootstrap Super Admin",
+  );
 }
 
 const userId = created.user.id;

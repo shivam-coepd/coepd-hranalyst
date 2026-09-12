@@ -1,36 +1,26 @@
 "use server";
-
 import { revalidatePath } from "next/cache";
-
 import { requireAdmin } from "@/lib/auth/guards";
 import { supabaseAdmin } from "@/lib/supabase/admin";
-
-export async function approveUserAction(
-  userId: string
-) {
+export async function approveUserAction(userId: string) {
   const admin = await requireAdmin();
-
-  const { data: profile, error: profileError } =
-    await supabaseAdmin
-      .from("profiles")
-      .select("id, account_status")
-      .eq("id", userId)
-      .single();
-
+  const { data: profile, error: profileError } = await supabaseAdmin
+    .from("profiles")
+    .select("id, account_status")
+    .eq("id", userId)
+    .single();
   if (profileError || !profile) {
     return {
       success: false,
       message: "User not found",
     };
   }
-
   if (profile.account_status === "approved") {
     return {
       success: false,
       message: "User is already approved",
     };
   }
-
   const { error } = await supabaseAdmin
     .from("profiles")
     .update({
@@ -40,65 +30,50 @@ export async function approveUserAction(
       rejection_reason: null,
     })
     .eq("id", userId);
-
   if (error) {
     return {
       success: false,
       message: error.message,
     };
   }
-
-  await supabaseAdmin
-    .from("audit_logs")
-    .insert({
-      actor_user_id: admin.id,
-      entity_type: "user",
-      entity_id: userId,
-      action: "USER_APPROVED",
-      old_data: {
-        status: profile.account_status,
-      },
-      new_data: {
-        status: "approved",
-      },
-    });
-
+  await supabaseAdmin.from("audit_logs").insert({
+    actor_id: admin.id,
+    entity_type: "user",
+    entity_id: userId,
+    action: "USER_APPROVED",
+    old_values: {
+      status: profile.account_status,
+    },
+    new_values: {
+      status: "approved",
+    },
+  });
   revalidatePath("/admin/users");
   revalidatePath(`/admin/users/${userId}`);
-
   return {
     success: true,
     message: "User approved successfully",
   };
 }
-
-export async function rejectUserAction(
-  userId: string,
-  reason: string
-) {
+export async function rejectUserAction(userId: string, reason: string) {
   const admin = await requireAdmin();
-
   if (!reason.trim()) {
     return {
       success: false,
       message: "Rejection reason is required",
     };
   }
-
-  const { data: profile } =
-    await supabaseAdmin
-      .from("profiles")
-      .select("account_status")
-      .eq("id", userId)
-      .single();
-
+  const { data: profile } = await supabaseAdmin
+    .from("profiles")
+    .select("account_status")
+    .eq("id", userId)
+    .single();
   if (!profile) {
     return {
       success: false,
       message: "User not found",
     };
   }
-
   const { error } = await supabaseAdmin
     .from("profiles")
     .update({
@@ -108,95 +83,71 @@ export async function rejectUserAction(
       approved_at: null,
     })
     .eq("id", userId);
-
   if (error) {
     return {
       success: false,
       message: error.message,
     };
   }
-
-  await supabaseAdmin
-    .from("audit_logs")
-    .insert({
-      actor_user_id: admin.id,
-      entity_type: "user",
-      entity_id: userId,
-      action: "USER_REJECTED",
-
-      old_data: {
-        status: profile.account_status,
-      },
-
-      new_data: {
-        status: "rejected",
-        reason,
-      },
-    });
-
+  await supabaseAdmin.from("audit_logs").insert({
+    actor_id: admin.id,
+    entity_type: "user",
+    entity_id: userId,
+    action: "USER_REJECTED",
+    old_values: {
+      status: profile.account_status,
+    },
+    new_values: {
+      status: "rejected",
+      reason,
+    },
+  });
   revalidatePath("/admin/users");
   revalidatePath(`/admin/users/${userId}`);
-
   return {
     success: true,
   };
 }
-
-export async function suspendUserAction(
-  userId: string,
-  reason: string
-) {
+export async function suspendUserAction(userId: string, reason: string) {
   const admin = await requireAdmin();
-
   if (admin.id === userId) {
     return {
       success: false,
       message: "You cannot suspend your own account",
     };
   }
-
-  const { data: profile } =
-    await supabaseAdmin
-      .from("profiles")
-      .select("account_status")
-      .eq("id", userId)
-      .single();
-
+  const { data: profile } = await supabaseAdmin
+    .from("profiles")
+    .select("account_status")
+    .eq("id", userId)
+    .single();
   if (!profile) {
     return {
       success: false,
       message: "User not found",
     };
   }
-
   await supabaseAdmin
     .from("profiles")
     .update({
       account_status: "suspended",
     })
     .eq("id", userId);
-
-  await supabaseAdmin
-    .from("audit_logs")
-    .insert({
-      actor_user_id: admin.id,
-      entity_type: "user",
-      entity_id: userId,
-      action: "USER_SUSPENDED",
-
-      old_data: {
-        status: profile.account_status,
-      },
-
-      new_data: {
-        status: "suspended",
-        reason,
-      },
-    });
-
+  await supabaseAdmin.from("audit_logs").insert({
+    actor_id: admin.id,
+    entity_type: "user",
+    entity_id: userId,
+    action: "USER_SUSPENDED",
+    old_values: {
+      status: profile.account_status,
+    },
+    new_values: {
+      status: "suspended",
+      reason,
+    },
+  });
   revalidatePath("/admin/users");
   revalidatePath(`/admin/users/${userId}`);
-
   return {
     success: true,
   };

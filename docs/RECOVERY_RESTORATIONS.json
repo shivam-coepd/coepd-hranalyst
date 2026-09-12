@@ -1,0 +1,6 @@
+{
+  "restoredCandidateFiles": 102,
+  "source": "Recoverable staged snapshots present during the initial audit",
+  "method": "Missing and zero-byte target files were selected by relative path, reviewed, copied, then reconciled against the final schema and build gates.",
+  "note": "The original per-file generated restoration log disappeared with the untracked docs directory after an environment retry. This aggregate record avoids inventing hashes or source paths that are no longer available. Git history for the recovery checkpoint is authoritative."
+}

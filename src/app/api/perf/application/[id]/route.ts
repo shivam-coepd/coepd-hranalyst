@@ -1,48 +1,27 @@
-import {
-  NextResponse,
-} from "next/server";
+import { NextResponse } from "next/server";
 
-import {
-  authorizePerformanceRequest,
-} from "@/lib/performance/authorize";
+import { authorizePerformanceRequest } from "@/lib/performance/authorize";
 
-import {
-  supabaseAdmin,
-} from "@/lib/supabase/admin";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
 export async function GET(
-  request:
-    Request,
+  request: Request,
   context: {
-    params:
-      Promise<{
-        id:
-          string;
-      }>;
-  }
+    params: Promise<{
+      id: string;
+    }>;
+  },
 ) {
+  authorizePerformanceRequest(request);
 
-  authorizePerformanceRequest(
-    request
-  );
+  const { id } = await context.params;
 
-  const {
-    id,
-  } =
-    await context.params;
+  const started = performance.now();
 
-  const started =
-    performance.now();
-
-  const {
-    data,
-    error,
-  } =
-    await supabaseAdmin
-      .from(
-        "applications"
-      )
-      .select(`
+  const { data, error } = await supabaseAdmin
+    .from("applications")
+    .select(
+      `
         id,
         status,
         match_score,
@@ -66,48 +45,31 @@ export async function GET(
           first_name,
           last_name
         )
-      `)
-      .eq(
-        "id",
-        id
-      )
-      .single();
+      `,
+    )
+    .eq("id", id)
+    .single();
 
-  if (
-    error ||
-    !data
-  ) {
+  if (error || !data) {
     return NextResponse.json(
       {
-        success:
-          false,
+        success: false,
 
-        error:
-          "Application not found",
+        error: "Application not found",
       },
       {
-        status:
-          404,
-      }
+        status: 404,
+      },
     );
   }
 
-  const elapsedMs =
-    performance.now()
-    -
-    started;
+  const elapsedMs = performance.now() - started;
 
   return NextResponse.json({
-    success:
-      true,
+    success: true,
 
-    elapsedMs:
-      Number(
-        elapsedMs
-          .toFixed(2)
-      ),
+    elapsedMs: Number(elapsedMs.toFixed(2)),
 
-    application:
-      data,
+    application: data,
   });
 }

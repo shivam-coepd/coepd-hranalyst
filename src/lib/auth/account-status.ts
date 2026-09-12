@@ -1,5 +1,4 @@
-export const ACCOUNT_STATUSES =
-[
+export const ACCOUNT_STATUSES = [
   "pending",
   "approved",
   "rejected",
@@ -7,5 +6,4 @@ export const ACCOUNT_STATUSES =
   "inactive",
 ] as const;
 
-export type AccountStatus =
-  (typeof ACCOUNT_STATUSES)[number];
+export type AccountStatus = (typeof ACCOUNT_STATUSES)[number];

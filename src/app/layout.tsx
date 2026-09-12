@@ -1,42 +1,26 @@
-import type {
-  Metadata,
-} from "next";
+import type { Metadata } from "next";
 
 import "./globals.css";
 
-
-export const metadata:
-  Metadata =
-{
+export const metadata: Metadata = {
   title: {
-    default:
-      "HRAnalyst Placement Wing",
+    default: "HRAnalyst Placement Wing",
 
-    template:
-      "%s | HRAnalyst Placement Wing",
+    template: "%s | HRAnalyst Placement Wing",
   },
 
   description:
     "Placement management platform for HRAnalyst students, Placement HR and Client HR.",
 };
 
-
-export default function
-RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
-  children:
-    React.ReactNode;
+  children: React.ReactNode;
 }>) {
-
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-    >
-      <body>
-        {children}
-      </body>
+    <html lang="en" suppressHydrationWarning>
+      <body>{children}</body>
     </html>
   );
 }

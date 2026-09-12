@@ -1,6 +1,4 @@
-import {
-  CLIENT_SUBMISSION_MATCH_THRESHOLD,
-} from "@/lib/applications/constants";
+import { CLIENT_SUBMISSION_MATCH_THRESHOLD } from "@/lib/applications/constants";
 
 export function validateSubmissionEligibility({
   status,
@@ -9,35 +7,24 @@ export function validateSubmissionEligibility({
   status: string;
   matchScore: number | null;
 }) {
-
-  if (
-    status !== "verified"
-  ) {
+  if (status !== "verified") {
     return {
       eligible: false,
-      reason:
-        "Candidate must be verified before submission",
+      reason: "Candidate must be verified before submission",
     };
   }
 
-  if (
-    matchScore === null
-  ) {
+  if (matchScore === null) {
     return {
       eligible: false,
-      reason:
-        "Match score is unavailable",
+      reason: "Match score is unavailable",
     };
   }
 
-  if (
-    matchScore <
-    CLIENT_SUBMISSION_MATCH_THRESHOLD
-  ) {
+  if (matchScore < CLIENT_SUBMISSION_MATCH_THRESHOLD) {
     return {
       eligible: false,
-      reason:
-        `Minimum ${CLIENT_SUBMISSION_MATCH_THRESHOLD}% match score is required`,
+      reason: `Minimum ${CLIENT_SUBMISSION_MATCH_THRESHOLD}% match score is required`,
     };
   }
 

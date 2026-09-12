@@ -1,167 +1,39 @@
+import "server-only";
 import { requireRole } from "@/lib/auth/guards";
-
+import { AppError } from "@/lib/http/route-error";
 import { supabaseAdmin } from "@/lib/supabase/admin";
-
+import { getApplicationEligibility } from "@/services/applications/application-eligibility.service";
 export async function applyToJob(jobId: string) {
-  const user = await requireRole(["student"]);
-
-  const { data: profile } = await supabaseAdmin
-    .from("profiles")
-    .select("account_status")
-    .eq("id", user.id)
-    .single();
-
-  if (!profile || profile.account_status !== "approved") {
-    throw new Error("Your account is not approved");
-  }
-
-  const { data: student } = await supabaseAdmin
-    .from("student_profiles")
-    .select(
-      `
-        id,
-        verification_status
-      `,
-    )
-    .eq("user_id", user.id)
-    .single();
-
-  if (!student) {
-    throw new Error("Student profile not found");
-  }
-
-  if (student.verification_status !== "verified") {
-    throw new Error("Only existing HRAnalyst students can apply");
-  }
-
-  const { data: job } = await supabaseAdmin
-    .from("jobs")
-    .select(
-      `
-        id,
-        status,
-        application_deadline
-      `,
-    )
-    .eq("id", jobId)
-    .single();
-
-  if (!job || job.status !== "published") {
-    throw new Error("Job is not available");
-  }
-
-  if (
-    job.application_deadline &&
-    new Date(job.application_deadline) < new Date()
-  ) {
-    throw new Error("Application deadline has passed");
-  }
-
-  const { data: cv } = await supabaseAdmin
-    .from("student_cvs")
-    .select(
-      `
-        id,
-        parsing_status
-      `,
-    )
-    .eq("student_id", student.id)
-    .eq("is_primary", true)
-    .is("deleted_at", null)
-    .single();
-
-  if (!cv) {
-    throw new Error("Upload a CV before applying");
-  }
-
-  const { data: checklist } = await supabaseAdmin
-    .from("job_checklists")
-    .select("id")
-    .eq("job_id", jobId)
-    .eq("status", "approved")
-    .single();
-
-  if (!checklist) {
-    throw new Error("Job checklist is unavailable");
-  }
-
-  const { data: application, error } = await supabaseAdmin
-    .from("applications")
-    .insert({
-      job_id: jobId,
-
-      student_id: student.id,
-
-      cv_id: cv.id,
-
-      checklist_id: checklist.id,
-
-      status: "scoring_pending",
-
-      score_status: "pending",
-    })
-    .select()
-    .single();
-
-  if (error) {
-    if (error.code === "23505") {
-      throw new Error("You have already applied for this job");
-    }
-
-    throw new Error(error.message);
-  }
-
-  await supabaseAdmin.from("notification_jobs").insert({
-    event_type: "APPLICATION_CREATED",
-
-    entity_type: "application",
-
-    entity_id: application.id,
-
-    channel: "in_app",
-
-    payload: {
-      application_id: application.id,
-
-      job_id: jobId,
+  const user = await requireRole("student");
+  const eligibility = await getApplicationEligibility(jobId);
+  if (!eligibility.eligible || !eligibility.studentId || !eligibility.cvId)
+    throw new AppError(
+      eligibility.reason ?? "You cannot apply to this job",
+      409,
+      "APPLICATION_NOT_ELIGIBLE",
+    );
+  const { data, error } = await supabaseAdmin.rpc(
+    "create_student_application",
+    {
+      p_job_id: jobId,
+      p_student_id: eligibility.studentId,
+      p_cv_id: eligibility.cvId,
+      p_actor_id: user.id,
     },
-  });
-
-  await Promise.all([
-    supabaseAdmin.from("application_status_history").insert({
-      application_id: application.id,
-
-      old_status: null,
-
-      new_status: "scoring_pending",
-
-      changed_by: user.id,
-
-      metadata: {
-        cv_id: cv.id,
-
-        checklist_id: checklist.id,
-      },
-    }),
-
-    supabaseAdmin.from("audit_logs").insert({
-      actor_user_id: user.id,
-
-      entity_type: "application",
-
-      entity_id: application.id,
-
-      action: "APPLICATION_CREATED",
-
-      new_data: {
-        job_id: jobId,
-
-        cv_id: cv.id,
-
-        checklist_id: checklist.id,
-      },
-    }),
-  ]);
-
+  );
+  if (error) {
+    const msg = error.message || "Unable to create application";
+    throw new AppError(
+      msg,
+      msg.includes("already applied") ? 409 : 422,
+      "APPLICATION_CREATE_FAILED",
+    );
+  }
+  const { data: application, error: readError } = await supabaseAdmin
+    .from("applications")
+    .select("*")
+    .eq("id", data as string)
+    .single();
+  if (readError) throw new Error(readError.message);
   return application;
 }
