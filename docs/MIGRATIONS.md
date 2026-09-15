@@ -19,6 +19,8 @@ Migrations are ordered, immutable schema steps under `supabase/migrations`:
 15. Production release controls
 16. Atomic notification claiming
 17. Recovery contracts and final RLS hardening
+18. Public API-role privilege hardening
+19. Legacy deployment schema alignment
 
 For a disposable local database, run `npm run db:test:local`. The harness creates an in-process Postgres-compatible database, applies every migration from zero, and runs applicable SQL tests. With Docker and the Supabase CLI available, run `npx supabase db reset` for the full local stack.
 

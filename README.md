@@ -33,3 +33,7 @@ npm run build
 `db:test:local` applies every migration from zero to an embedded PostgreSQL-compatible database and runs the SQL structural and behavior suite. Run `npx supabase db reset` as the final Auth, Storage, Realtime, and extension check whenever Docker is available.
 
 Operational and deployment instructions are in [docs/LOCAL_DEVELOPMENT.md](docs/LOCAL_DEVELOPMENT.md), [docs/TESTING.md](docs/TESTING.md), and [docs/DEPLOYMENT_RUNBOOK.md](docs/DEPLOYMENT_RUNBOOK.md).
+
+The canonical recovered schema is version 19.0. Existing deployments that predate the canonical extended company fields must apply `202609150019_schema_alignment_patch.sql`; it adds fields such as `companies.address` without removing data.
+
+Recovery evidence is in [docs/FINAL_RECOVERY_REPORT.md](docs/FINAL_RECOVERY_REPORT.md), [docs/PRD_IMPLEMENTATION_TRACEABILITY.md](docs/PRD_IMPLEMENTATION_TRACEABILITY.md), and [docs/TESTING_AND_ACCEPTANCE_REPORT.md](docs/TESTING_AND_ACCEPTANCE_REPORT.md). These reports distinguish locally proven checks from target-environment acceptance still awaiting credentials or load infrastructure.

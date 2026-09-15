@@ -3,13 +3,14 @@
 import { useActionState } from "react";
 
 type State = { success: boolean; message: string };
+// Keys match Zod companySchema field names exactly
 type CompanyDefaults = Partial<{
-  name: string;
+  companyName: string;
   legalName: string;
-  domain: string;
-  website: string;
+  companyDomain: string;
+  websiteUrl: string;
   industry: string;
-  size: string;
+  companySize: string;
   primaryEmail: string;
   primaryPhone: string;
   registrationNumber: string;
@@ -35,34 +36,40 @@ export default function CompanyForm({
     success: false,
     message: "",
   });
+
+  // name attr must match Zod companySchema keys so FormData keys align
   const fields: Array<[keyof CompanyDefaults, string, string]> = [
-    ["name", "Company name", "text"],
-    ["legalName", "Legal name", "text"],
-    ["domain", "Company domain", "text"],
-    ["website", "Website", "url"],
-    ["industry", "Industry", "text"],
-    ["size", "Company size", "text"],
-    ["primaryEmail", "Primary email", "email"],
-    ["primaryPhone", "Primary phone", "text"],
+    ["companyName",        "Company name",        "text"],
+    ["legalName",          "Legal name",          "text"],
+    ["companyDomain",      "Company domain",      "text"],
+    ["websiteUrl",         "Website",             "url"],
+    ["industry",           "Industry",            "text"],
+    ["companySize",        "Company size",        "text"],
+    ["primaryEmail",       "Primary email",       "email"],
+    ["primaryPhone",       "Primary phone",       "text"],
     ["registrationNumber", "Registration number", "text"],
-    ["gstNumber", "GST number", "text"],
-    ["linkedinUrl", "LinkedIn URL", "url"],
-    ["address", "Address", "text"],
-    ["city", "City", "text"],
-    ["state", "State", "text"],
-    ["country", "Country", "text"],
-    ["postalCode", "Postal code", "text"],
+    ["gstNumber",          "GST number",          "text"],
+    ["linkedinUrl",        "LinkedIn URL",        "url"],
+    ["address",            "Address",             "text"],
+    ["city",               "City",                "text"],
+    ["state",              "State",               "text"],
+    ["country",            "Country",             "text"],
+    ["postalCode",         "Postal code",         "text"],
   ];
+
   return (
     <form action={formAction} className="mt-6 grid gap-4 md:grid-cols-2">
       {fields.map(([name, label, type]) => (
         <label key={name} className={name === "address" ? "md:col-span-2" : ""}>
-          <span className="mb-1 block text-sm font-medium">{label}</span>
+          <span className="mb-1 block text-sm font-medium">
+            {label}
+            {name === "companyName" && <span className="text-red-500 ml-1">*</span>}
+          </span>
           <input
             name={name}
             type={type}
             defaultValue={defaults[name] ?? ""}
-            required={name === "name"}
+            required={name === "companyName"}
             className="w-full rounded-md border px-3 py-2"
           />
         </label>

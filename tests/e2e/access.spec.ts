@@ -34,3 +34,19 @@ test("protected mutation APIs fail closed without a session", async ({
     expect([401, 403]).toContain(response.status());
   }
 });
+
+test("private document and cron endpoints fail closed", async ({ request }) => {
+  const id = "00000000-0000-4000-8000-000000000001";
+  for (const url of [
+    `/api/client/candidates/${id}/cv`,
+    `/api/offers/${id}/file`,
+  ]) {
+    const response = await request.get(url);
+    expect([401, 403, 404]).toContain(response.status());
+  }
+
+  for (const url of ["/api/cron/notifications", "/api/cron/operations"]) {
+    const response = await request.post(url);
+    expect(response.status()).toBe(401);
+  }
+});

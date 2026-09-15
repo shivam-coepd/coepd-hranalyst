@@ -1,6 +1,6 @@
 # Database Schema
 
-Applying migrations 1 through 17 creates 59 relations and 60 public functions. Generated TypeScript bindings are in `src/types/database.ts`.
+Applying migrations 1 through 19 creates 59 relations and 60 public functions. Generated TypeScript bindings are in `src/types/database.ts`. Migration 18 hardens API-role privileges, and migration 19 aligns older deployed company/profile schemas with the canonical columns.
 
 Core identity tables include `profiles`, `user_roles`, `companies`, `client_hr_companies`, and `students`. Recruiting tables include `jobs`, `job_assignments`, `job_checklists`, `student_cvs`, `applications`, `application_scores`, `application_status_history`, `client_submissions`, `mock_interviews`, `interviews`, `interview_feedbacks`, `offers`, and `placements`. Operations tables cover notifications, delivery attempts, audit events, rate limits, releases, UAT, and operational alerts.
 

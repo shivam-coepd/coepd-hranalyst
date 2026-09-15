@@ -6,7 +6,7 @@ The Placement Wing was reconstructed on `recovery/full-project-rebuild-2026-09-1
 
 ## Material repairs
 
-- Established migrations 1–17 as the schema source of truth and generated database TypeScript types from the migrated catalog.
+- Established migrations 1–19 as the schema source of truth and generated database TypeScript types from the migrated catalog. Migrations 18 and 19 harden API-role privileges and repair older deployed schemas.
 - Enforced the offer sequence `offer_received -> offer_accepted -> placed` and retained terminal notification `dead_letter` handling.
 - Added atomic notification claims with row locking, attempt tracking, ownership fencing, retry backoff, and dead-letter exhaustion.
 - Reconciled scoring with the canonical 70/20/10 calculation and the 60 percent client-submission gate.
@@ -16,10 +16,10 @@ The Placement Wing was reconstructed on `recovery/full-project-rebuild-2026-09-1
 
 ## Verification result
 
-The final local gate set passed: 69 page-link patterns, 20 unit tests, every migration from zero, all applicable SQL contracts including direct cross-tenant RLS probes, TypeScript, ESLint with zero warnings, the production build with 81 pages, and three credential-free Playwright tests. Four role journeys are present and skip without configured E2E credentials. The production dependency audit reports zero vulnerabilities.
+The current local gate set passes: 71 page-link patterns, 23 unit tests, all 19 migrations from zero in the embedded harness, every SQL contract on full PostgreSQL including cross-tenant and privilege probes, TypeScript, ESLint with zero warnings, the production build with 83 pages, and four credential-free Playwright tests. Four role journeys are present and skip without configured E2E credentials. The production dependency audit reports zero vulnerabilities.
 
 ## Remaining environment checks
 
-Docker was not running on the recovery host, so a full Supabase reset and Auth/Storage/Realtime HTTP validation could not be executed. `pg_stat_statements`, authenticated browser journeys, provider delivery, and load measurements require their documented external environment and credentials.
+Docker Supabase reset successfully through migration 17; migrations 18–19 and every SQL file then passed against its PostgreSQL container, including `pg_stat_statements`. A later Windows Application Control block prevented a second CLI reset. Authenticated browser journeys, linked deployment, provider delivery, and load measurements require their documented environment and credentials.
 
 The source stage directories visible during the initial recovery disappeared from the parent workspace after an environment retry. No delete or move command was issued against them. Their recovered content remains in this branch; this report and the generated inventory preserve the resulting checkpoint.

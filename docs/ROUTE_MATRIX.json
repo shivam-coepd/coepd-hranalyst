@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T10:22:06.930Z",
+  "generatedAt": "2026-09-15T05:26:08.640Z",
   "routes": [
     {
       "route": "/",
@@ -488,6 +488,12 @@
       "source": "auth/confirm/route.ts"
     },
     {
+      "route": "/client",
+      "kind": "page",
+      "audience": "client",
+      "source": "client/page.tsx"
+    },
+    {
       "route": "/client/analytics",
       "kind": "page",
       "audience": "client",
@@ -582,6 +588,12 @@
       "kind": "page",
       "audience": "public-or-account-state",
       "source": "(auth)/pending-approval/page.tsx"
+    },
+    {
+      "route": "/placement-hr",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/page.tsx"
     },
     {
       "route": "/placement-hr/analytics",

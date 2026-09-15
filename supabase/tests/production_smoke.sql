@@ -20,11 +20,11 @@ begin
 
 
     if v_schema_version <>
-       '17.0'
+       '19.0'
     then
 
         raise exception
-        'Expected schema version 17.0, found %',
+        'Expected schema version 19.0, found %',
         v_schema_version;
 
     end if;

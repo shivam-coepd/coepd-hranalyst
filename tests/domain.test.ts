@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { calculateMatchScore } from "../src/services/scoring/calculate-match";
+import { calculateAtsScore } from "../src/services/scoring/calculate-ats";
 import { buildCsv } from "../src/lib/reports/csv";
 import {
   getAccountStatusRoute,
@@ -15,6 +16,7 @@ import {
   studentOfferDecisionSchema,
   registerOfferSchema,
 } from "../src/lib/validators/offer.schema";
+import { companySchema } from "../src/lib/validators/company.schema";
 
 describe("PRD score and verification gates", () => {
   it("uses the exact 70/20/10 weights", () => {
@@ -59,6 +61,46 @@ describe("PRD score and verification gates", () => {
         domainVerified: false,
       }).success,
     ).toBe(false);
+  });
+  it("uses the 20/30/20/15/15 ATS category caps", () => {
+    const evidence = Array.from({ length: 12 }, (_, index) => ({
+      name: `Skill ${index}`,
+      normalized_name: `skill-${index}`,
+      evidence: `Skill ${index}`,
+      confidence: 1,
+    }));
+    const score = calculateAtsScore(
+      {
+        full_name: "Test Student",
+        email: "student@example.test",
+        phone: "9999999999",
+        location: "Pune",
+        linkedin_url: "https://www.linkedin.com/in/test-student",
+        professional_summary: "Business analyst",
+        total_experience_months: 60,
+        current_company: "Example",
+        current_designation: "Business Analyst",
+        skills: evidence,
+        tools: [],
+        domains: [],
+        methodologies: [],
+        certifications: [],
+        education: [],
+        experience: [],
+        projects: [],
+      },
+      Array.from({ length: 35 }, () =>
+        Array.from({ length: 10 }, () => "experience").join(" "),
+      ).join("\n"),
+    );
+    expect(score).toEqual({
+      atsScore: 100,
+      contactScore: 20,
+      skillsScore: 30,
+      experienceScore: 20,
+      formattingScore: 15,
+      lengthScore: 15,
+    });
   });
 });
 describe("effective score and workflow boundaries", () => {
@@ -111,4 +153,23 @@ describe("CSV export", () => {
   );
   it("escapes commas and quotes", () =>
     expect(buildCsv([{ value: 'A,"B"' }])).toBe('value\r\n"A,""B"""'));
+});
+
+describe("company input", () => {
+  it("normalizes a website-shaped company domain", () => {
+    const result = companySchema.parse({
+      companyName: "APT Digital Express",
+      companyDomain: "https://www.aptdigital.in/about",
+    });
+    expect(result.companyDomain).toBe("aptdigital.in");
+  });
+
+  it("rejects an industry label used as a company domain", () => {
+    expect(
+      companySchema.safeParse({
+        companyName: "APT Digital Express",
+        companyDomain: "IT Solutions",
+      }).success,
+    ).toBe(false);
+  });
 });

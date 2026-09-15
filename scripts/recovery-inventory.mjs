@@ -3,7 +3,15 @@ import path from "node:path";
 import crypto from "node:crypto";
 const root = process.cwd();
 const parent = path.dirname(root);
-const excluded = new Set(["node_modules", ".git", ".next", "docs"]);
+const excluded = new Set([
+  "node_modules",
+  ".git",
+  ".next",
+  "docs",
+  ".codex-ci-verify",
+  "test-results",
+  "playwright-report",
+]);
 function walk(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
     if (excluded.has(e.name) || e.name.startsWith(".env")) return [];

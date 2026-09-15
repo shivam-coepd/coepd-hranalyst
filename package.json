@@ -15,6 +15,7 @@
     "db:test:integrity": "npx supabase db query --linked --file supabase/tests/production_integrity.sql",
     "typecheck": "tsc --noEmit",
     "verify:links": "node scripts/check-local-links.mjs",
+    "docs:api": "node scripts/generate-api-contract.mjs",
     "test": "vitest run",
     "test:e2e": "node scripts/run-e2e.mjs",
     "db:test:local": "node scripts/test-migrations.mjs",

@@ -21,6 +21,14 @@ export const companySchema = z.object({
         .replace(/^www\./, "")
         .replace(/\/.*$/, ""),
     )
+    .refine(
+      (value) =>
+        value === "" ||
+        /^(?=.{1,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/i.test(
+          value,
+        ),
+      "Enter a valid company domain, such as example.com",
+    )
     .optional(),
   websiteUrl: z
     .string()

@@ -14,6 +14,7 @@
 /coverage
 /test-results/
 /playwright-report/
+/.codex-ci-verify/
 
 # next.js
 /.next/
