@@ -1,9 +1,8 @@
 "use client";
 
 import { useActionState } from "react";
+import type { CompanyFormState } from "@/app/admin/companies/new/actions";
 
-type State = { success: boolean; message: string };
-// Keys match Zod companySchema field names exactly
 type CompanyDefaults = Partial<{
   companyName: string;
   legalName: string;
@@ -28,7 +27,7 @@ export default function CompanyForm({
   defaults = {},
   submitLabel = "Save company",
 }: {
-  action: (state: State, formData: FormData) => Promise<State>;
+  action: (state: CompanyFormState, formData: FormData) => Promise<CompanyFormState>;
   defaults?: CompanyDefaults;
   submitLabel?: string;
 }) {
@@ -57,6 +56,14 @@ export default function CompanyForm({
     ["postalCode",         "Postal code",         "text"],
   ];
 
+  // Use previously submitted value if validation fails, otherwise default
+  const getValue = (name: keyof CompanyDefaults) => {
+    if (state?.fields && state.fields[name] !== undefined) {
+      return state.fields[name];
+    }
+    return defaults[name] ?? "";
+  };
+
   return (
     <form action={formAction} className="mt-6 grid gap-4 md:grid-cols-2">
       {fields.map(([name, label, type]) => (
@@ -68,7 +75,7 @@ export default function CompanyForm({
           <input
             name={name}
             type={type}
-            defaultValue={defaults[name] ?? ""}
+            defaultValue={getValue(name)}
             required={name === "companyName"}
             className="w-full rounded-md border px-3 py-2"
           />
@@ -76,7 +83,7 @@ export default function CompanyForm({
       ))}
       {state.message && (
         <p
-          className={`md:col-span-2 text-sm ${state.success ? "text-green-700" : "text-red-700"}`}
+          className={`md:col-span-2 text-sm font-medium ${state.success ? "text-green-700" : "text-red-700"}`}
         >
           {state.message}
         </p>
@@ -84,7 +91,7 @@ export default function CompanyForm({
       <div className="md:col-span-2">
         <button
           disabled={pending}
-          className="rounded-md bg-slate-950 px-4 py-2 text-white disabled:opacity-50"
+          className="rounded-md bg-slate-950 px-4 py-2 text-white disabled:opacity-50 transition-opacity"
         >
           {pending ? "Saving..." : submitLabel}
         </button>
