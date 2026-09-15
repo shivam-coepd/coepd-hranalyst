@@ -1,6 +1,9 @@
 import { requireRole } from "@/lib/auth/guards";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { getStudentPlacements } from "@/repositories/placements.repository";
+import { PageHeader } from "@/components/ui/page-header";
+import { Badge } from "@/components/ui/badge";
+import { Building2, Briefcase, Calendar, CheckCircle } from "lucide-react";
 
 export default async function StudentPlacementsPage() {
   const user = await requireRole("student");
@@ -10,46 +13,71 @@ export default async function StudentPlacementsPage() {
     .eq("user_id", user.id)
     .maybeSingle();
   const placements = student ? await getStudentPlacements(student.id) : [];
+
   return (
-    <div className="mx-auto max-w-6xl space-y-6 p-6">
-      <div>
-        <h1 className="text-2xl font-bold">My Placements</h1>
-        <p className="mt-1 text-sm text-gray-500">
-          Track placement confirmation and joining status.
-        </p>
-      </div>
-      <div className="grid gap-4">
-        {placements.map((p) => {
-          const company = Array.isArray(p.companies)
-            ? p.companies[0]
-            : p.companies;
-          return (
-            <div key={p.id} className="rounded-xl border bg-white p-5">
-              <div className="flex justify-between gap-4">
-                <div>
-                  <p className="text-sm text-gray-500">{company?.name}</p>
-                  <h2 className="mt-1 font-semibold">{p.placed_designation}</h2>
-                  <p className="mt-1 text-sm">
-                    {p.annual_ctc != null
-                      ? `${p.currency} ${Number(p.annual_ctc).toLocaleString()}`
-                      : "CTC not specified"}
-                  </p>
-                </div>
-                <span className="h-fit rounded-full border px-3 py-1 text-xs capitalize">
-                  {p.placement_status}
-                </span>
-              </div>
-              <p className="mt-4 text-sm text-gray-600">
-                Joining date: {p.joining_date ?? "Not specified"}
-              </p>
-            </div>
-          );
-        })}
+    <div className="p-8">
+      <PageHeader 
+        title="My Placements" 
+        description="Track placement confirmation and joining status."
+      />
+
+      <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {placements.length === 0 && (
-          <div className="rounded-xl border bg-white p-10 text-center text-gray-500">
+          <div className="col-span-full rounded-xl border border-dashed bg-slate-50/50 p-12 text-center text-muted-foreground">
             No confirmed placements yet.
           </div>
         )}
+        
+        {placements.map((p) => {
+          const company = Array.isArray(p.companies) ? p.companies[0] : p.companies;
+
+          let statusVariant: "default" | "success" | "warning" | "destructive" | "pending" | "secondary" = "secondary";
+          if (p.placement_status === "placed" || p.placement_status === "joined") statusVariant = "success";
+          if (p.placement_status === "pending_joining") statusVariant = "pending";
+          if (p.placement_status === "dropped_out") statusVariant = "destructive";
+
+          return (
+            <div key={p.id} className="flex flex-col justify-between rounded-xl border bg-white p-6 shadow-sm dark:bg-slate-950">
+              <div>
+                <div className="flex items-start justify-between">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-900/50 dark:text-emerald-400">
+                    <CheckCircle className="h-6 w-6" />
+                  </div>
+                  <Badge variant={statusVariant} className="capitalize">
+                    {p.placement_status.replace('_', ' ')}
+                  </Badge>
+                </div>
+                
+                <h2 className="mt-4 text-lg font-bold tracking-tight text-foreground line-clamp-1">
+                  {p.placed_designation}
+                </h2>
+                
+                <div className="mt-2 space-y-2 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2">
+                    <Building2 className="h-4 w-4 shrink-0 text-primary" />
+                    <span className="font-medium text-foreground">{company?.name}</span>
+                  </div>
+                  <div className="flex items-center gap-2 font-medium">
+                    <Briefcase className="h-4 w-4 shrink-0" />
+                    <span>
+                      {p.annual_ctc != null
+                        ? `${p.currency} ${Number(p.annual_ctc).toLocaleString()}`
+                        : "CTC not specified"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-6 border-t pt-4">
+                <div className="flex items-center gap-2 text-sm">
+                  <Calendar className="h-4 w-4 text-primary" />
+                  <span className="text-muted-foreground">Joining Date:</span>
+                  <span className="font-medium text-foreground">{p.joining_date ?? "Not specified"}</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

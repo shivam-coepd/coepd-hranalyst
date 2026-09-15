@@ -31,14 +31,7 @@ export async function getUsers({
       phone,
       account_status,
       created_at,
-      approved_at,
-      user_roles (
-        roles (
-          id,
-          name,
-          display_name
-        )
-      )
+      approved_at
       `,
       {
         count: "exact",

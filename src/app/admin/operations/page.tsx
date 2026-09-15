@@ -1,76 +1,78 @@
 import { requireAdmin } from "@/lib/auth/guards";
-
 import { getOperationalAlerts } from "@/repositories/operational-alerts.repository";
+import { PageHeader } from "@/components/ui/page-header";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 export default async function AdminOperationsPage() {
   await requireAdmin();
-
   const alerts = await getOperationalAlerts();
 
   return (
-    <div className="mx-auto max-w-7xl space-y-6 p-6">
-      <div>
-        <h1 className="text-2xl font-bold">Operational Alerts</h1>
+    <div className="p-8">
+      <PageHeader 
+        title="Operational Alerts" 
+        description="SLA breaches and actions requiring administrative follow-up."
+      />
 
-        <p className="mt-1 text-sm text-gray-500">
-          SLA breaches and actions requiring administrative follow-up.
-        </p>
-      </div>
-
-      <div className="overflow-hidden rounded-xl border bg-white">
-        <table className="w-full text-left text-sm">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-4 py-3">Alert</th>
-
-              <th className="px-4 py-3">Severity</th>
-
-              <th className="px-4 py-3">Entity</th>
-
-              <th className="px-4 py-3">Created</th>
-
-              <th className="px-4 py-3">Status</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {alerts.map((alert) => (
-              <tr key={alert.id} className="border-t">
-                <td className="px-4 py-3">
-                  <p className="font-medium">{alert.title}</p>
-
-                  {alert.description && (
-                    <p className="mt-1 text-xs text-gray-500">
-                      {alert.description}
-                    </p>
-                  )}
-                </td>
-
-                <td className="px-4 py-3 capitalize">{alert.severity}</td>
-
-                <td className="px-4 py-3">{alert.entity_type}</td>
-
-                <td className="px-4 py-3">
-                  {new Date(alert.created_at).toLocaleString("en-IN")}
-                </td>
-
-                <td className="px-4 py-3 capitalize">{alert.status}</td>
-              </tr>
-            ))}
-
-            {alerts.length === 0 && (
+      <Card>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-slate-50/50 dark:bg-slate-900/50">
               <tr>
-                <td
-                  colSpan={5}
-                  className="px-4 py-10 text-center text-gray-500"
-                >
-                  No active operational alerts.
-                </td>
+                <th className="px-5 py-3 font-medium text-muted-foreground">Alert</th>
+                <th className="px-5 py-3 font-medium text-muted-foreground">Severity</th>
+                <th className="px-5 py-3 font-medium text-muted-foreground">Entity</th>
+                <th className="px-5 py-3 font-medium text-muted-foreground">Created</th>
+                <th className="px-5 py-3 font-medium text-muted-foreground">Status</th>
               </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody className="divide-y">
+              {alerts.map((alert) => {
+                let severityVariant: "default" | "warning" | "destructive" | "secondary" = "secondary";
+                if (alert.severity === "high" || alert.severity === "critical") severityVariant = "destructive";
+                if (alert.severity === "medium") severityVariant = "warning";
+                if (alert.severity === "low") severityVariant = "default";
+
+                return (
+                  <tr key={alert.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50">
+                    <td className="px-5 py-4">
+                      <p className="font-medium text-foreground">{alert.title}</p>
+                      {alert.description && (
+                        <p className="mt-1 text-xs text-muted-foreground">
+                          {alert.description}
+                        </p>
+                      )}
+                    </td>
+                    <td className="px-5 py-4">
+                      <Badge variant={severityVariant} className="capitalize">{alert.severity}</Badge>
+                    </td>
+                    <td className="px-5 py-4">
+                      <Badge variant="outline">{alert.entity_type}</Badge>
+                    </td>
+                    <td className="px-5 py-4 text-muted-foreground">
+                      {new Date(alert.created_at).toLocaleString("en-IN")}
+                    </td>
+                    <td className="px-5 py-4">
+                      <Badge variant={alert.status === 'open' ? 'pending' : 'secondary'} className="capitalize">
+                        {alert.status}
+                      </Badge>
+                    </td>
+                  </tr>
+                );
+              })}
+              {alerts.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="px-5 py-12 text-center text-muted-foreground">
+                    No active operational alerts. System is healthy.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </Card>
     </div>
   );
 }
+

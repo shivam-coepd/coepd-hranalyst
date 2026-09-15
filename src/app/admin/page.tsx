@@ -1,5 +1,9 @@
 import { requireAdmin } from "@/lib/auth/guards";
 import { getAdminDashboardMetrics } from "@/services/admin/dashboard.service";
+import { PageHeader } from "@/components/ui/page-header";
+import { StatCard } from "@/components/ui/stat-card";
+import { Users, Building2, UserCheck, Briefcase } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function AdminDashboardPage() {
   const user = await requireAdmin();
@@ -7,51 +11,57 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="p-8">
-      <div>
-        <p className="text-sm text-muted-foreground">
-          HRAnalyst Placement Wing
-        </p>
-
-        <h1 className="mt-1 text-3xl font-bold tracking-tight">
-          Admin Dashboard
-        </h1>
-
-        <p className="mt-2 text-muted-foreground">
-          Welcome, {user.firstName || user.email}
-        </p>
-      </div>
+      <PageHeader 
+        title="Admin Dashboard" 
+        description={`Welcome back, ${user.firstName || user.email}`} 
+      />
 
       <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-        <DashboardCard
+        <StatCard
           title="Pending Users"
-          value={String(metrics.pendingUsers)}
+          value={metrics.pendingUsers}
+          icon={Users}
+          description="Awaiting approval"
         />
-
-        <DashboardCard
+        <StatCard
           title="Approved Students"
-          value={String(metrics.approvedStudents)}
+          value={metrics.approvedStudents}
+          icon={UserCheck}
+          description="Active student accounts"
         />
-
-        <DashboardCard
+        <StatCard
           title="Client Companies"
-          value={String(metrics.companies)}
+          value={metrics.companies}
+          icon={Building2}
+          description="Partner organizations"
         />
-
-        <DashboardCard
+        <StatCard
           title="Placement HR"
-          value={String(metrics.placementHR)}
+          value={metrics.placementHR}
+          icon={Briefcase}
+          description="Active HR personnel"
         />
+      </div>
+
+      <div className="mt-8 grid gap-5 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Activity</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">Activity feed will appear here.</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>System Health</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">All systems operational.</p>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
 }
 
-function DashboardCard({ title, value }: { title: string; value: string }) {
-  return (
-    <div className="rounded-xl border bg-white p-5 shadow-sm">
-      <p className="text-sm text-muted-foreground">{title}</p>
-
-      <p className="mt-2 text-3xl font-semibold">{value}</p>
-    </div>
-  );
-}

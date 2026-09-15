@@ -1,25 +1,65 @@
 import Link from "next/link";
 import { getStudentDashboard } from "@/services/students/dashboard.service";
+import { PageHeader } from "@/components/ui/page-header";
+import { StatCard } from "@/components/ui/stat-card";
+import { Badge } from "@/components/ui/badge";
+import { User, FileText, Send, Briefcase } from "lucide-react";
+
 export default async function Page() {
   const d = await getStudentDashboard();
+
+  let verificationVariant: "default" | "success" | "warning" | "destructive" | "pending" | "secondary" = "secondary";
+  if (d.student.verification_status === "verified") verificationVariant = "success";
+  if (d.student.verification_status === "pending") verificationVariant = "pending";
+
   return (
-    <main className="mx-auto max-w-6xl p-8">
-      <h1 className="text-3xl font-bold">Student Dashboard</h1>
-      <p className="mt-1 text-slate-600">
-        Enrollment {d.student.enrollment_id} · {d.student.verification_status}
-      </p>
-      <div className="mt-8 grid gap-4 md:grid-cols-4">
-        {[
-          ["Profile", `${d.student.profile_completion}%`, `/student/profile`],
-          ["CVs", d.cvCount, "/student/cv"],
-          ["Applications", d.applicationCount, "/student/applications"],
-          ["Live jobs", d.publishedJobs, "/student/jobs"],
-        ].map(([a, b, h]) => (
-          <Link key={a} href={h as string} className="rounded-xl border p-5">
-            <div className="text-sm text-slate-500">{a}</div>
-            <div className="mt-2 text-2xl font-bold">{b}</div>
-          </Link>
-        ))}
+    <main className="p-8">
+      <PageHeader 
+        title="Student Dashboard" 
+        description={
+          <div className="flex items-center gap-3 mt-2 text-sm text-muted-foreground">
+            <span>Enrollment ID: {d.student.enrollment_id}</span>
+            <span className="text-slate-300">•</span>
+            <Badge variant={verificationVariant} className="capitalize">
+              {d.student.verification_status}
+            </Badge>
+          </div>
+        }
+      />
+
+      <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <Link href="/student/profile" className="group block">
+          <StatCard
+            title="Profile Completion"
+            value={`${d.student.profile_completion}%`}
+            icon={User}
+            className="group-hover:shadow-md transition-all group-hover:border-primary/20"
+          />
+        </Link>
+        <Link href="/student/cv" className="group block">
+          <StatCard
+            title="CVs Uploaded"
+            value={d.cvCount}
+            icon={FileText}
+            className="group-hover:shadow-md transition-all group-hover:border-primary/20"
+          />
+        </Link>
+        <Link href="/student/applications" className="group block">
+          <StatCard
+            title="Applications"
+            value={d.applicationCount}
+            icon={Send}
+            className="group-hover:shadow-md transition-all group-hover:border-primary/20"
+          />
+        </Link>
+        <Link href="/student/jobs" className="group block">
+          <StatCard
+            title="Live Jobs"
+            value={d.publishedJobs}
+            icon={Briefcase}
+            className="group-hover:shadow-md transition-all group-hover:border-primary/20"
+          />
+        </Link>
       </div>
     </main>
   );
