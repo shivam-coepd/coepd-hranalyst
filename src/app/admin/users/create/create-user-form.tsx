@@ -18,7 +18,8 @@ export default function CreateUserForm({
     createUserAction,
     initialState,
   );
-  const [role, setRole] = useState("student");
+  // Default to the returned state role if available, otherwise "student"
+  const [role, setRole] = useState(state.fields?.role || "student");
 
   return (
     <form
@@ -30,12 +31,14 @@ export default function CreateUserForm({
           label="First name"
           name="firstName"
           required
+          defaultValue={state.fields?.firstName}
           error={state.fieldErrors?.firstName?.[0]}
         />
         <Field
           label="Last name"
           name="lastName"
           required
+          defaultValue={state.fields?.lastName}
           error={state.fieldErrors?.lastName?.[0]}
         />
         <Field
@@ -43,11 +46,13 @@ export default function CreateUserForm({
           name="email"
           type="email"
           required
+          defaultValue={state.fields?.email}
           error={state.fieldErrors?.email?.[0]}
         />
         <Field
           label="Phone"
           name="phone"
+          defaultValue={state.fields?.phone}
           error={state.fieldErrors?.phone?.[0]}
         />
       </div>
@@ -75,6 +80,7 @@ export default function CreateUserForm({
           label="Enrollment ID"
           name="enrollmentId"
           required
+          defaultValue={state.fields?.enrollmentId}
           error={state.fieldErrors?.enrollmentId?.[0]}
         />
       ) : null}
@@ -88,6 +94,7 @@ export default function CreateUserForm({
             id="companyId"
             name="companyId"
             required
+            defaultValue={state.fields?.companyId || ""}
             className="w-full rounded-lg border px-3 py-2.5"
           >
             <option value="">Select company</option>
@@ -106,14 +113,14 @@ export default function CreateUserForm({
       ) : null}
 
       {state.message ? (
-        <div className="rounded-lg bg-red-50 p-3 text-sm text-red-700">
+        <div className="rounded-lg bg-red-50 p-3 text-sm font-medium text-red-700">
           {state.message}
         </div>
       ) : null}
       <button
         type="submit"
         disabled={pending}
-        className="rounded-lg bg-slate-900 px-5 py-2.5 font-medium text-white disabled:opacity-50"
+        className="rounded-lg bg-slate-900 px-5 py-2.5 font-medium text-white disabled:opacity-50 transition-opacity"
       >
         {pending ? "Creating..." : "Create and invite user"}
       </button>
@@ -126,12 +133,14 @@ function Field({
   name,
   type = "text",
   required,
+  defaultValue = "",
   error,
 }: {
   label: string;
   name: string;
   type?: string;
   required?: boolean;
+  defaultValue?: string;
   error?: string;
 }) {
   return (
@@ -144,6 +153,7 @@ function Field({
         name={name}
         type={type}
         required={required}
+        defaultValue={defaultValue}
         className="w-full rounded-lg border px-3 py-2.5"
       />
       {error ? <p className="mt-1 text-sm text-red-600">{error}</p> : null}

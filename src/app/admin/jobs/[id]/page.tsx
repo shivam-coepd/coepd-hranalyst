@@ -18,10 +18,20 @@ export default async function Page({
   ]);
   return (
     <main className="mx-auto max-w-6xl p-8">
-      <h1 className="text-3xl font-bold">{job.job_title}</h1>
-      <p className="mt-1 text-slate-600">
-        {job.job_code} · {job.status}
-      </p>
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold">{job.job_title}</h1>
+          <p className="mt-1 text-slate-600">
+            {job.job_code} · {job.status}
+          </p>
+        </div>
+        <a 
+          href={`/admin/jobs/${job.id}/edit`} 
+          className="rounded-lg border bg-white px-4 py-2 text-sm font-medium hover:bg-slate-50"
+        >
+          Edit job
+        </a>
+      </div>
       <div className="mt-6">
         <JobSubmitAction jobId={job.id} disabled={job.status !== "draft"} />
       </div>

@@ -15,6 +15,7 @@ export async function forgotPasswordAction(
     return {
       success: false,
       message: "Email is required",
+      fields: { email },
     };
   }
 
@@ -27,7 +28,8 @@ export async function forgotPasswordAction(
   if (error) {
     return {
       success: false,
-      message: "Unable to send password reset email",
+      message: error.message || "Unable to send password reset email",
+      fields: { email },
     };
   }
 

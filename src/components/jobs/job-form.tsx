@@ -1,6 +1,6 @@
 "use client";
 import { useActionState } from "react";
-type State = { success: boolean; message: string };
+import type { State } from "@/app/placement-hr/jobs/new/actions";
 type Company = { id: string; name: string };
 type Hr = {
   id: string;
@@ -25,13 +25,17 @@ export default function JobForm({
     success: false,
     message: "",
   });
+  
+  // Merge defaults with returned form fields to preserve data on error
+  const initialValues = { ...defaults, ...(state.fields || {}) };
+
   return (
     <form action={formAction} className="mt-6 grid gap-4 md:grid-cols-2">
       <label>
         <span className="mb-1 block text-sm font-medium">Company</span>
         <select
           name="companyId"
-          defaultValue={lockedCompanyId ?? String(defaults.companyId ?? "")}
+          defaultValue={lockedCompanyId ?? String(initialValues.companyId ?? "")}
           disabled={!!lockedCompanyId}
           className="w-full rounded border px-3 py-2"
         >
@@ -49,7 +53,7 @@ export default function JobForm({
         <span className="mb-1 block text-sm font-medium">Job title</span>
         <input
           name="jobTitle"
-          defaultValue={String(defaults.jobTitle ?? "")}
+          defaultValue={String(initialValues.jobTitle ?? "")}
           required
           className="w-full rounded border px-3 py-2"
         />
@@ -58,7 +62,7 @@ export default function JobForm({
         <span className="mb-1 block text-sm font-medium">Role</span>
         <select
           name="roleType"
-          defaultValue={String(defaults.roleType ?? "BA")}
+          defaultValue={String(initialValues.roleType ?? "BA")}
           className="w-full rounded border px-3 py-2"
         >
           {["BA", "PO", "PM", "SM"].map((v) => (
@@ -70,7 +74,7 @@ export default function JobForm({
         <span className="mb-1 block text-sm font-medium">Placement HR</span>
         <select
           name="assignedPlacementHr"
-          defaultValue={String(defaults.assignedPlacementHr ?? "")}
+          defaultValue={String(initialValues.assignedPlacementHr ?? "")}
           className="w-full rounded border px-3 py-2"
         >
           <option value="">Unassigned</option>
@@ -85,7 +89,7 @@ export default function JobForm({
         <span className="mb-1 block text-sm font-medium">Location type</span>
         <select
           name="locationType"
-          defaultValue={String(defaults.locationType ?? "domestic")}
+          defaultValue={String(initialValues.locationType ?? "domestic")}
           className="w-full rounded border px-3 py-2"
         >
           <option value="domestic">Domestic</option>
@@ -96,7 +100,7 @@ export default function JobForm({
         <span className="mb-1 block text-sm font-medium">Workplace</span>
         <select
           name="workplaceType"
-          defaultValue={String(defaults.workplaceType ?? "onsite")}
+          defaultValue={String(initialValues.workplaceType ?? "onsite")}
           className="w-full rounded border px-3 py-2"
         >
           <option value="onsite">Onsite</option>
@@ -108,7 +112,7 @@ export default function JobForm({
         <span className="mb-1 block text-sm font-medium">Location</span>
         <input
           name="location"
-          defaultValue={String(defaults.location ?? "")}
+          defaultValue={String(initialValues.location ?? "")}
           className="w-full rounded border px-3 py-2"
         />
       </label>
@@ -116,7 +120,7 @@ export default function JobForm({
         <span className="mb-1 block text-sm font-medium">Country</span>
         <input
           name="country"
-          defaultValue={String(defaults.country ?? "India")}
+          defaultValue={String(initialValues.country ?? "India")}
           className="w-full rounded border px-3 py-2"
         />
       </label>
@@ -124,7 +128,7 @@ export default function JobForm({
         <span className="mb-1 block text-sm font-medium">Employment type</span>
         <select
           name="employmentType"
-          defaultValue={String(defaults.employmentType ?? "full_time")}
+          defaultValue={String(initialValues.employmentType ?? "full_time")}
           className="w-full rounded border px-3 py-2"
         >
           <option value="full_time">Full time</option>
@@ -139,7 +143,7 @@ export default function JobForm({
           name="openings"
           type="number"
           min="1"
-          defaultValue={Number(defaults.openings ?? 1)}
+          defaultValue={Number(initialValues.openings ?? 1)}
           className="w-full rounded border px-3 py-2"
         />
       </label>
@@ -151,7 +155,7 @@ export default function JobForm({
           name="experienceMinMonths"
           type="number"
           min="0"
-          defaultValue={Number(defaults.experienceMinMonths ?? 0)}
+          defaultValue={Number(initialValues.experienceMinMonths ?? 0)}
           className="w-full rounded border px-3 py-2"
         />
       </label>
@@ -163,7 +167,7 @@ export default function JobForm({
           name="experienceMaxMonths"
           type="number"
           min="0"
-          defaultValue={defaults.experienceMaxMonths ?? ""}
+          defaultValue={initialValues.experienceMaxMonths ?? ""}
           className="w-full rounded border px-3 py-2"
         />
       </label>
@@ -174,7 +178,7 @@ export default function JobForm({
           type="number"
           min="0"
           step="0.01"
-          defaultValue={defaults.salaryMin ?? ""}
+          defaultValue={initialValues.salaryMin ?? ""}
           className="w-full rounded border px-3 py-2"
         />
       </label>
@@ -185,7 +189,7 @@ export default function JobForm({
           type="number"
           min="0"
           step="0.01"
-          defaultValue={defaults.salaryMax ?? ""}
+          defaultValue={initialValues.salaryMax ?? ""}
           className="w-full rounded border px-3 py-2"
         />
       </label>
@@ -193,7 +197,7 @@ export default function JobForm({
         <span className="mb-1 block text-sm font-medium">Currency</span>
         <input
           name="salaryCurrency"
-          defaultValue={String(defaults.salaryCurrency ?? "INR")}
+          defaultValue={String(initialValues.salaryCurrency ?? "INR")}
           className="w-full rounded border px-3 py-2"
         />
       </label>
@@ -204,7 +208,7 @@ export default function JobForm({
         <input
           name="applicationDeadline"
           type="date"
-          defaultValue={String(defaults.applicationDeadline ?? "").slice(0, 10)}
+          defaultValue={String(initialValues.applicationDeadline ?? "").slice(0, 10)}
           className="w-full rounded border px-3 py-2"
         />
       </label>
@@ -215,7 +219,7 @@ export default function JobForm({
           required
           minLength={50}
           rows={12}
-          defaultValue={String(defaults.jdText ?? "")}
+          defaultValue={String(initialValues.jdText ?? "")}
           className="w-full rounded border px-3 py-2"
         />
       </label>

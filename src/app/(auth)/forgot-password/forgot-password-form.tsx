@@ -25,6 +25,7 @@ export default function ForgotPasswordForm() {
           type="email"
           required
           autoComplete="email"
+          defaultValue={state.fields?.email ?? ""}
           className="w-full rounded-lg border px-4 py-3 outline-none focus:ring-2"
         />
       </div>

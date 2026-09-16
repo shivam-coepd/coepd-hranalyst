@@ -30,4 +30,5 @@ export interface CurrentUser {
 export interface AuthActionState {
   success: boolean;
   message: string;
+  fields?: Record<string, string>;
 }

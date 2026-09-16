@@ -1,5 +1,6 @@
 "use server";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth/guards";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 export async function approveUserAction(userId: string) {
@@ -151,4 +152,37 @@ export async function suspendUserAction(userId: string, reason: string) {
   return {
     success: true,
   };
+}
+
+export async function deleteUserAction(userId: string) {
+  const admin = await requireAdmin();
+  if (admin.id === userId) {
+    return {
+      success: false,
+      message: "You cannot delete your own account",
+    };
+  }
+  
+  // Log the deletion before we actually delete the user
+  await supabaseAdmin.from("audit_logs").insert({
+    actor_id: admin.id,
+    entity_type: "user",
+    entity_id: userId,
+    action: "USER_DELETED",
+    old_values: { status: "deleted" },
+    new_values: {},
+  });
+
+  // This will cascade and delete the user's profile and roles as well
+  const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
+  
+  if (error) {
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
+
+  revalidatePath("/admin/users");
+  redirect("/admin/users");
 }
