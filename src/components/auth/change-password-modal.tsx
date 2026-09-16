@@ -8,15 +8,21 @@ import { changeMyPasswordAction } from "@/app/actions/auth";
 export default function ChangePasswordModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showOldPassword, setShowOldPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
+      return;
+    }
+    if (oldPassword === password) {
+      toast.error("New password cannot be the same as the old password");
       return;
     }
     if (password.length < 8) {
@@ -26,12 +32,13 @@ export default function ChangePasswordModal() {
 
     startTransition(async () => {
       try {
-        const result = await changeMyPasswordAction(password);
+        const result = await changeMyPasswordAction(oldPassword, password);
         if (result && !result.success) {
           toast.error(result.message || "Unable to update password");
         } else {
           toast.success("Password updated successfully!");
           setIsOpen(false);
+          setOldPassword("");
           setPassword("");
           setConfirmPassword("");
         }
@@ -65,6 +72,26 @@ export default function ChangePasswordModal() {
             </div>
             
             <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="mb-1 block text-sm font-medium">Old Password</label>
+                <div className="relative">
+                  <input
+                    type={showOldPassword ? "text" : "password"}
+                    required
+                    value={oldPassword}
+                    onChange={(e) => setOldPassword(e.target.value)}
+                    className="w-full rounded border px-3 py-2 pr-10"
+                    placeholder="Enter current password"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowOldPassword(!showOldPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 focus:outline-none"
+                  >
+                    {showOldPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  </button>
+                </div>
+              </div>
               <div>
                 <label className="mb-1 block text-sm font-medium">New Password</label>
                 <div className="relative">
