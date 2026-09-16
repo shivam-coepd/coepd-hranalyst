@@ -142,20 +142,22 @@ export async function createUser(
   }
   /*
    * --------------------------------------------------------
-   * 8. Create Supabase Auth invitation
+   * 8. Create Supabase Auth User
    * --------------------------------------------------------
    */
   const { data: authData, error: authError } =
-    await supabaseAdmin.auth.admin.inviteUserByEmail(parsed.email, {
-      data: {
+    await supabaseAdmin.auth.admin.createUser({
+      email: parsed.email,
+      password: parsed.password,
+      email_confirm: true,
+      user_metadata: {
         first_name: parsed.firstName,
         last_name: parsed.lastName,
         phone: parsed.phone || null,
       },
-      redirectTo: `${appUrl}/reset-password`,
     });
   if (authError) {
-    throw new Error(authError.message || "Unable to create user invitation");
+    throw new Error(authError.message || "Unable to create user");
   }
   if (!authData?.user) {
     throw new Error("Supabase did not return the created user");

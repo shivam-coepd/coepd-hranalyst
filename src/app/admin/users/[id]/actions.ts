@@ -186,3 +186,42 @@ export async function deleteUserAction(userId: string) {
   revalidatePath("/admin/users");
   redirect("/admin/users");
 }
+
+export async function adminUpdateUserPasswordAction(userId: string, newPassword: string) {
+  const admin = await requireAdmin();
+  if (admin.id === userId) {
+    return {
+      success: false,
+      message: "Please use the normal Change Password feature to update your own password",
+    };
+  }
+
+  if (newPassword.length < 8) {
+    return {
+      success: false,
+      message: "Password must be at least 8 characters",
+    };
+  }
+
+  const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, {
+    password: newPassword,
+  });
+
+  if (error) {
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
+
+  await supabaseAdmin.from("audit_logs").insert({
+    actor_id: admin.id,
+    entity_type: "user",
+    entity_id: userId,
+    action: "USER_PASSWORD_RESET",
+    old_values: {},
+    new_values: { password_reset: true },
+  });
+
+  return { success: true };
+}

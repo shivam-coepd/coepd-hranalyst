@@ -5,6 +5,7 @@ export const createUserSchema = z
     firstName: z.string().trim().min(2, "First name is required").max(120),
     lastName: z.string().trim().min(1, "Last name is required").max(120),
     email: z.string().trim().toLowerCase().email(),
+    password: z.string().min(8, "Password must be at least 8 characters"),
     phone: z.string().trim().max(30).optional().or(z.literal("")),
     role: z.enum(["admin", "placement_hr", "client_hr", "student"]),
     enrollmentId: z.string().trim().max(100).optional().or(z.literal("")),

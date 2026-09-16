@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { createUserAction, type CreateUserState } from "./actions";
 
 interface CompanyOption {
@@ -48,6 +49,14 @@ export default function CreateUserForm({
           required
           defaultValue={state.fields?.email}
           error={state.fieldErrors?.email?.[0]}
+        />
+        <Field
+          label="Password"
+          name="password"
+          type="password"
+          required
+          defaultValue={state.fields?.password}
+          error={state.fieldErrors?.password?.[0]}
         />
         <Field
           label="Phone"
@@ -122,7 +131,7 @@ export default function CreateUserForm({
         disabled={pending}
         className="rounded-lg bg-slate-900 px-5 py-2.5 font-medium text-white disabled:opacity-50 transition-opacity"
       >
-        {pending ? "Creating..." : "Create and invite user"}
+        {pending ? "Creating..." : "Create user"}
       </button>
     </form>
   );
@@ -143,19 +152,39 @@ function Field({
   defaultValue?: string;
   error?: string;
 }) {
+  const [showPassword, setShowPassword] = useState(false);
+  const isPassword = type === "password";
+  const inputType = isPassword ? (showPassword ? "text" : "password") : type;
+
   return (
     <div>
       <label htmlFor={name} className="mb-2 block text-sm font-medium">
         {label}
       </label>
-      <input
-        id={name}
-        name={name}
-        type={type}
-        required={required}
-        defaultValue={defaultValue}
-        className="w-full rounded-lg border px-3 py-2.5"
-      />
+      <div className="relative">
+        <input
+          id={name}
+          name={name}
+          type={inputType}
+          required={required}
+          defaultValue={defaultValue}
+          className="w-full rounded-lg border px-3 py-2.5"
+        />
+        {isPassword && (
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 focus:outline-none"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+          >
+            {showPassword ? (
+              <EyeOff className="h-5 w-5" aria-hidden="true" />
+            ) : (
+              <Eye className="h-5 w-5" aria-hidden="true" />
+            )}
+          </button>
+        )}
+      </div>
       {error ? <p className="mt-1 text-sm text-red-600">{error}</p> : null}
     </div>
   );

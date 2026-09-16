@@ -22,6 +22,7 @@ export async function createUserAction(
     firstName: raw.firstName,
     lastName: raw.lastName,
     email: raw.email,
+    password: raw.password,
     phone: raw.phone || undefined,
     role: raw.role,
     enrollmentId: raw.enrollmentId || undefined,

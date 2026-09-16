@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/auth/guards";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import EditUserForm from "@/components/users/edit-user-form";
+import ChangeUserPasswordForm from "@/components/users/change-user-password-form";
 import { updateUserAction } from "./actions";
 
 export default async function EditUserPage({
@@ -41,6 +42,12 @@ export default async function EditUserPage({
 
       <div className="rounded-xl border bg-white p-6 shadow-sm">
         <EditUserForm action={actionWithId} defaults={defaults} />
+      </div>
+
+      <div className="mt-8 rounded-xl border bg-white p-6 shadow-sm">
+        <h2 className="text-xl font-bold text-slate-900">Security</h2>
+        <p className="text-sm text-slate-500 mt-1">Force update this user's password. This action takes effect immediately.</p>
+        <ChangeUserPasswordForm userId={id} />
       </div>
     </div>
   );

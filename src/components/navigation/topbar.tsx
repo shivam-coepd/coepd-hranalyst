@@ -4,6 +4,7 @@ import { LogOut, Bell, Menu } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import ChangePasswordModal from "@/components/auth/change-password-modal";
 
 export function Topbar({
   user,
@@ -47,6 +48,7 @@ export function Topbar({
             <span className="hidden text-sm font-semibold leading-6 text-slate-900 lg:block dark:text-slate-100">
               {displayName}
             </span>
+            <ChangePasswordModal />
             <button
               onClick={handleSignOut}
               className="rounded-full p-2 text-slate-400 hover:text-slate-500"
