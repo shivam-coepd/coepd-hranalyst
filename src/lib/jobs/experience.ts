@@ -1,18 +1,9 @@
-function monthsToDisplay(
-  months: number
-) {
-  const years =
-    Math.floor(
-      months / 12
-    );
+function monthsToDisplay(months: number) {
+  const years = Math.floor(months / 12);
 
-  const remaining =
-    months % 12;
+  const remaining = months % 12;
 
-  if (
-    years &&
-    remaining
-  ) {
+  if (years && remaining) {
     return `${years}y ${remaining}m`;
   }
 
@@ -23,15 +14,8 @@ function monthsToDisplay(
   return `${remaining}m`;
 }
 
-export function formatExperience(
-  min: number,
-  max?: number | null
-) {
-
-  if (
-    max === null ||
-    max === undefined
-  ) {
+export function formatExperience(min: number, max?: number | null) {
+  if (max === null || max === undefined) {
     return `${monthsToDisplay(min)}+`;
   }
 

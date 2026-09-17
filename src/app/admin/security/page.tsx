@@ -1,96 +1,66 @@
-import {
-  requireAdmin,
-} from "@/lib/auth/guards";
+import { requireAdmin } from "@/lib/auth/guards";
+import { getSecurityOverview } from "@/repositories/security.repository";
+import { PageHeader } from "@/components/ui/page-header";
+import { StatCard } from "@/components/ui/stat-card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { ShieldAlert, Users, UserX, BellRing, Activity } from "lucide-react";
 
-import {
-  getSecurityOverview,
-} from "@/repositories/security.repository";
-
-import {
-  KpiCard,
-} from "@/components/dashboard/kpi-card";
-
-export default async function
-AdminSecurityPage() {
-
+export default async function AdminSecurityPage() {
   await requireAdmin();
-
-  const data =
-    await getSecurityOverview();
+  const data = await getSecurityOverview();
 
   return (
-    <div className="mx-auto max-w-7xl space-y-6 p-6">
+    <div className="p-8">
+      <PageHeader 
+        title="Security & System Health" 
+        description="Production security and operational status."
+      />
 
-      <div>
-        <h1 className="text-2xl font-bold">
-          Security & System Health
-        </h1>
-
-        <p className="mt-1 text-sm text-gray-500">
-          Production security and operational status.
-        </p>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <StatCard
+          title="Failed Notifications"
+          value={data.failedNotifications}
+          icon={BellRing}
+        />
+        <StatCard 
+          title="Suspended Accounts" 
+          value={data.suspendedUsers}
+          icon={UserX} 
+        />
+        <StatCard 
+          title="Operational Alerts" 
+          value={data.openAlerts}
+          icon={ShieldAlert}
+        />
+        <StatCard 
+          title="Rejected Accounts" 
+          value={data.rejectedUsers}
+          icon={Users}
+        />
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-
-        <KpiCard
-          label="Failed Notifications"
-          value={
-            data.failedNotifications
-          }
-        />
-
-        <KpiCard
-          label="Suspended Accounts"
-          value={
-            data.suspendedUsers
-          }
-        />
-
-        <KpiCard
-          label="Operational Alerts"
-          value={
-            data.openAlerts
-          }
-        />
-
-        <KpiCard
-          label="Rejected Accounts"
-          value={
-            data.rejectedUsers
-          }
-        />
-
+      <div className="mt-8">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Activity className="h-5 w-5" />
+              System Endpoints
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4 text-sm">
+              <div className="flex items-center justify-between rounded-lg border p-4">
+                <span className="font-medium">Health</span>
+                <code className="rounded bg-slate-100 px-2 py-1 text-slate-800 dark:bg-slate-800 dark:text-slate-300">/api/health</code>
+              </div>
+              <div className="flex items-center justify-between rounded-lg border p-4">
+                <span className="font-medium">Readiness</span>
+                <code className="rounded bg-slate-100 px-2 py-1 text-slate-800 dark:bg-slate-800 dark:text-slate-300">/api/readiness</code>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
-
-      <div className="rounded-xl border bg-white p-6">
-
-        <h2 className="font-semibold">
-          System Endpoints
-        </h2>
-
-        <div className="mt-4 space-y-2 text-sm">
-
-          <p>
-            Health:
-            {" "}
-            <code>
-              /api/health
-            </code>
-          </p>
-
-          <p>
-            Readiness:
-            {" "}
-            <code>
-              /api/readiness
-            </code>
-          </p>
-
-        </div>
-
-      </div>
-
     </div>
   );
 }

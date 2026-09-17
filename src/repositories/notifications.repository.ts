@@ -1,26 +1,12 @@
 import "server-only";
 
-import {
-  supabaseAdmin,
-} from "@/lib/supabase/admin";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
-export async function
-getNotifications(
-  userId:
-    string,
-  limit =
-    50
-) {
-
-  const {
-    data,
-    error,
-  } =
-    await supabaseAdmin
-      .from(
-        "notifications"
-      )
-      .select(`
+export async function getNotifications(userId: string, limit = 50) {
+  const { data, error } = await supabaseAdmin
+    .from("notifications")
+    .select(
+      `
         id,
         event_type,
         title,
@@ -32,70 +18,33 @@ getNotifications(
         is_read,
         read_at,
         created_at
-      `)
-      .eq(
-        "user_id",
-        userId
-      )
-      .order(
-        "created_at",
-        {
-          ascending:
-            false,
-        }
-      )
-      .limit(
-        Math.min(
-          limit,
-          100
-        )
-      );
+      `,
+    )
+    .eq("user_id", userId)
+    .order("created_at", {
+      ascending: false,
+    })
+    .limit(Math.min(limit, 100));
 
   if (error) {
-    throw new Error(
-      error.message
-    );
+    throw new Error(error.message);
   }
 
   return data ?? [];
 }
 
-export async function
-getUnreadNotificationCount(
-  userId:
-    string
-) {
-
-  const {
-    count,
-    error,
-  } =
-    await supabaseAdmin
-      .from(
-        "notifications"
-      )
-      .select(
-        "id",
-        {
-          count:
-            "exact",
-          head:
-            true,
-        }
-      )
-      .eq(
-        "user_id",
-        userId
-      )
-      .eq(
-        "is_read",
-        false
-      );
+export async function getUnreadNotificationCount(userId: string) {
+  const { count, error } = await supabaseAdmin
+    .from("notifications")
+    .select("id", {
+      count: "exact",
+      head: true,
+    })
+    .eq("user_id", userId)
+    .eq("is_read", false);
 
   if (error) {
-    throw new Error(
-      error.message
-    );
+    throw new Error(error.message);
   }
 
   return count ?? 0;

@@ -7,34 +7,29 @@ export async function forgotPasswordAction(
     success: boolean;
     message: string;
   },
-  formData: FormData
+  formData: FormData,
 ) {
-  const email =
-    String(formData.get("email") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim();
 
   if (!email) {
     return {
       success: false,
       message: "Email is required",
+      fields: { email },
     };
   }
 
   const supabase = await createClient();
 
-  const { error } =
-    await supabase.auth.resetPasswordForEmail(
-      email,
-      {
-        redirectTo:
-          `${process.env.NEXT_PUBLIC_APP_URL}/reset-password`,
-      }
-    );
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/reset-password`,
+  });
 
   if (error) {
     return {
       success: false,
-      message:
-        "Unable to send password reset email",
+      message: error.message || "Unable to send password reset email",
+      fields: { email },
     };
   }
 

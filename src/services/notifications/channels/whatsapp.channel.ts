@@ -1,96 +1,58 @@
 import "server-only";
 
-export async function
-sendWhatsAppMessage({
+export async function sendWhatsAppMessage({
   phone,
   message,
 }: {
-  phone:
-    string;
-  message:
-    string;
+  phone: string;
+  message: string;
 }) {
-
-  if (
-    process.env.WHATSAPP_ENABLED !==
-    "true"
-  ) {
+  if (process.env.WHATSAPP_ENABLED !== "true") {
     return {
-      provider:
-        "whatsapp-disabled",
+      provider: "whatsapp-disabled",
 
-      providerMessageId:
-        null,
+      providerMessageId: null,
     };
   }
 
-  const url =
-    process.env
-      .WHATSAPP_WEBHOOK_URL;
+  const url = process.env.WHATSAPP_WEBHOOK_URL;
 
-  const token =
-    process.env
-      .WHATSAPP_WEBHOOK_TOKEN;
+  const token = process.env.WHATSAPP_WEBHOOK_TOKEN;
 
   if (!url) {
-    throw new Error(
-      "WHATSAPP_WEBHOOK_URL is not configured"
-    );
+    throw new Error("WHATSAPP_WEBHOOK_URL is not configured");
   }
 
-  const response =
-    await fetch(
-      url,
-      {
-        method:
-          "POST",
+  const response = await fetch(url, {
+    method: "POST",
 
-        headers: {
-          "Content-Type":
-            "application/json",
+    headers: {
+      "Content-Type": "application/json",
 
-          ...(token
-            ? {
-                Authorization:
-                  `Bearer ${token}`,
-              }
-            : {}),
-        },
+      ...(token
+        ? {
+            Authorization: `Bearer ${token}`,
+          }
+        : {}),
+    },
 
-        body:
-          JSON.stringify({
-            phone,
-            message,
-          }),
-      }
-    );
+    body: JSON.stringify({
+      phone,
+      message,
+    }),
+  });
 
   if (!response.ok) {
+    const text = await response.text();
 
-    const text =
-      await response.text();
-
-    throw new Error(
-      `WhatsApp delivery failed: ${text}`
-    );
+    throw new Error(`WhatsApp delivery failed: ${text}`);
   }
 
-  const result =
-    await response
-      .json()
-      .catch(
-        () => ({})
-      );
+  const result = await response.json().catch(() => ({}));
 
   return {
-    provider:
-      "whatsapp-webhook",
+    provider: "whatsapp-webhook",
 
-    providerMessageId:
-      result.id
-        ? String(
-            result.id
-          )
-        : null,
+    providerMessageId: result.id ? String(result.id) : null,
   };
 }

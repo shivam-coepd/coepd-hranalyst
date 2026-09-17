@@ -30,7 +30,9 @@ export async function verifyExistingHRAnalystStudent(
   });
 
   if (!response.ok) {
-    throw new Error(`HRAnalyst verification service returned HTTP ${response.status}`);
+    throw new Error(
+      `HRAnalyst verification service returned HTTP ${response.status}`,
+    );
   }
 
   const payload: unknown = await response.json();
@@ -58,8 +60,17 @@ export async function verifyExistingHRAnalystStudent(
 
   return {
     enrollmentId: returnedEnrollment,
-    firstName: typeof record.student?.first_name === "string" ? record.student.first_name : null,
-    lastName: typeof record.student?.last_name === "string" ? record.student.last_name : null,
-    email: typeof record.student?.email === "string" ? record.student.email.toLowerCase() : null,
+    firstName:
+      typeof record.student?.first_name === "string"
+        ? record.student.first_name
+        : null,
+    lastName:
+      typeof record.student?.last_name === "string"
+        ? record.student.last_name
+        : null,
+    email:
+      typeof record.student?.email === "string"
+        ? record.student.email.toLowerCase()
+        : null,
   };
 }

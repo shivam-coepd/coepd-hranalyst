@@ -45,8 +45,8 @@ export async function getStudentJobFeed({
 
         companies (
           id,
-          company_name,
-          logo_url
+          name,
+          logo
         ),
 
         job_checklists (

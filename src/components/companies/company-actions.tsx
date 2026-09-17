@@ -1,15 +1,94 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useTransition } from "react";
+import Link from "next/link";
+import { toast } from "sonner";
+import {
+  verifyCompanyAction,
+  rejectCompanyAction,
+  toggleCompanyActiveAction,
+} from "@/app/admin/companies/[id]/actions";
 
-export default function CompanyActions({ companyId, status, active }: { companyId: string; status: string; active: boolean }) {
-  const router = useRouter(); const [busy,setBusy]=useState(false); const [message,setMessage]=useState("");
-  async function post(url:string, body?:unknown){ setBusy(true); setMessage(""); const r=await fetch(url,{method:"POST",headers:{"content-type":"application/json"},body:body?JSON.stringify(body):undefined}); const j=await r.json().catch(()=>({})); setBusy(false); if(!r.ok){setMessage(j.error??"Request failed");return;} router.refresh(); }
-  return <div className="space-y-3">
+export default function CompanyActions({
+  companyId,
+  status,
+  active,
+}: {
+  companyId: string;
+  status: string;
+  active: boolean;
+}) {
+  const [isPending, startTransition] = useTransition();
+
+  function handleVerify() {
+    startTransition(async () => {
+      const result = await verifyCompanyAction(companyId);
+      if (result.success) {
+        toast.success("Company verified successfully");
+      } else {
+        toast.error(result.message);
+      }
+    });
+  }
+
+  function handleReject() {
+    const reason = window.prompt("Rejection reason:");
+    if (!reason) return;
+    
+    startTransition(async () => {
+      const result = await rejectCompanyAction(companyId, reason);
+      if (result.success) {
+        toast.success("Company rejected");
+      } else {
+        toast.error(result.message);
+      }
+    });
+  }
+
+  function handleToggleActive() {
+    startTransition(async () => {
+      const result = await toggleCompanyActiveAction(companyId, !active);
+      if (result.success) {
+        toast.success(`Company ${!active ? "activated" : "deactivated"} successfully`);
+      } else {
+        toast.error(result.message);
+      }
+    });
+  }
+
+  return (
     <div className="flex flex-wrap gap-2">
-      {status !== "verified" && <button disabled={busy} onClick={()=>post(`/api/companies/${companyId}/verify`)} className="rounded bg-green-700 px-3 py-2 text-white">Verify</button>}
-      {status !== "rejected" && <button disabled={busy} onClick={()=>{const reason=window.prompt("Rejection reason"); if(reason) post(`/api/companies/${companyId}/reject`,{reason});}} className="rounded bg-red-700 px-3 py-2 text-white">Reject</button>}
-      <button disabled={busy} onClick={()=>post(`/api/companies/${companyId}/active`,{active:!active})} className="rounded border px-3 py-2">{active?"Deactivate":"Activate"}</button>
-    </div>{message&&<p className="text-sm text-red-700">{message}</p>}
-  </div>;
+      <Link
+        href={`/admin/companies/${companyId}/edit`}
+        className="rounded border border-slate-300 bg-white px-3 py-2 text-sm font-medium hover:bg-slate-50"
+      >
+        Edit company
+      </Link>
+      
+      {status !== "verified" && (
+        <button
+          disabled={isPending}
+          onClick={handleVerify}
+          className="rounded bg-green-700 px-3 py-2 text-sm font-medium text-white disabled:opacity-50"
+        >
+          Verify
+        </button>
+      )}
+      {status !== "rejected" && (
+        <button
+          disabled={isPending}
+          onClick={handleReject}
+          className="rounded bg-red-700 px-3 py-2 text-sm font-medium text-white disabled:opacity-50"
+        >
+          Reject
+        </button>
+      )}
+      <button
+        disabled={isPending}
+        onClick={handleToggleActive}
+        className="rounded border px-3 py-2 text-sm font-medium disabled:opacity-50"
+      >
+        {active ? "Deactivate" : "Activate"}
+      </button>
+    </div>
+  );
 }

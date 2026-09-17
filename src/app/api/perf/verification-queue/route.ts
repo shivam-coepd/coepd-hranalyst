@@ -1,47 +1,24 @@
-import {
-  NextResponse,
-} from "next/server";
+import { NextResponse } from "next/server";
 
-import {
-  authorizePerformanceRequest,
-} from "@/lib/performance/authorize";
+import { authorizePerformanceRequest } from "@/lib/performance/authorize";
 
-import {
-  getPerformanceVerificationQueue,
-} from "@/services/performance/verification-queue.service";
+import { getPerformanceVerificationQueue } from "@/services/performance/verification-queue.service";
 
-export async function GET(
-  request:
-    Request
-) {
+export async function GET(request: Request) {
+  authorizePerformanceRequest(request);
 
-  authorizePerformanceRequest(
-    request
-  );
+  const started = performance.now();
 
-  const started =
-    performance.now();
+  const items = await getPerformanceVerificationQueue();
 
-  const items =
-    await getPerformanceVerificationQueue();
-
-  const elapsedMs =
-    performance.now()
-    -
-    started;
+  const elapsedMs = performance.now() - started;
 
   return NextResponse.json({
-    success:
-      true,
+    success: true,
 
-    elapsedMs:
-      Number(
-        elapsedMs
-          .toFixed(2)
-      ),
+    elapsedMs: Number(elapsedMs.toFixed(2)),
 
-    count:
-      items.length,
+    count: items.length,
 
     items,
   });

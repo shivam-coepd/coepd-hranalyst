@@ -1,20 +1,12 @@
 import "server-only";
 
-import {
-  supabaseAdmin,
-} from "@/lib/supabase/admin";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
-
-export async function
-getUatRuns() {
-
-  const {
-    data,
-    error,
-  } =
-    await supabaseAdmin
-      .from("uat_runs")
-      .select(`
+export async function getUatRuns() {
+  const { data, error } = await supabaseAdmin
+    .from("uat_runs")
+    .select(
+      `
         id,
         run_code,
         environment,
@@ -25,40 +17,24 @@ getUatRuns() {
         total_tests,
         passed_tests,
         failed_tests
-      `)
-      .order(
-        "started_at",
-        {
-          ascending:
-            false,
-        }
-      );
-
+      `,
+    )
+    .order("started_at", {
+      ascending: false,
+    });
 
   if (error) {
-    throw new Error(
-      error.message
-    );
+    throw new Error(error.message);
   }
-
 
   return data ?? [];
 }
 
-
-export async function
-getUatRun(
-  id:
-    string
-) {
-
-  const {
-    data,
-    error,
-  } =
-    await supabaseAdmin
-      .from("uat_runs")
-      .select(`
+export async function getUatRun(id: string) {
+  const { data, error } = await supabaseAdmin
+    .from("uat_runs")
+    .select(
+      `
         id,
         run_code,
         environment,
@@ -83,20 +59,14 @@ getUatRun(
           evidence,
           executed_at
         )
-      `)
-      .eq(
-        "id",
-        id
-      )
-      .single();
-
+      `,
+    )
+    .eq("id", id)
+    .single();
 
   if (error) {
-    throw new Error(
-      error.message
-    );
+    throw new Error(error.message);
   }
-
 
   return data;
 }

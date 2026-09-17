@@ -1,0 +1,803 @@
+{
+  "generatedAt": "2026-09-15T05:26:08.640Z",
+  "routes": [
+    {
+      "route": "/",
+      "kind": "page",
+      "audience": "public-or-account-state",
+      "source": "page.tsx"
+    },
+    {
+      "route": "/account-inactive",
+      "kind": "page",
+      "audience": "public-or-account-state",
+      "source": "(auth)/account-inactive/page.tsx"
+    },
+    {
+      "route": "/account-rejected",
+      "kind": "page",
+      "audience": "public-or-account-state",
+      "source": "(auth)/account-rejected/page.tsx"
+    },
+    {
+      "route": "/account-suspended",
+      "kind": "page",
+      "audience": "public-or-account-state",
+      "source": "(auth)/account-suspended/page.tsx"
+    },
+    {
+      "route": "/admin",
+      "kind": "page",
+      "audience": "admin",
+      "source": "admin/page.tsx"
+    },
+    {
+      "route": "/admin/analytics",
+      "kind": "page",
+      "audience": "admin",
+      "source": "admin/analytics/page.tsx"
+    },
+    {
+      "route": "/admin/companies",
+      "kind": "page",
+      "audience": "admin",
+      "source": "admin/companies/page.tsx"
+    },
+    {
+      "route": "/admin/companies/[id]",
+      "kind": "page",
+      "audience": "admin",
+      "source": "admin/companies/[id]/page.tsx"
+    },
+    {
+      "route": "/admin/companies/new",
+      "kind": "page",
+      "audience": "admin",
+      "source": "admin/companies/new/page.tsx"
+    },
+    {
+      "route": "/admin/jobs",
+      "kind": "page",
+      "audience": "admin",
+      "source": "admin/jobs/page.tsx"
+    },
+    {
+      "route": "/admin/jobs/[id]",
+      "kind": "page",
+      "audience": "admin",
+      "source": "admin/jobs/[id]/page.tsx"
+    },
+    {
+      "route": "/admin/jobs/new",
+      "kind": "page",
+      "audience": "admin",
+      "source": "admin/jobs/new/page.tsx"
+    },
+    {
+      "route": "/admin/operations",
+      "kind": "page",
+      "audience": "admin",
+      "source": "admin/operations/page.tsx"
+    },
+    {
+      "route": "/admin/security",
+      "kind": "page",
+      "audience": "admin",
+      "source": "admin/security/page.tsx"
+    },
+    {
+      "route": "/admin/uat",
+      "kind": "page",
+      "audience": "admin",
+      "source": "admin/uat/page.tsx"
+    },
+    {
+      "route": "/admin/users",
+      "kind": "page",
+      "audience": "admin",
+      "source": "admin/users/page.tsx"
+    },
+    {
+      "route": "/admin/users/[id]",
+      "kind": "page",
+      "audience": "admin",
+      "source": "admin/users/[id]/page.tsx"
+    },
+    {
+      "route": "/admin/users/create",
+      "kind": "page",
+      "audience": "admin",
+      "source": "admin/users/create/page.tsx"
+    },
+    {
+      "route": "/admin/users/pending",
+      "kind": "page",
+      "audience": "admin",
+      "source": "admin/users/pending/page.tsx"
+    },
+    {
+      "route": "/api/admin/uat",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/admin/uat/route.ts"
+    },
+    {
+      "route": "/api/admin/uat/[runId]/tests/[testCode]",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/admin/uat/[runId]/tests/[testCode]/route.ts"
+    },
+    {
+      "route": "/api/applications",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/applications/route.ts"
+    },
+    {
+      "route": "/api/applications/[id]/score",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/applications/[id]/score/route.ts"
+    },
+    {
+      "route": "/api/applications/[id]/verification/claim",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/applications/[id]/verification/claim/route.ts"
+    },
+    {
+      "route": "/api/applications/[id]/verification/finalize",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/applications/[id]/verification/finalize/route.ts"
+    },
+    {
+      "route": "/api/applications/[id]/verification/release",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/applications/[id]/verification/release/route.ts"
+    },
+    {
+      "route": "/api/checklists/[id]",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/checklists/[id]/route.ts"
+    },
+    {
+      "route": "/api/checklists/[id]/approve",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/checklists/[id]/approve/route.ts"
+    },
+    {
+      "route": "/api/client/candidates/[id]/cv",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/client/candidates/[id]/cv/route.ts"
+    },
+    {
+      "route": "/api/client/candidates/[id]/decision",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/client/candidates/[id]/decision/route.ts"
+    },
+    {
+      "route": "/api/client/interviews",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/client/interviews/route.ts"
+    },
+    {
+      "route": "/api/client/interviews/[id]",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/client/interviews/[id]/route.ts"
+    },
+    {
+      "route": "/api/client/interviews/[id]/cancel",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/client/interviews/[id]/cancel/route.ts"
+    },
+    {
+      "route": "/api/client/interviews/[id]/complete",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/client/interviews/[id]/complete/route.ts"
+    },
+    {
+      "route": "/api/client/interviews/[id]/reschedule",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/client/interviews/[id]/reschedule/route.ts"
+    },
+    {
+      "route": "/api/companies",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/companies/route.ts"
+    },
+    {
+      "route": "/api/companies/[id]/active",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/companies/[id]/active/route.ts"
+    },
+    {
+      "route": "/api/companies/[id]/reject",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/companies/[id]/reject/route.ts"
+    },
+    {
+      "route": "/api/companies/[id]/verify",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/companies/[id]/verify/route.ts"
+    },
+    {
+      "route": "/api/cron/notifications",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/cron/notifications/route.ts"
+    },
+    {
+      "route": "/api/cron/operations",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/cron/operations/route.ts"
+    },
+    {
+      "route": "/api/feedbacks",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/feedbacks/route.ts"
+    },
+    {
+      "route": "/api/feedbacks/[id]/revise",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/feedbacks/[id]/revise/route.ts"
+    },
+    {
+      "route": "/api/health",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/health/route.ts"
+    },
+    {
+      "route": "/api/jobs",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/jobs/route.ts"
+    },
+    {
+      "route": "/api/jobs/[id]",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/jobs/[id]/route.ts"
+    },
+    {
+      "route": "/api/jobs/[id]/checklist/generate",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/jobs/[id]/checklist/generate/route.ts"
+    },
+    {
+      "route": "/api/jobs/[id]/publish",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/jobs/[id]/publish/route.ts"
+    },
+    {
+      "route": "/api/jobs/[id]/submit",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/jobs/[id]/submit/route.ts"
+    },
+    {
+      "route": "/api/mocks",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/mocks/route.ts"
+    },
+    {
+      "route": "/api/mocks/[id]/cancel",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/mocks/[id]/cancel/route.ts"
+    },
+    {
+      "route": "/api/mocks/[id]/scorecard",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/mocks/[id]/scorecard/route.ts"
+    },
+    {
+      "route": "/api/mocks/[id]/start",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/mocks/[id]/start/route.ts"
+    },
+    {
+      "route": "/api/mocks/book",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/mocks/book/route.ts"
+    },
+    {
+      "route": "/api/mocks/slots",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/mocks/slots/route.ts"
+    },
+    {
+      "route": "/api/notifications",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/notifications/route.ts"
+    },
+    {
+      "route": "/api/notifications/[id]/read",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/notifications/[id]/read/route.ts"
+    },
+    {
+      "route": "/api/notifications/read-all",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/notifications/read-all/route.ts"
+    },
+    {
+      "route": "/api/offers",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/offers/route.ts"
+    },
+    {
+      "route": "/api/offers/[id]/file",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/offers/[id]/file/route.ts"
+    },
+    {
+      "route": "/api/offers/[id]/withdraw",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/offers/[id]/withdraw/route.ts"
+    },
+    {
+      "route": "/api/perf/application/[id]",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/perf/application/[id]/route.ts"
+    },
+    {
+      "route": "/api/perf/notification-worker",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/perf/notification-worker/route.ts"
+    },
+    {
+      "route": "/api/perf/student-feed",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/perf/student-feed/route.ts"
+    },
+    {
+      "route": "/api/perf/verification-queue",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/perf/verification-queue/route.ts"
+    },
+    {
+      "route": "/api/placements/[id]/close",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/placements/[id]/close/route.ts"
+    },
+    {
+      "route": "/api/placements/[id]/joined",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/placements/[id]/joined/route.ts"
+    },
+    {
+      "route": "/api/placements/[id]/transition",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/placements/[id]/transition/route.ts"
+    },
+    {
+      "route": "/api/placements/confirm",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/placements/confirm/route.ts"
+    },
+    {
+      "route": "/api/readiness",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/readiness/route.ts"
+    },
+    {
+      "route": "/api/reports/[type]",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/reports/[type]/route.ts"
+    },
+    {
+      "route": "/api/student/cvs/[id]",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/student/cvs/[id]/route.ts"
+    },
+    {
+      "route": "/api/student/cvs/[id]/download",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/student/cvs/[id]/download/route.ts"
+    },
+    {
+      "route": "/api/student/cvs/[id]/primary",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/student/cvs/[id]/primary/route.ts"
+    },
+    {
+      "route": "/api/student/cvs/complete",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/student/cvs/complete/route.ts"
+    },
+    {
+      "route": "/api/student/cvs/upload-url",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/student/cvs/upload-url/route.ts"
+    },
+    {
+      "route": "/api/student/offers/[id]/decision",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/student/offers/[id]/decision/route.ts"
+    },
+    {
+      "route": "/api/student/profile",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/student/profile/route.ts"
+    },
+    {
+      "route": "/api/submissions",
+      "kind": "api",
+      "audience": "server-authorized",
+      "source": "api/submissions/route.ts"
+    },
+    {
+      "route": "/auth/callback",
+      "kind": "api",
+      "audience": "public-or-account-state",
+      "source": "auth/callback/route.ts"
+    },
+    {
+      "route": "/auth/confirm",
+      "kind": "api",
+      "audience": "public-or-account-state",
+      "source": "auth/confirm/route.ts"
+    },
+    {
+      "route": "/client",
+      "kind": "page",
+      "audience": "client",
+      "source": "client/page.tsx"
+    },
+    {
+      "route": "/client/analytics",
+      "kind": "page",
+      "audience": "client",
+      "source": "client/analytics/page.tsx"
+    },
+    {
+      "route": "/client/candidates/[id]",
+      "kind": "page",
+      "audience": "client",
+      "source": "client/candidates/[id]/page.tsx"
+    },
+    {
+      "route": "/client/company",
+      "kind": "page",
+      "audience": "client",
+      "source": "client/company/page.tsx"
+    },
+    {
+      "route": "/client/interviews",
+      "kind": "page",
+      "audience": "client",
+      "source": "client/interviews/page.tsx"
+    },
+    {
+      "route": "/client/interviews/[id]",
+      "kind": "page",
+      "audience": "client",
+      "source": "client/interviews/[id]/page.tsx"
+    },
+    {
+      "route": "/client/jobs",
+      "kind": "page",
+      "audience": "client",
+      "source": "client/jobs/page.tsx"
+    },
+    {
+      "route": "/client/jobs/[id]",
+      "kind": "page",
+      "audience": "client",
+      "source": "client/jobs/[id]/page.tsx"
+    },
+    {
+      "route": "/client/jobs/new",
+      "kind": "page",
+      "audience": "client",
+      "source": "client/jobs/new/page.tsx"
+    },
+    {
+      "route": "/client/placements",
+      "kind": "page",
+      "audience": "client",
+      "source": "client/placements/page.tsx"
+    },
+    {
+      "route": "/client/submissions",
+      "kind": "page",
+      "audience": "client",
+      "source": "client/submissions/page.tsx"
+    },
+    {
+      "route": "/client/submissions/[id]",
+      "kind": "page",
+      "audience": "client",
+      "source": "client/submissions/[id]/page.tsx"
+    },
+    {
+      "route": "/forgot-password",
+      "kind": "page",
+      "audience": "public-or-account-state",
+      "source": "(auth)/forgot-password/page.tsx"
+    },
+    {
+      "route": "/login",
+      "kind": "page",
+      "audience": "public-or-account-state",
+      "source": "(auth)/login/page.tsx"
+    },
+    {
+      "route": "/maintenance",
+      "kind": "page",
+      "audience": "public-or-account-state",
+      "source": "maintenance/page.tsx"
+    },
+    {
+      "route": "/notifications",
+      "kind": "page",
+      "audience": "public-or-account-state",
+      "source": "notifications/page.tsx"
+    },
+    {
+      "route": "/pending-approval",
+      "kind": "page",
+      "audience": "public-or-account-state",
+      "source": "(auth)/pending-approval/page.tsx"
+    },
+    {
+      "route": "/placement-hr",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/page.tsx"
+    },
+    {
+      "route": "/placement-hr/analytics",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/analytics/page.tsx"
+    },
+    {
+      "route": "/placement-hr/applications",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/applications/page.tsx"
+    },
+    {
+      "route": "/placement-hr/applications/[id]",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/applications/[id]/page.tsx"
+    },
+    {
+      "route": "/placement-hr/interviews",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/interviews/page.tsx"
+    },
+    {
+      "route": "/placement-hr/interviews/[id]",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/interviews/[id]/page.tsx"
+    },
+    {
+      "route": "/placement-hr/jobs",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/jobs/page.tsx"
+    },
+    {
+      "route": "/placement-hr/jobs/[id]",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/jobs/[id]/page.tsx"
+    },
+    {
+      "route": "/placement-hr/jobs/new",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/jobs/new/page.tsx"
+    },
+    {
+      "route": "/placement-hr/mocks",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/mocks/page.tsx"
+    },
+    {
+      "route": "/placement-hr/mocks/[id]",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/mocks/[id]/page.tsx"
+    },
+    {
+      "route": "/placement-hr/offers",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/offers/page.tsx"
+    },
+    {
+      "route": "/placement-hr/offers/[id]",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/offers/[id]/page.tsx"
+    },
+    {
+      "route": "/placement-hr/offers/new",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/offers/new/page.tsx"
+    },
+    {
+      "route": "/placement-hr/placements",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/placements/page.tsx"
+    },
+    {
+      "route": "/placement-hr/placements/[id]",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/placements/[id]/page.tsx"
+    },
+    {
+      "route": "/placement-hr/reports",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/reports/page.tsx"
+    },
+    {
+      "route": "/placement-hr/submissions",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/submissions/page.tsx"
+    },
+    {
+      "route": "/placement-hr/submissions/[id]",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/submissions/[id]/page.tsx"
+    },
+    {
+      "route": "/placement-hr/submissions/new",
+      "kind": "page",
+      "audience": "placement-hr",
+      "source": "placement-hr/submissions/new/page.tsx"
+    },
+    {
+      "route": "/reset-password",
+      "kind": "page",
+      "audience": "public-or-account-state",
+      "source": "(auth)/reset-password/page.tsx"
+    },
+    {
+      "route": "/student",
+      "kind": "page",
+      "audience": "student",
+      "source": "student/page.tsx"
+    },
+    {
+      "route": "/student/analytics",
+      "kind": "page",
+      "audience": "student",
+      "source": "student/analytics/page.tsx"
+    },
+    {
+      "route": "/student/applications",
+      "kind": "page",
+      "audience": "student",
+      "source": "student/applications/page.tsx"
+    },
+    {
+      "route": "/student/applications/[id]",
+      "kind": "page",
+      "audience": "student",
+      "source": "student/applications/[id]/page.tsx"
+    },
+    {
+      "route": "/student/cv",
+      "kind": "page",
+      "audience": "student",
+      "source": "student/cv/page.tsx"
+    },
+    {
+      "route": "/student/interviews",
+      "kind": "page",
+      "audience": "student",
+      "source": "student/interviews/page.tsx"
+    },
+    {
+      "route": "/student/jobs",
+      "kind": "page",
+      "audience": "student",
+      "source": "student/jobs/page.tsx"
+    },
+    {
+      "route": "/student/jobs/[id]",
+      "kind": "page",
+      "audience": "student",
+      "source": "student/jobs/[id]/page.tsx"
+    },
+    {
+      "route": "/student/mocks",
+      "kind": "page",
+      "audience": "student",
+      "source": "student/mocks/page.tsx"
+    },
+    {
+      "route": "/student/offers",
+      "kind": "page",
+      "audience": "student",
+      "source": "student/offers/page.tsx"
+    },
+    {
+      "route": "/student/offers/[id]",
+      "kind": "page",
+      "audience": "student",
+      "source": "student/offers/[id]/page.tsx"
+    },
+    {
+      "route": "/student/placements",
+      "kind": "page",
+      "audience": "student",
+      "source": "student/placements/page.tsx"
+    },
+    {
+      "route": "/student/profile",
+      "kind": "page",
+      "audience": "student",
+      "source": "student/profile/page.tsx"
+    },
+    {
+      "route": "/unauthorized",
+      "kind": "page",
+      "audience": "public-or-account-state",
+      "source": "unauthorized/page.tsx"
+    }
+  ]
+}

@@ -7,13 +7,7 @@ export function calculateMockScore({
   technical: number;
   domain: number;
 }) {
+  const overall = communication * 0.3 + technical * 0.4 + domain * 0.3;
 
-  const overall =
-    communication * 0.30 +
-    technical * 0.40 +
-    domain * 0.30;
-
-  return Number(
-    overall.toFixed(2)
-  );
+  return Number(overall.toFixed(2));
 }

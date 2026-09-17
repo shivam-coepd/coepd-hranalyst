@@ -1,2 +1,28 @@
-import { requireActiveClientHr } from "@/services/client/client-profile.service"; import { supabaseAdmin } from "@/lib/supabase/admin"; import JobForm from "@/components/jobs/job-form"; import { getPlacementHrOptions } from "@/repositories/jobs.repository"; import { createJobAction } from "./actions";
-export default async function Page(){const{clientProfile}=await requireActiveClientHr();const[{data:company},hrs]=await Promise.all([supabaseAdmin.from("companies").select("id,name").eq("id",clientProfile.company_id).single(),getPlacementHrOptions()]);if(!company)throw new Error("Company not found");return <main className="mx-auto max-w-5xl p-8"><h1 className="text-3xl font-bold">Create job</h1><JobForm action={createJobAction} companies={[company]} placementHrs={hrs} lockedCompanyId={company.id}/></main>}
+import { requireActiveClientHr } from "@/services/client/client-profile.service";
+import { supabaseAdmin } from "@/lib/supabase/admin";
+import JobForm from "@/components/jobs/job-form";
+import { getPlacementHrOptions } from "@/repositories/jobs.repository";
+import { createJobAction } from "./actions";
+export default async function Page() {
+  const { clientProfile } = await requireActiveClientHr();
+  const [{ data: company }, hrs] = await Promise.all([
+    supabaseAdmin
+      .from("companies")
+      .select("id,name")
+      .eq("id", clientProfile.company_id)
+      .single(),
+    getPlacementHrOptions(),
+  ]);
+  if (!company) throw new Error("Company not found");
+  return (
+    <main className="mx-auto max-w-5xl p-8">
+      <h1 className="text-3xl font-bold">Create job</h1>
+      <JobForm
+        action={createJobAction}
+        companies={[company]}
+        placementHrs={hrs}
+        lockedCompanyId={company.id}
+      />
+    </main>
+  );
+}

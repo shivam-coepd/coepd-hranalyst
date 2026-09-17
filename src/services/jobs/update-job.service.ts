@@ -29,6 +29,15 @@ export async function updateJob(jobId: string, input: JobInput) {
       .single();
     if (!client?.is_active || client.company_id !== before.company_id)
       throw new Error("You cannot edit this job");
+  } else if (
+    user.roles.includes("placement_hr") &&
+    !user.roles.some((r) => r === "admin" || r === "super_admin")
+  ) {
+    if (
+      before.assigned_placement_hr &&
+      before.assigned_placement_hr !== user.id
+    )
+      throw new Error("You cannot edit a job assigned to another Placement HR");
   }
   const d = parsed.data;
   const companyId = user.roles.includes("client_hr")
@@ -61,16 +70,14 @@ export async function updateJob(jobId: string, input: JobInput) {
     .select()
     .single();
   if (error || !data) throw new Error(error?.message ?? "Unable to update job");
-  await supabaseAdmin
-    .from("audit_logs")
-    .insert({
-      actor_user_id: user.id,
-      entity_type: "job",
-      entity_id: jobId,
-      action: "JOB_UPDATED",
-      old_data: before,
-      new_data: data,
-    });
+  await supabaseAdmin.from("audit_logs").insert({
+    actor_id: user.id,
+    entity_type: "job",
+    entity_id: jobId,
+    action: "JOB_UPDATED",
+    old_values: before,
+    new_values: data,
+  });
   return data;
 }
 
@@ -106,14 +113,12 @@ export async function assignPlacementHr(
     .update({ assigned_placement_hr: placementHrId })
     .eq("id", jobId);
   if (error) throw new Error(error.message);
-  await supabaseAdmin
-    .from("audit_logs")
-    .insert({
-      actor_user_id: user.id,
-      entity_type: "job",
-      entity_id: jobId,
-      action: "JOB_HR_ASSIGNED",
-      new_data: { assigned_placement_hr: placementHrId },
-    });
+  await supabaseAdmin.from("audit_logs").insert({
+    actor_id: user.id,
+    entity_type: "job",
+    entity_id: jobId,
+    action: "JOB_HR_ASSIGNED",
+    new_values: { assigned_placement_hr: placementHrId },
+  });
   return { success: true };
 }

@@ -12,54 +12,27 @@ import {
 
 type Props = {
   data: {
-    name:
-      string;
-    value:
-      number;
+    name: string;
+    value: number;
   }[];
 };
 
-export function
-FunnelChart({
-  data,
-}: Props) {
-
+export function FunnelChart({ data }: Props) {
   return (
     <div className="h-80 w-full">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
 
-      <ResponsiveContainer
-        width="100%"
-        height="100%"
-      >
+          <XAxis dataKey="name" />
 
-        <BarChart
-          data={data}
-        >
-
-          <CartesianGrid
-            strokeDasharray="3 3"
-          />
-
-          <XAxis
-            dataKey="name"
-          />
-
-          <YAxis
-            allowDecimals={
-              false
-            }
-          />
+          <YAxis allowDecimals={false} />
 
           <Tooltip />
 
-          <Bar
-            dataKey="value"
-          />
-
+          <Bar dataKey="value" />
         </BarChart>
-
       </ResponsiveContainer>
-
     </div>
   );
 }

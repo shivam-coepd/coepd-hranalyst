@@ -1,220 +1,125 @@
 export interface PerfCaseResult {
-  name:
-    string;
+  name: string;
 
-  connections:
-    number;
+  connections: number;
 
-  duration:
-    number;
+  duration: number;
 
-  totalRequests:
-    number;
+  totalRequests: number;
 
-  requestsPerSecond:
-    number;
+  requestsPerSecond: number;
 
-  latencyAverage:
-    number;
+  latencyAverage: number;
 
-  latencyP50:
-    number;
+  latencyP50: number;
 
-  latencyP95:
-    number;
+  latencyP95: number;
 
-  latencyP99:
-    number;
+  latencyP99: number;
 
-  latencyMax:
-    number;
+  latencyMax: number;
 
-  errors:
-    number;
+  errors: number;
 
-  timeouts:
-    number;
+  timeouts: number;
 
-  non2xx:
-    number;
+  non2xx: number;
 
-  errorRatePercent:
-    number;
+  errorRatePercent: number;
 
-  passed:
-    boolean;
+  passed: boolean;
 
-  failures:
-    string[];
+  failures: string[];
 }
 
-export function
-normalizeAutocannonResult({
+interface AutocannonResult {
+  connections?: number;
+  duration?: number;
+  errors?: number;
+  timeouts?: number;
+  non2xx?: number;
+  requests?: { total?: number; average?: number };
+  latency?: {
+    average?: number;
+    p50?: number;
+    p95?: number;
+    p97_5?: number;
+    p99?: number;
+    max?: number;
+  };
+}
+
+export function normalizeAutocannonResult({
   name,
   result,
   p95LimitMs,
   p99LimitMs,
   maxErrorRatePercent,
 }: {
-  name:
-    string;
+  name: string;
 
-  result:
-    any;
+  result: AutocannonResult;
 
-  p95LimitMs:
-    number;
+  p95LimitMs: number;
 
-  p99LimitMs:
-    number;
+  p99LimitMs: number;
 
-  maxErrorRatePercent:
-    number;
+  maxErrorRatePercent: number;
 }): PerfCaseResult {
+  const totalRequests = Number(result.requests?.total ?? 0);
 
-  const totalRequests =
-    Number(
-      result.requests
-        ?.total ??
-      0
-    );
+  const errors = Number(result.errors ?? 0);
 
-  const errors =
-    Number(
-      result.errors ??
-      0
-    );
+  const timeouts = Number(result.timeouts ?? 0);
 
-  const timeouts =
-    Number(
-      result.timeouts ??
-      0
-    );
+  const non2xx = Number(result.non2xx ?? 0);
 
-  const non2xx =
-    Number(
-      result.non2xx ??
-      0
-    );
+  const badRequests = errors + timeouts + non2xx;
 
-  const badRequests =
-    errors
-    +
-    timeouts
-    +
-    non2xx;
+  const errorRatePercent = totalRequests
+    ? Number(((badRequests / totalRequests) * 100).toFixed(3))
+    : 100;
 
-  const errorRatePercent =
-    totalRequests
-      ? Number(
-          (
-            badRequests
-            /
-            totalRequests
-            *
-            100
-          )
-            .toFixed(
-              3
-            )
-        )
-      : 100;
+  const latencyP95 = Number(result.latency?.p95 ?? result.latency?.p97_5 ?? 0);
 
-  const latencyP95 =
-    Number(
-      result.latency
-        ?.p95 ??
-      result.latency
-        ?.p97_5 ??
-      0
-    );
+  const latencyP99 = Number(result.latency?.p99 ?? 0);
 
-  const latencyP99 =
-    Number(
-      result.latency
-        ?.p99 ??
-      0
-    );
+  const failures: string[] = [];
 
-  const failures:
-    string[] =
-    [];
-
-  if (
-    latencyP95 >
-    p95LimitMs
-  ) {
-    failures.push(
-      `P95 ${latencyP95}ms exceeds ${p95LimitMs}ms`
-    );
+  if (latencyP95 > p95LimitMs) {
+    failures.push(`P95 ${latencyP95}ms exceeds ${p95LimitMs}ms`);
   }
 
-  if (
-    latencyP99 >
-    p99LimitMs
-  ) {
-    failures.push(
-      `P99 ${latencyP99}ms exceeds ${p99LimitMs}ms`
-    );
+  if (latencyP99 > p99LimitMs) {
+    failures.push(`P99 ${latencyP99}ms exceeds ${p99LimitMs}ms`);
   }
 
-  if (
-    errorRatePercent >
-    maxErrorRatePercent
-  ) {
+  if (errorRatePercent > maxErrorRatePercent) {
     failures.push(
-      `Error rate ${errorRatePercent}% exceeds ${maxErrorRatePercent}%`
+      `Error rate ${errorRatePercent}% exceeds ${maxErrorRatePercent}%`,
     );
   }
 
   return {
     name,
 
-    connections:
-      Number(
-        result.connections ??
-        0
-      ),
+    connections: Number(result.connections ?? 0),
 
-    duration:
-      Number(
-        result.duration ??
-        0
-      ),
+    duration: Number(result.duration ?? 0),
 
     totalRequests,
 
-    requestsPerSecond:
-      Number(
-        result.requests
-          ?.average ??
-        0
-      ),
+    requestsPerSecond: Number(result.requests?.average ?? 0),
 
-    latencyAverage:
-      Number(
-        result.latency
-          ?.average ??
-        0
-      ),
+    latencyAverage: Number(result.latency?.average ?? 0),
 
-    latencyP50:
-      Number(
-        result.latency
-          ?.p50 ??
-        0
-      ),
+    latencyP50: Number(result.latency?.p50 ?? 0),
 
     latencyP95,
 
     latencyP99,
 
-    latencyMax:
-      Number(
-        result.latency
-          ?.max ??
-        0
-      ),
+    latencyMax: Number(result.latency?.max ?? 0),
 
     errors,
 
@@ -224,9 +129,7 @@ normalizeAutocannonResult({
 
     errorRatePercent,
 
-    passed:
-      failures.length ===
-      0,
+    passed: failures.length === 0,
 
     failures,
   };

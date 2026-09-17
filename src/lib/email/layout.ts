@@ -1,27 +1,18 @@
-import {
-  escapeHtml,
-} from "./html";
+import { escapeHtml } from "./html";
 
-export function
-emailLayout({
+export function emailLayout({
   title,
   body,
   actionLabel,
   actionUrl,
 }: {
-  title:
-    string;
-  body:
-    string;
-  actionLabel?:
-    string;
-  actionUrl?:
-    string;
+  title: string;
+  body: string;
+  actionLabel?: string;
+  actionUrl?: string;
 }) {
-
   const button =
-    actionLabel &&
-    actionUrl
+    actionLabel && actionUrl
       ? `
         <p style="margin:28px 0">
           <a

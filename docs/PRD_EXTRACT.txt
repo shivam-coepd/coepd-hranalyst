@@ -1,0 +1,303 @@
+HRAnalyst Placement Wing - Technical PRD + SOP v2.1
+
+Version: 2.1 | Date: Sep 7, 2026 | Roles: Business Analyst / Product Owner / Product Manager (Domestic / International)
+
+Document Type: Technical PRD + SOP for Development Team | Company: HRAnalyst
+
+1. Product Overview
+
+Problem: Manual placement process via portals, WhatsApp, sheets leads to delays, no tracking, no verification of existing students, no client visibility.Solution: 3-Panel Platform - Admin Panel (Super Admin creates/approves users), HR Panel (Placement HR internal + Client HR external), Student Panel (Job Seekers). Goals: JD to Submission <24hr, 90% verification accuracy, 100% interview tracking.
+
+2. 11-Step Exact Business Flow
+
+Step
+
+Actor / Panel
+
+Action
+
+Output
+
+TAT
+
+1. Admin creates / approves users
+
+Admin / Admin Panel
+
+Create/approve HR Clients (company email) + Students (enrollment_id vs HRAnalyst DB). Status Pending->Approved/Rejected
+
+Active Users
+
+2 hrs
+
+2. HR gives JD
+
+Client HR / HR Panel
+
+Post Job: title, role_type BA/PO/PM, location_type Dom/Intl, location, exp, salary_range, jd_text, company_id
+
+Job Ticket
+
+Same day
+
+3. HR creates checklist
+
+Placement HR / HR Panel
+
+Read JD, create CV checklist using AI: must_have[], good_to_have[], tools[], domain, exp_required. Linked to job_id
+
+CV Checklist
+
+4 hrs
+
+4. Publishes to Student panels
+
+Placement HR / Student Panel
+
+Publish job, generate poster payload, broadcast flag WhatsApp/Telegram/Email
+
+Live Job
+
+1 hr
+
+5. Student applies
+
+Student / Student Panel
+
+One-click apply, upload CV pdf/docx, system calculates match% vs checklist. Only if approved student
+
+Application
+
+24-48 hr
+
+6. HR verifies
+
+Placement HR / HR Panel
+
+Verification Queue: CV vs checklist side-by-side, ATS score, must_have coverage. Verify/Reject/Request Update
+
+Verified List
+
+4-6 hrs
+
+7. HR submits to Client
+
+Placement HR / HR Panel
+
+Submit verified profiles to Client view, create submission record, trigger notification
+
+Submitted to Client
+
+24 hr
+
+8. Mock
+
+Placement HR + Student / Both
+
+Schedule mock_interviews, scorecard comm/tech/domain/overall, share notes
+
+Mock Scorecard
+
+Before interview
+
+9. HR shortlists in their panel
+
+Client HR / HR Panel
+
+View submitted cards (CV, match%, mock score) -> Shortlist/Reject with reason
+
+Shortlisted
+
+2 days
+
+10. Interview
+
+Client HR / HR Panel
+
+Schedule interview: round, datetime, link/location. Admin ensures scheduled
+
+Interview Scheduled
+
+2-3 days
+
+11. Feedback loop
+
+Client->Placement->Student / All
+
+Feedback rating/comments/decision Selected/Rejected/OnHold. If Selected -> Offer upload -> Placed
+
+Placement Closed
+
+24 hr
+
+3. RBAC Permissions Matrix
+
+Feature
+
+Admin
+
+Placement HR
+
+Client HR
+
+Student
+
+User Create/Approve
+
+CRUD
+
+R
+
+-
+
+-
+
+Post JD
+
+CRUD
+
+CRUD
+
+CR
+
+R
+
+Create Checklist
+
+CRUD
+
+CRUD
+
+R
+
+R
+
+Publish
+
+CRUD
+
+CRUD
+
+-
+
+R
+
+Apply
+
+-
+
+R
+
+-
+
+CR
+
+Verify CV
+
+CRUD
+
+CRUD
+
+-
+
+-
+
+Submit to Client
+
+CRUD
+
+CRUD
+
+R
+
+-
+
+Mock
+
+CRUD
+
+CRUD
+
+-
+
+R+Booking
+
+Shortlist
+
+R
+
+R
+
+CRUD
+
+R
+
+Interview Schedule
+
+R
+
+R
+
+CRUD
+
+R
+
+Feedback
+
+CRUD
+
+CRUD
+
+CR
+
+R
+
+4. Functional Requirements
+
+FR-01 User Management: Admin creates users {name,email,role,company_id/enrollment_id}. Approval workflow Pending->Approved/Rejected. Student validation via enrollment_id check against HRAnalyst DB. Company validation via domain.FR-02 Job Management: Client HR posts job with fields job_title, role_type, location_type, location, experience, jd_text, salary_range. Status draft, pending_checklist, published, closed.FR-03 Checklist Generator: Placement HR creates checklist linked to job_id. Fields must_have JSONB, good_to_have JSONB, tools JSONB, domain, exp_required. AI assist button to auto-generate from JD using OpenAI.FR-04 Publishing: Publish job to Student Panel, generate poster payload {title, company, role_type, top_3_skills, exp}, broadcast flags.FR-05 Application: Student job feed cards with match% badge, Apply modal with CV upload, ATS score preview. Table applications with UNIQUE(job_id, student_id).FR-06 Verification: Queue list, CV viewer split view, match% calculation, ATS score, actions Verify/Reject.FR-07 Submission: Select verified, submit to client, notification.FR-08 Mock: mock_interviews table, calendar UI, scorecard form.FR-09 Shortlisting: Client view submitted profiles cards, Shortlist/Reject buttons.FR-10 Interview: interviews table, scheduling form, calendar invite, notifications.FR-11 Feedback: feedbacks table, rating, decision, comments, offer upload, status update to Placed.
+
+5. Business Logic & Calculations
+
+Match Score = (must_matched/total_must * 70) + (good_matched/total_good * 20) + (tools_matched/total_tools * 10)ATS Score = 20% contact info + 30% skills + 20% experience + 15% formatting + 15% length (0-100)Existing Student Check: enrollment_id must exist in external HRAnalyst student DB/API else block with message "Only existing HRAnalyst students can apply"Quality Gates: No submit if match <60%, No publish without checklist, Mock mandatory before client interview, Feedback logged within 24hr
+
+6. API Endpoints
+
+POST /api/users - Admin - Create user - Body {name,email,role,company_id/enrollment_id}
+
+PUT /api/users/:id/approve - Admin - {status: approved/rejected, reason}
+
+POST /api/jobs - Client HR, Placement HR, Admin - {title, role_type, location_type, location, experience, jd_text, salary_range, company_id}
+
+POST /api/checklists - Placement HR - {job_id, must_have[], good_to_have[], tools[], domain, exp_required}
+
+POST /api/jobs/:id/publish - Placement HR, Admin - Publish to student panel
+
+POST /api/applications - Student - {job_id, cv_url}
+
+PUT /api/applications/:id/verify - Placement HR - {status, match_score, ats_score, reason}
+
+POST /api/submissions - Placement HR - {application_ids[], job_id}
+
+POST /api/mocks - Placement HR - {application_id, scheduled_at, mode}
+
+PUT /api/applications/:id/shortlist - Client HR - {decision: shortlisted/rejected_client, reason}
+
+POST /api/interviews - Client HR - {application_id, round, scheduled_at, location_or_link}
+
+POST /api/feedbacks - Client HR, Placement HR - {application_id, rating, decision, comments}
+
+7. Non-Functional Requirements
+
+Security: RBAC with Supabase Auth JWT role claims, S3 storage for CVs private, audit log for status changesPerformance: Support 1000 concurrent students, job feed <2sScalability: Supabase PostgreSQL, Storage, Realtime for notificationsData Privacy: Only approved students visible, CVs only visible to relevant roles
+
+8. Milestones
+
+Phase 1 MVP (2 weeks): Auth + RBAC + User Approval + Job Post + Student Job Feed + ApplyPhase 2 (2 weeks): Checklist Creator with AI + Verification Queue + Match% + ATS + Submit to ClientPhase 3 (2 weeks): Mock Scheduler + Client Shortlist + Interview Scheduler + FeedbackPhase 4 (1 week): Notifications, Analytics Dashboard, Poster Generator, Export Reports
+
+9. SOP Operations Day-to-Day
+
+Tools: Naukri, LinkedIn, Indeed, Cutshort, Hirist for sourcing. AI Tools ChatGPT/Claude for JD parsing.Internal: WhatsApp groups, LMS, Telegram.Quality Gates as above. TATs as per table.Escalation: If client not giving feedback in 48hr -> Admin calls client. If student not submitting CV in window -> Reminder broadcast.
+
+10. Email Templates Triggers
+
+On User Approval -> Onboarding EmailOn Job Post -> To Placement HROn Publish -> To all Students: New Job AlertOn Apply -> To Placement HROn Verify -> To Student: Verified/RejectedOn Submit to Client -> To Client HROn Shortlist -> To Student + AdminOn Interview Schedule -> To Student + Admin (Calendar invite)On Feedback -> To Student + Admin

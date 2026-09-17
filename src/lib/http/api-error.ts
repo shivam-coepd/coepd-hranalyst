@@ -1,69 +1,42 @@
-import {
-  NextResponse,
-} from "next/server";
+import { NextResponse } from "next/server";
 
-import {
-  logger,
-} from "@/lib/logging/logger";
+import { logger } from "@/lib/logging/logger";
 
-export function
-apiError(
-  error:
-    unknown,
+export function apiError(
+  error: unknown,
   {
     requestId,
-    fallback =
-      "Request failed",
+    fallback = "Request failed",
   }: {
-    requestId?:
-      string;
-    fallback?:
-      string;
-  } = {}
+    requestId?: string;
+    fallback?: string;
+  } = {},
 ) {
-
   const status =
     (
-      error as
-      {
-        status?:
-          number;
+      error as {
+        status?: number;
       }
-    )?.status
-    ??
-    400;
+    )?.status ?? 400;
 
-  const message =
-    error instanceof Error
-      ? error.message
-      : fallback;
+  const message = error instanceof Error ? error.message : fallback;
 
-  logger.error(
-    "API request failed",
-    {
-      requestId,
-      status,
-      error:
-        message,
-    }
-  );
+  logger.error("API request failed", {
+    requestId,
+    status,
+    error: message,
+  });
 
   return NextResponse.json(
     {
-      success:
-        false,
+      success: false,
 
-      error:
-        status >= 500
-          ? fallback
-          : message,
+      error: status >= 500 ? fallback : message,
 
-      requestId:
-        requestId ??
-        null,
+      requestId: requestId ?? null,
     },
     {
       status,
-    }
+    },
   );
 }

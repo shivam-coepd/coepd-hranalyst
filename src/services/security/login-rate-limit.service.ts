@@ -1,66 +1,39 @@
 import "server-only";
 
-import {
-  consumeRateLimit,
-} from "./rate-limit.service";
+import { consumeRateLimit } from "./rate-limit.service";
 
-export async function
-enforceLoginRateLimit({
+export async function enforceLoginRateLimit({
   ip,
   email,
 }: {
-  ip:
-    string;
-  email:
-    string;
+  ip: string;
+  email: string;
 }) {
+  const normalizedEmail = email.trim().toLowerCase();
 
-  const normalizedEmail =
-    email
-      .trim()
-      .toLowerCase();
+  const [ipLimit, emailLimit] = await Promise.all([
+    consumeRateLimit({
+      namespace: "login-ip",
 
-  const [
-    ipLimit,
-    emailLimit,
-  ] =
-    await Promise.all([
+      identifier: ip,
 
-      consumeRateLimit({
-        namespace:
-          "login-ip",
+      limit: 20,
 
-        identifier:
-          ip,
+      windowSeconds: 900,
+    }),
 
-        limit:
-          20,
+    consumeRateLimit({
+      namespace: "login-email",
 
-        windowSeconds:
-          900,
-      }),
+      identifier: normalizedEmail,
 
-      consumeRateLimit({
-        namespace:
-          "login-email",
+      limit: 10,
 
-        identifier:
-          normalizedEmail,
+      windowSeconds: 900,
+    }),
+  ]);
 
-        limit:
-          10,
-
-        windowSeconds:
-          900,
-      }),
-    ]);
-
-  if (
-    !ipLimit.allowed ||
-    !emailLimit.allowed
-  ) {
-    throw new Error(
-      "Too many login attempts. Please try again later."
-    );
+  if (!ipLimit.allowed || !emailLimit.allowed) {
+    throw new Error("Too many login attempts. Please try again later.");
   }
 }

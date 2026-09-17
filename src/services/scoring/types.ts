@@ -1,33 +1,17 @@
 export interface RequirementMatch {
+  requirementType: "must_have" | "good_to_have" | "tool";
 
-  requirementType:
-    | "must_have"
-    | "good_to_have"
-    | "tool";
+  requirementName: string;
 
-  requirementName:
-    string;
+  normalizedRequirement: string;
 
-  normalizedRequirement:
-    string;
+  matched: boolean;
 
-  matched:
-    boolean;
+  matchedCvTerm: string | null;
 
-  matchedCvTerm:
-    string | null;
+  method: "exact" | "alias" | "normalized" | "semantic" | "manual" | "none";
 
-  method:
-    | "exact"
-    | "alias"
-    | "normalized"
-    | "semantic"
-    | "manual"
-    | "none";
+  confidence: number;
 
-  confidence:
-    number;
-
-  evidence:
-    string | null;
+  evidence: string | null;
 }

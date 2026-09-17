@@ -1,27 +1,16 @@
-import {
-  requireRole,
-} from "@/lib/auth/guards";
+import { requireRole } from "@/lib/auth/guards";
+import { supabaseAdmin } from "@/lib/supabase/admin";
+import { PageHeader } from "@/components/ui/page-header";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
-import {
-  supabaseAdmin,
-} from "@/lib/supabase/admin";
+export default async function PlacementHrInterviewsPage() {
+  const user = await requireRole(["placement_hr", "admin", "super_admin"]);
 
-export default async function
-PlacementHrInterviewsPage() {
-
-  await requireRole([
-    "placement_hr",
-    "admin",
-    "super_admin",
-  ]);
-
-  const {
-    data,
-    error,
-  } =
-    await supabaseAdmin
-      .from("interviews")
-      .select(`
+  let query = supabaseAdmin
+    .from("interviews")
+    .select(
+      `
         id,
         interview_code,
         round_name,
@@ -29,8 +18,9 @@ PlacementHrInterviewsPage() {
         mode,
         status,
 
-        jobs (
-          job_title
+        jobs!inner (
+          job_title,
+          assigned_placement_hr
         ),
 
         companies (
@@ -40,170 +30,92 @@ PlacementHrInterviewsPage() {
         submission_candidates (
           candidate_snapshot
         )
-      `)
-      .is(
-        "deleted_at",
-        null
-      )
-      .order(
-        "scheduled_at",
-        {
-          ascending:
-            true,
-        }
-      );
+      `,
+    )
+    .is("deleted_at", null);
 
-  if (error) {
-    throw new Error(
-      error.message
-    );
+  if (!user.roles.some((role) => role === "admin" || role === "super_admin")) {
+    query = query.eq("jobs.assigned_placement_hr", user.id);
   }
 
-  const interviews =
-    data ?? [];
+  const { data, error } = await query.order("scheduled_at", { ascending: true });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  const interviews = data ?? [];
 
   return (
-    <div className="mx-auto max-w-7xl space-y-6 p-6">
+    <div className="p-8">
+      <PageHeader 
+        title="Client Interviews" 
+        description="Monitor all scheduled candidate interviews."
+      />
 
-      <div>
-        <h1 className="text-2xl font-bold">
-          Client Interviews
-        </h1>
+      <Card>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-slate-50/50 dark:bg-slate-900/50">
+              <tr>
+                <th className="px-5 py-3 font-medium text-muted-foreground">Candidate</th>
+                <th className="px-5 py-3 font-medium text-muted-foreground">Company & Job</th>
+                <th className="px-5 py-3 font-medium text-muted-foreground">Round & Mode</th>
+                <th className="px-5 py-3 font-medium text-muted-foreground">Schedule</th>
+                <th className="px-5 py-3 font-medium text-muted-foreground">Status</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y">
+              {interviews.map((interview) => {
+                const candidate = Array.isArray(interview.submission_candidates)
+                  ? interview.submission_candidates[0]
+                  : interview.submission_candidates;
 
-        <p className="mt-1 text-sm text-gray-500">
-          Monitor all scheduled candidate interviews.
-        </p>
-      </div>
+                const snapshot = candidate?.candidate_snapshot as Record<string, unknown> | undefined;
+                const company = Array.isArray(interview.companies) ? interview.companies[0] : interview.companies;
+                const job = Array.isArray(interview.jobs) ? interview.jobs[0] : interview.jobs;
 
-      <div className="overflow-hidden rounded-xl border bg-white">
-
-        <table className="w-full text-left text-sm">
-
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-4 py-3">
-                Candidate
-              </th>
-              <th className="px-4 py-3">
-                Company
-              </th>
-              <th className="px-4 py-3">
-                Job
-              </th>
-              <th className="px-4 py-3">
-                Round
-              </th>
-              <th className="px-4 py-3">
-                Schedule
-              </th>
-              <th className="px-4 py-3">
-                Status
-              </th>
-            </tr>
-          </thead>
-
-          <tbody>
-
-            {interviews.map(
-              interview => {
-
-                const candidate =
-                  Array.isArray(
-                    interview
-                      .submission_candidates
-                  )
-                    ? interview
-                        .submission_candidates[0]
-                    : interview
-                        .submission_candidates;
-
-                const snapshot =
-                  candidate
-                    ?.candidate_snapshot as
-                    Record<
-                      string,
-                      unknown
-                    >
-                    | undefined;
-
-                const company =
-                  Array.isArray(
-                    interview
-                      .companies
-                  )
-                    ? interview
-                        .companies[0]
-                    : interview
-                        .companies;
-
-                const job =
-                  Array.isArray(
-                    interview.jobs
-                  )
-                    ? interview
-                        .jobs[0]
-                    : interview.jobs;
+                let statusVariant: "default" | "success" | "warning" | "destructive" | "pending" | "secondary" = "secondary";
+                if (interview.status === "scheduled") statusVariant = "pending";
+                if (interview.status === "completed") statusVariant = "success";
+                if (interview.status === "cancelled") statusVariant = "destructive";
 
                 return (
-                  <tr
-                    key={
-                      interview.id
-                    }
-                    className="border-t"
-                  >
-
-                    <td className="px-4 py-3 font-medium">
-                      {String(
-                        snapshot
-                          ?.candidate_name ??
-                        "Candidate"
-                      )}
+                  <tr key={interview.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50">
+                    <td className="px-5 py-4 font-medium text-foreground">
+                      {String(snapshot?.candidate_name ?? "Candidate")}
                     </td>
-
-                    <td className="px-4 py-3">
-                      {
-                        company?.name
-                      }
+                    <td className="px-5 py-4">
+                      <div className="font-medium">{company?.name}</div>
+                      <div className="text-xs text-muted-foreground line-clamp-1 max-w-[200px]">{job?.job_title}</div>
                     </td>
-
-                    <td className="px-4 py-3">
-                      {
-                        job
-                          ?.job_title
-                      }
+                    <td className="px-5 py-4">
+                      <div className="font-medium">{interview.round_name}</div>
+                      <div className="text-xs text-muted-foreground uppercase">{interview.mode}</div>
                     </td>
-
-                    <td className="px-4 py-3">
-                      {
-                        interview
-                          .round_name
-                      }
+                    <td className="px-5 py-4 text-muted-foreground">
+                      {new Date(interview.scheduled_at).toLocaleString("en-US", {
+                        dateStyle: "medium",
+                        timeStyle: "short",
+                      })}
                     </td>
-
-                    <td className="px-4 py-3">
-                      {new Date(
-                        interview
-                          .scheduled_at
-                      ).toLocaleString()}
+                    <td className="px-5 py-4">
+                      <Badge variant={statusVariant} className="capitalize">{interview.status}</Badge>
                     </td>
-
-                    <td className="px-4 py-3 capitalize">
-                      {
-                        interview.status
-                      }
-                    </td>
-
                   </tr>
                 );
-              }
-            )}
-
-          </tbody>
-
-        </table>
-
-      </div>
-
+              })}
+              {interviews.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="px-5 py-12 text-center text-muted-foreground">
+                    No interviews scheduled.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </Card>
     </div>
   );
 }

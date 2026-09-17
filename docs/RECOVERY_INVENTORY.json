@@ -1,0 +1,3790 @@
+[
+  {
+    "directory": "S:\\COEPD HRAnalyst\\hranalyst-placement",
+    "files": [
+      {
+        "path": ".dockerignore",
+        "bytes": 130,
+        "sha256": "32562d23c95a7f1680f919e77cfd205f70ea9f06753c406dadf4a589846e8b6c"
+      },
+      {
+        "path": ".gitignore",
+        "bytes": 591,
+        "sha256": "fb9337d0b21e0b549e4fc96026d6705e09a0f57aeb2834ff3bbec32b499824a2"
+      },
+      {
+        "path": "AGENTS.md",
+        "bytes": 678,
+        "sha256": "63f2c50380ed6303237cce215ce27af1d620d094c215e28d1b1538a3c070e3bb"
+      },
+      {
+        "path": "CLAUDE.md",
+        "bytes": 11,
+        "sha256": "336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49"
+      },
+      {
+        "path": "components.json",
+        "bytes": 583,
+        "sha256": "8e3040d749a2630b1c8393af1dc3b62500d81e63f96ba997eb95a079078757d0",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "Dockerfile",
+        "bytes": 773,
+        "sha256": "b7988cba5ef941266bf7030ab7e9b25d20fabc0eb8723a2f38010f5b8f589e15"
+      },
+      {
+        "path": "eslint.config.mjs",
+        "bytes": 465,
+        "sha256": "870f1adccecf3051cbcd9fd307cef51d7633cf510979c181a81f4b1797273493",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "next-env.d.ts",
+        "bytes": 288,
+        "sha256": "1862ac4bbbc5192d4bf562161df66ea547ed3e67173100656ab606ae9797db2b",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "next.config.ts",
+        "bytes": 1656,
+        "sha256": "e666a34c773d68697693c87436d60c85ae3bf2594f67f761fb5aca70b35fc759",
+        "env": [
+          "NODE_ENV"
+        ],
+        "flags": []
+      },
+      {
+        "path": "package-lock.json",
+        "bytes": 453711,
+        "sha256": "7335bbddbbc9cff3a6de8c97f78b2b3e0605bc47dd2d6f855c4ca7ebae724d21",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "package.json",
+        "bytes": 2878,
+        "sha256": "e217a15871b908e2db7055891c9111b991676373a01a491f57ca734d71c382c7",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "performance/application-read.load.ts",
+        "bytes": 1002,
+        "sha256": "e5e48443fde5de8e4892f6f18f88cdbbb3c55d7d458b8ea09cbb857a941e4284",
+        "env": [
+          "PERF_TEST_BASE_URL",
+          "PERF_TEST_SECRET"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "performance/cleanup.ts",
+        "bytes": 1820,
+        "sha256": "9a51baf061523f0675afb5fe3d565c4300cb7ca712ea33db2c9fc8e2e9b6f50a",
+        "env": [
+          "NEXT_PUBLIC_SUPABASE_URL",
+          "SUPABASE_SERVICE_ROLE_KEY",
+          "PERF_TEST_ENABLED"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "performance/feed-payload.ts",
+        "bytes": 644,
+        "sha256": "c20f14255887b91a8aab25b31d39aaf83185c487ee614e6861c6939b1bb3ffb9",
+        "env": [
+          "PERF_TEST_BASE_URL",
+          "PERF_TEST_SECRET"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "performance/job-feed.load.ts",
+        "bytes": 905,
+        "sha256": "6da22065608376f3c92fa5fccf03cf8b285737bac4c5846522b78f3be9a00c6a",
+        "env": [
+          "PERF_TEST_BASE_URL",
+          "PERF_TEST_SECRET",
+          "PERF_CONCURRENCY",
+          "PERF_DURATION_SECONDS"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "performance/notification-worker.load.ts",
+        "bytes": 876,
+        "sha256": "11331424d859a2a90902e38abacb53decfd3243c6d6a752d89addecac68bc180",
+        "env": [
+          "PERF_TEST_BASE_URL",
+          "PERF_TEST_SECRET",
+          "PERF_CONCURRENCY",
+          "PERF_DURATION_SECONDS"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "performance/readiness.load.ts",
+        "bytes": 611,
+        "sha256": "3874834ce8cb46df0322df462791180d47b213dc8521a88b90b69326d577883a",
+        "env": [
+          "PERF_TEST_BASE_URL"
+        ],
+        "flags": []
+      },
+      {
+        "path": "performance/report.ts",
+        "bytes": 2405,
+        "sha256": "957ff9eb68c337075026830ef4373d1ab0afca4a14a692b211a23264d092c853",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "performance/run-all.ts",
+        "bytes": 3612,
+        "sha256": "b47459b6f1771b40680078dc130b0153be27b46579692a9144e198ff2400cb0a",
+        "env": [
+          "PERF_FEED_P95_MS",
+          "PERF_FEED_P99_MS",
+          "PERF_ERROR_RATE_PERCENT"
+        ],
+        "flags": []
+      },
+      {
+        "path": "performance/seed-notifications.ts",
+        "bytes": 1122,
+        "sha256": "07f229ce2571ae40b516daf470e88feec997689f1d61d0d52b7ffb8a94c5dd10",
+        "env": [
+          "NEXT_PUBLIC_SUPABASE_URL",
+          "SUPABASE_SERVICE_ROLE_KEY",
+          "PERF_NOTIFICATION_COUNT"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "performance/seed.ts",
+        "bytes": 9417,
+        "sha256": "f02b83132c233dda48442f2fb658ea536a9dc9a93e667d4a410e5b306d627284",
+        "env": [
+          "NEXT_PUBLIC_SUPABASE_URL",
+          "SUPABASE_SERVICE_ROLE_KEY",
+          "PERF_TEST_USER_PASSWORD",
+          "PERF_TEST_ENABLED",
+          "NODE_ENV",
+          "ALLOW_PRODUCTION_PERF_TEST",
+          "PERF_STUDENT_COUNT",
+          "PERF_JOB_COUNT",
+          "PERF_APPLICATION_COUNT"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "performance/types.ts",
+        "bytes": 218,
+        "sha256": "745712417d4d41a6f3aa519618db75b4d1cf6817ea830f43f668811702071008",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "performance/verification-queue.load.ts",
+        "bytes": 492,
+        "sha256": "b9a3739d4e9984b1b1a6cc3b97afeeaabfac480544eed3618a32b50b692392e6",
+        "env": [
+          "PERF_TEST_BASE_URL",
+          "PERF_TEST_SECRET"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "playwright.config.ts",
+        "bytes": 839,
+        "sha256": "8342640247ce5efd76c3a25d5467bf5f558f4566e58b524759f85f67e9795d0c",
+        "env": [
+          "CI",
+          "E2E_BASE_URL"
+        ],
+        "flags": []
+      },
+      {
+        "path": "postcss.config.mjs",
+        "bytes": 94,
+        "sha256": "dfac7ac2d86d326a0e5adb024e7943c181393ed17a5fcb8f0315b24c7da6ddde",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "public/file.svg",
+        "bytes": 391,
+        "sha256": "2b67812c325c199a02536cdbeea0c593a72f707d323b72ee3e08dbab06753bd4"
+      },
+      {
+        "path": "public/globe.svg",
+        "bytes": 1035,
+        "sha256": "b614b9bf183925957661ac851498fe1d8029fd43a62fbfed86f9e2624a57e7cf"
+      },
+      {
+        "path": "public/next.svg",
+        "bytes": 1375,
+        "sha256": "55995dfad6ecb4945a1e856ddca03c5e16aa5bf13fd21b4df6a74ae79357bcfc"
+      },
+      {
+        "path": "public/vercel.svg",
+        "bytes": 128,
+        "sha256": "f081337b2fee635b455b63275406a3e7f39d6a014e25ad90dab5a67e62a12ac4"
+      },
+      {
+        "path": "public/window.svg",
+        "bytes": 385,
+        "sha256": "644768c4aaeb4767bce293344eeb0c125fb804a94d801440424072202d85e3a1"
+      },
+      {
+        "path": "README.md",
+        "bytes": 2025,
+        "sha256": "cbdbde465a6be7af27c16e16dc9320d2886fb8baf81afc32803534a69dcfc39b"
+      },
+      {
+        "path": "scripts/bootstrap-super-admin.mjs",
+        "bytes": 1881,
+        "sha256": "c7bd16c436f0088557b27cd34902172d9732f2a86b60d01a876cb9436a7fdc8c",
+        "env": [
+          "NEXT_PUBLIC_SUPABASE_URL",
+          "SUPABASE_SERVICE_ROLE_KEY",
+          "BOOTSTRAP_SUPER_ADMIN_EMAIL",
+          "BOOTSTRAP_SUPER_ADMIN_PASSWORD"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "scripts/check-local-links.mjs",
+        "bytes": 1749,
+        "sha256": "98ee79b9e0b522078210863e1fcf7d13fa6ff7e6c77fb67491e654fb956520cd",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "scripts/create-uat-users.ts",
+        "bytes": 3194,
+        "sha256": "a60d99768ba17fa583c4494e054dfea90d152750daf5c51d71b45b204bc391cf",
+        "env": [
+          "NEXT_PUBLIC_SUPABASE_URL",
+          "SUPABASE_SERVICE_ROLE_KEY",
+          "UAT_USER_PASSWORD",
+          "NODE_ENV"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "scripts/generate-api-contract.mjs",
+        "bytes": 2543,
+        "sha256": "0c729a01fcab991d5d5bca0c84e7a9ea28a0f7392d8c9653d8e631cdb0ac4013",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "scripts/generate-database-types.mjs",
+        "bytes": 5113,
+        "sha256": "3c235072097d0b25959f798f5f697ef046092938b381a63bc63f48eaf40affb3",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "scripts/generate-route-matrix.mjs",
+        "bytes": 1325,
+        "sha256": "80ff34f604c20415872d1b01d89011598f4fd7f84ecefc99a03a53c874f8a978",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "scripts/production-smoke.ts",
+        "bytes": 1739,
+        "sha256": "7cbbef17a02d9236fd24d007159b72e961ea367f7ddf78f9ab5e6926488b15f0",
+        "env": [
+          "PRODUCTION_BASE_URL"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "scripts/recovery-inventory.mjs",
+        "bytes": 2049,
+        "sha256": "e97e88d83e7bba66369c3923783637c3a9312d046547c6ac35d1226304266ca9",
+        "env": [],
+        "flags": [
+          "TODO",
+          "FIXME",
+          "any",
+          "not implemented",
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "scripts/release-check.ts",
+        "bytes": 1443,
+        "sha256": "b698b96cf8c9f02b4b878bdf93cab04d1e1ff95d1cb2f4cda0b0dead9ce403ed",
+        "env": [
+          "NEXT_PUBLIC_SUPABASE_URL",
+          "SUPABASE_SERVICE_ROLE_KEY"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "scripts/run-e2e.mjs",
+        "bytes": 1330,
+        "sha256": "60da9cd1878cd5f8dc46a98c64f33a4ffdeef258f6b2e4fe89084d6d7029f73b",
+        "env": [
+          "E2E_BASE_URL"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "scripts/test-email.ts",
+        "bytes": 782,
+        "sha256": "98c17ff8f90984de95fc6fdefa0f4da96ae0a29d147687ca1388594a39997c12",
+        "env": [
+          "SMTP_TEST_RECIPIENT"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "scripts/test-migrations.mjs",
+        "bytes": 2923,
+        "sha256": "7b9556930d7e3750df04918704488c825d76c74c8865e417165a5fec53ab7aa7",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/(auth)/account-inactive/page.tsx",
+        "bytes": 627,
+        "sha256": "0f344521a302bcfdb6bc7b71b165d7dfa4fa25ba890a42d7becfd7a4af66c064",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/(auth)/account-rejected/page.tsx",
+        "bytes": 895,
+        "sha256": "fa2a00673e8cd5ff62672a0df006dd65e4be28559f9717242dd50112e8cc6af6",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/(auth)/account-suspended/page.tsx",
+        "bytes": 680,
+        "sha256": "46ac463c033ad943cdbf22bb594cb0d4789c29b98b803e5a1f0655ea8739f2fa",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/(auth)/forgot-password/actions.ts",
+        "bytes": 799,
+        "sha256": "d733fac71e10daac668d6ca9f270e30a6b336d81c01acad4444865976469b962",
+        "env": [
+          "NEXT_PUBLIC_APP_URL"
+        ],
+        "flags": []
+      },
+      {
+        "path": "src/app/(auth)/forgot-password/forgot-password-form.tsx",
+        "bytes": 1496,
+        "sha256": "b52b65f834f01eedab916c758f036e134e76673a7325e0bcf5f219010f78a6e9",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/(auth)/forgot-password/page.tsx",
+        "bytes": 538,
+        "sha256": "980de7cc1c0c8f9643df3015f91b250022ed33930618e5c27bd1b24f099a7292",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/(auth)/login/actions.ts",
+        "bytes": 2020,
+        "sha256": "5720db79dd890e85c3004eb0e11bc52071dcc58b5511a00bbbe052ed9113d140",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/(auth)/login/login-form.tsx",
+        "bytes": 1557,
+        "sha256": "632f69842fd9a2c7390cb9fe7e9a1c2d27dfe98ed35d5d9c16da21ee359bfd3a",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/(auth)/login/page.tsx",
+        "bytes": 796,
+        "sha256": "afcf9f0bb7329d96a008d5679c2775621229eca712a7f140c964357f571c2dac",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/(auth)/pending-approval/page.tsx",
+        "bytes": 1349,
+        "sha256": "8a9276c5f1c908280a557f8ef849bd8602bc6eac4cdb84f0ef7d3f75d3a72cd1",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/(auth)/reset-password/actions.ts",
+        "bytes": 1140,
+        "sha256": "ffa474ee36ffeab951b69e2ce73bb092e879a078f10d1dbb39e8c53aa08928ae",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/(auth)/reset-password/page.tsx",
+        "bytes": 770,
+        "sha256": "7bb165c570f10fa52accd2d714221fe63aa3e335a60e224a4395470123dbf051",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/(auth)/reset-password/reset-password-form.tsx",
+        "bytes": 1716,
+        "sha256": "57521947b750014112595b262a633bad7425e6fd8077a4311f517f18921049ee",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/actions/logout.ts",
+        "bytes": 253,
+        "sha256": "fd6b2cd63aabac4eb06d792070ff79528116a34973e55dba80a54ee8cf697ddc",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/analytics/page.tsx",
+        "bytes": 3227,
+        "sha256": "01ccdc7baf26904444641b7bc07fe1dc74b90cf5f22355f0b79fc890f88b7a9e",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/companies/new/actions.ts",
+        "bytes": 644,
+        "sha256": "40414e898c8757ade32ca5b27b5fa65dd5b1aa89dfa0ecdf9438942cfaf4b9a3",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/companies/new/page.tsx",
+        "bytes": 512,
+        "sha256": "b46f52858f9fedcd57f4662886158956bce713f0e58b46f3aa15f08c354899a5",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/companies/page.tsx",
+        "bytes": 4733,
+        "sha256": "81dfa03d03e3e3e79840f780838368e84fe6da02ca9de20c75161a1940d76f2a",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/companies/[id]/page.tsx",
+        "bytes": 1732,
+        "sha256": "cc6b90df844d946bbfa2303c449f4725d1e0112caa4d0714f4b4f382a5503d71",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/jobs/new/actions.ts",
+        "bytes": 767,
+        "sha256": "9ad60acd49b3ba9d59279bd7cb789d35489345c8dbac854f918c4eb56803e73b",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/jobs/new/page.tsx",
+        "bytes": 820,
+        "sha256": "63cd84eeff7cad2ecd003b61daa982c4ce5b1b6a540bc770c44d848fd1b20acc",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/jobs/page.tsx",
+        "bytes": 2908,
+        "sha256": "77a084a80616630bc09bbed5dc14f6936085d076d9f93f16d83dea6b35b1db7d",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/jobs/[id]/page.tsx",
+        "bytes": 1317,
+        "sha256": "0528242229a678c921df1b6624c97d31f0b393a808b0061d7606cb5508bafff5",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/layout.tsx",
+        "bytes": 1513,
+        "sha256": "9af74bce85854629a9fa4f6b9459d182646de00ec0f1a1559435db090ebe1d84",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/operations/page.tsx",
+        "bytes": 3412,
+        "sha256": "92d7950a46233f0b15aa05d49306c6b46eee4cf900fb16edb0b2d8815986119f",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/page.tsx",
+        "bytes": 2101,
+        "sha256": "760cdeebc25776a603256a76194d02c0f14acb1012066ab28c07c8e0c69e39df",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/security/page.tsx",
+        "bytes": 2330,
+        "sha256": "d69d706ad9f2d9d9c648072dde8842085d53d81139676e17eced502e4bdaead8",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/uat/page.tsx",
+        "bytes": 1936,
+        "sha256": "6a7aea20b35cad80ae44a5a1040576dd71daad8f2a90a901b4ec747c2398efeb",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/users/create/actions.ts",
+        "bytes": 1212,
+        "sha256": "01d3d977c29ac8b3d1952d304ee748598e64b33b06adf0221090af8c169f3e15",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/users/create/create-user-form.tsx",
+        "bytes": 3832,
+        "sha256": "95acb30c54d877aa581d7d8115a837aeb68b2f7d6f791e73cfa077bfdeb9023b",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/users/create/page.tsx",
+        "bytes": 854,
+        "sha256": "352b03ca821fe80fb3a8ccb1e6902de6681e0523d0a020aa8e3eee6c69ab6011",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/app/admin/users/page.tsx",
+        "bytes": 6030,
+        "sha256": "c6c4aeeda7fbec542ced351f4284d680426abf34d1af9d20c2cf8c4e71945ebf",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/users/pending/page.tsx",
+        "bytes": 135,
+        "sha256": "261b3fefb00107f6d361bf77da895285cd6640caa07b65a8f8fa783ca3bbcbc9",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/users/[id]/actions.ts",
+        "bytes": 3616,
+        "sha256": "acf35b4d33a61b71426ceb872197c1f115a18c33011cd82272b49346c9792e38",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/users/[id]/page.tsx",
+        "bytes": 2981,
+        "sha256": "bb8d71bde515a19ac216c00b426d1dbf82b11af3461a5488bf458f5b5f173462",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/admin/users/[id]/user-approval-actions.tsx",
+        "bytes": 1257,
+        "sha256": "33abe646b737833758874890492f804d62496e09490f7bc660d6a561776b75ec",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/admin/uat/route.ts",
+        "bytes": 800,
+        "sha256": "c4e0f577762f4475a3194a9ac59386f121c934aa93c1d85588c766acbd63777e",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/app/api/admin/uat/[runId]/tests/[testCode]/route.ts",
+        "bytes": 918,
+        "sha256": "ca6969fe07d20f933762a314d73100a2fdc2af4c34fffec533fa5b951ec18ef8",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/app/api/applications/route.ts",
+        "bytes": 681,
+        "sha256": "a512afdf41db11cf13bbba448dcc77327647b59235a698bae87dddf59b389979",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/applications/[id]/score/route.ts",
+        "bytes": 508,
+        "sha256": "bc2cc785e44bd6f714dd993f51bafa76e59ba142c5ae2b93b296cdf530dd5158",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/applications/[id]/verification/claim/route.ts",
+        "bytes": 510,
+        "sha256": "cb8990f6aa70dbbff84f6e3e7cdb78c493e4b9cbac93bc050f7a68e817d6d010",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/applications/[id]/verification/finalize/route.ts",
+        "bytes": 603,
+        "sha256": "7b5dcca087fa61ae532315cd61303a149380b609f0cb43539a526c44ccd8ac3e",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/applications/[id]/verification/release/route.ts",
+        "bytes": 495,
+        "sha256": "65359645e7fdac4bd5ebeb9ff2fcb614b3428234fa03ea29ca1a1ac341e58861",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/checklists/[id]/approve/route.ts",
+        "bytes": 441,
+        "sha256": "91a2d300e23ad8bc4af075dc004054b5332eae74518e6c55aeb47a1907686b5b",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/checklists/[id]/route.ts",
+        "bytes": 525,
+        "sha256": "05d804ebf412f2daaf5c74ffffba282bdd74b73ffde00583e65493dfed0632d3",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/client/candidates/[id]/cv/route.ts",
+        "bytes": 501,
+        "sha256": "931a6b8db8ec6e59129a0d52de67e348c1016f6185a517b76c7160f4245791da",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/client/candidates/[id]/decision/route.ts",
+        "bytes": 784,
+        "sha256": "1111bda06d153a870420b3fcbee328c33439c34b4daef3ef3a11261a73930f80",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/client/interviews/route.ts",
+        "bytes": 1001,
+        "sha256": "2969af10aed08395febbbae44a7e7057698b32e91b45a53dd42d4056ebe3a897",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/client/interviews/[id]/cancel/route.ts",
+        "bytes": 603,
+        "sha256": "37257bf75ff61859889afbb3e90feda666d935c0957a2e5ac3fbf25d54596465",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/client/interviews/[id]/complete/route.ts",
+        "bytes": 495,
+        "sha256": "f1b9b82ec2ab831f55b57b96f44c4db8f3c3940189a1d40b476d5cbd5394684c",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/client/interviews/[id]/reschedule/route.ts",
+        "bytes": 821,
+        "sha256": "bb301166e0abb2feda09895a550c642fbce6e5ce6e3272b3c4fb7d6b778452da",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/client/interviews/[id]/route.ts",
+        "bytes": 904,
+        "sha256": "73d8d9e054151f93c43912dede3c7e8c9e4cb02e565bdc40dd150414cbdc9dc7",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/companies/route.ts",
+        "bytes": 748,
+        "sha256": "2f6782dccf21c39ee8f8652968f78969c19e031772823949a90cb5e140039e5a",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/companies/[id]/active/route.ts",
+        "bytes": 474,
+        "sha256": "66391cab799e0c0573ab915ef430671b000d60ccd0226c5bf3454c33e615934f",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/companies/[id]/reject/route.ts",
+        "bytes": 473,
+        "sha256": "9e68ad1128cced4f40e2eb73b5f79d45b8d044ed365c3297cfdaecf4c974a0e1",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/companies/[id]/verify/route.ts",
+        "bytes": 408,
+        "sha256": "949f0f1be07be374c5211f665b7d5c677c15e3ebe9284b7c69b64498243d6c5e",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/cron/notifications/route.ts",
+        "bytes": 524,
+        "sha256": "69ce7fad69950c677772effef9d6dc7b4ec96cb35fb08136f5a736628cef9758",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/cron/operations/route.ts",
+        "bytes": 679,
+        "sha256": "178cf5cab0622769ec5f7d967d1584574aee7df9f9c456f11bbef5b639cdc966",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/feedbacks/route.ts",
+        "bytes": 549,
+        "sha256": "89bb463e1f4a330ac3558c282f3db52524762ae169768fa58cfa0148a39c6336",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/feedbacks/[id]/revise/route.ts",
+        "bytes": 813,
+        "sha256": "f3b47cf144353ae9d4f3f8a59393139df58533a5cb07810962f0f8bcf7347fe3",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/health/route.ts",
+        "bytes": 365,
+        "sha256": "5fc85bbe0486b6b2f08f0435bf2039e6ff5f5001f3767c34b1addc8b44b77821",
+        "env": [
+          "NEXT_PUBLIC_APP_VERSION"
+        ],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/jobs/route.ts",
+        "bytes": 788,
+        "sha256": "bca28d80ee5b08f6b722923bfb852328c07acf2d30cefc373c3cc3c8354deb8a",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/jobs/[id]/checklist/generate/route.ts",
+        "bytes": 552,
+        "sha256": "d86c0c6274c7f04b25bbc157074afd6e1e019cac7c8b73ecdc163154ba5782e2",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/jobs/[id]/publish/route.ts",
+        "bytes": 479,
+        "sha256": "1f0ed75c1ec7450ab233cd4be6b6e28de4767ef842908191954216e20c3847f7",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/jobs/[id]/route.ts",
+        "bytes": 717,
+        "sha256": "9c8e20a712e07111460dd34359faa8beb020412e2dbc3cc07d3f5147ba5289ed",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/jobs/[id]/submit/route.ts",
+        "bytes": 422,
+        "sha256": "443d6a7743da6e7811bae5699424b15b7c261edb443de9cc7eee750c65b46743",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/mocks/book/route.ts",
+        "bytes": 532,
+        "sha256": "148f870a3cb0bb100ef9eb82a8802c8b094a6bc6acbb1d6f09e765ed527bbbc4",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/mocks/route.ts",
+        "bytes": 424,
+        "sha256": "f8fa0c073d38a82b8cfc956dc18c5a8e640649520a48dd47802b2afe69eae63f",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/mocks/slots/route.ts",
+        "bytes": 434,
+        "sha256": "1d86b1f91b01674d4065635a08ec72e25c97776773266d34b0c69cbea13829d0",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/mocks/[id]/cancel/route.ts",
+        "bytes": 586,
+        "sha256": "c32004187cfb92e272f16c17fb10b6a05838433c7f63cce4207581ede37bf7c9",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/mocks/[id]/scorecard/route.ts",
+        "bytes": 544,
+        "sha256": "7972d9f6e04ee7c2689bdfa4c9293a28a437afafe76be548594bfe403d04b642",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/mocks/[id]/start/route.ts",
+        "bytes": 434,
+        "sha256": "464a4c66282bb69850668e39673e30cdf7ff0daf9772c87c94bb1a81e5cf6106",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/notifications/read-all/route.ts",
+        "bytes": 589,
+        "sha256": "67751d2fcffb6357a2e2769649f2a7b529a2b58f4aeda6a16131fd50181d2250",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/app/api/notifications/route.ts",
+        "bytes": 638,
+        "sha256": "37123428b1d8535ac8c80aa9b2666f5606e8709b37376e30a68f2eb467cffcb7",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/notifications/[id]/read/route.ts",
+        "bytes": 727,
+        "sha256": "e655f9d5627f3b27e0fdc1c92f7d801354cadb1d99f4c07a2cfd71ba61bd83ff",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/app/api/offers/route.ts",
+        "bytes": 1964,
+        "sha256": "1f576060722b72dc38a3ac5d4659c32232b3a2fdcd2a5cd72573a207eba87ea8",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/app/api/offers/[id]/file/route.ts",
+        "bytes": 2280,
+        "sha256": "8cfe33fdfaf2578d1c4be6c2b516062bba77090033dac69aee8c5c7293bc045b",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/app/api/offers/[id]/withdraw/route.ts",
+        "bytes": 536,
+        "sha256": "ab0f90129f28d1605c72286bd71fc3b12d6c0d6f33043769d8995f9fda52fb74",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/perf/application/[id]/route.ts",
+        "bytes": 1326,
+        "sha256": "cf0aa22061a0a7284e4beab5f2214d3ed2685dac1d8b87cded95ea2841a80ba4",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/perf/notification-worker/route.ts",
+        "bytes": 567,
+        "sha256": "3267c677552f6de31ff2eeea9aaac2e6e33a2d47ad9dfb08d7f0fef1a0ae87dd",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/perf/student-feed/route.ts",
+        "bytes": 1253,
+        "sha256": "be5a00999da31d82ccfb2976524436586e03a8f14d4780636893201423999438",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/perf/verification-queue/route.ts",
+        "bytes": 596,
+        "sha256": "6d2e7b423d769f06644da92334d8cf5a3cf15475f6a766e38dd2e009540857ef",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/placements/confirm/route.ts",
+        "bytes": 638,
+        "sha256": "cb20a65b081be4a7c1a42defac1eaf2bf9d1bc5424951c274d926d65b9b68df1",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/placements/[id]/close/route.ts",
+        "bytes": 601,
+        "sha256": "feda39215f9330d3913222873c43eaebd199a3c58e001f18549b742136552965",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/placements/[id]/joined/route.ts",
+        "bytes": 615,
+        "sha256": "0db712544614fc43b3471712905ee55ea2fb274af1a31bdea95d386de13898a8",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/placements/[id]/transition/route.ts",
+        "bytes": 647,
+        "sha256": "c82b68043b2a491d65685beb22ae03b6fe77b16b483c87e8420fd86789557ac0",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/readiness/route.ts",
+        "bytes": 955,
+        "sha256": "4d9407e4b9affa01e67ba1954e6551afb5e05fa0f2fa10fa7fb1e898cdb37660",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/reports/[type]/route.ts",
+        "bytes": 1493,
+        "sha256": "685e51a566c63ed2540773e438977bbb5b6fd6c5a8efaa4168245e0d4c6d18ef",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/student/cvs/complete/route.ts",
+        "bytes": 368,
+        "sha256": "9fdc2093f1e776413fe4c9e84aec0a6a0d80030646ce0452fad9214e63e1d55b",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/student/cvs/upload-url/route.ts",
+        "bytes": 336,
+        "sha256": "3da75629e75d488d9f7bfdb930ab8ce82b71e1459df53c9baeeadec5c9f8c082",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/student/cvs/[id]/download/route.ts",
+        "bytes": 435,
+        "sha256": "2d0a8fc190661c45beb2fd4f5afcb470464a2447044ae828f73e9afc95933ddf",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/student/cvs/[id]/primary/route.ts",
+        "bytes": 426,
+        "sha256": "d36d84724ffcadf8bd779301e7cadc7e3727816368de0e33b9e975795abac798",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/student/cvs/[id]/route.ts",
+        "bytes": 397,
+        "sha256": "e95b57a915de20c89b1afc666fc4cf108edf15c63724b8d69e252e3b743f8125",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/student/offers/[id]/decision/route.ts",
+        "bytes": 626,
+        "sha256": "11fb9016a1478e02dd255a7f7ba9ec97d621bccd798b8466e8b970933c719a09",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/student/profile/route.ts",
+        "bytes": 356,
+        "sha256": "98add1d63f0a2a3c7e0cee898b329e7a872d6dc1aa830b3e6ae8b7ac3accbf51",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/api/submissions/route.ts",
+        "bytes": 457,
+        "sha256": "7a06ef8f865d7d9333935114b34bae897446fbc081a0f333abe31d75760082d0",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/auth/callback/route.ts",
+        "bytes": 737,
+        "sha256": "a6ecdc3b185ac0cd771b62015174c074f042b5e3f0d6449ac4b88d03f30e63ce",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/auth/confirm/route.ts",
+        "bytes": 1150,
+        "sha256": "0bff7a0ac5fa0d63fd59ecfe887a496af7e5f61b0ad9cd09f27316638e22307a",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/client/analytics/page.tsx",
+        "bytes": 1051,
+        "sha256": "412cdfaaf4297c1e86f46745bd48f70076ee75b813d7efba48ead95f78d9bc81",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/client/candidates/[id]/page.tsx",
+        "bytes": 4975,
+        "sha256": "6155a4ae6cf9d14ccf4faf1560a964c7230c286aa89b55db28177e8d0f5fe94b",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/client/company/page.tsx",
+        "bytes": 1558,
+        "sha256": "2c5dd3cc3910069b00b6b8d578434d66a3d283d2562597aaa3e72021c9cb6124",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/app/client/interviews/page.tsx",
+        "bytes": 4171,
+        "sha256": "a943a063acd881f4379a00934c427a12d7a15fa2722aae53bf01355da5630e1e",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/client/interviews/[id]/page.tsx",
+        "bytes": 4370,
+        "sha256": "d19c2ed08b417ae71a82332834f6c9384b491edb1d463bff593efd67ddb55a71",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/client/jobs/new/actions.ts",
+        "bytes": 768,
+        "sha256": "2ec39e9a95eb00e3f56218fb67ef0f1ad2678f2303691c1036f8d4d72d6046f8",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/client/jobs/new/page.tsx",
+        "bytes": 955,
+        "sha256": "0b098cb3873badc2864bdc7db68d3e391165008a1af37e24ca7a4545f1fe1cf9",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/app/client/jobs/page.tsx",
+        "bytes": 3118,
+        "sha256": "0646c7c3d31da08516ffa324c4f62da61e560e6290e78ea89046071a8403e513",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/client/jobs/[id]/page.tsx",
+        "bytes": 974,
+        "sha256": "5a7efc12689e89dae9ec784163be38abe93834e31ea52d3ec6f70e8fad51dbd7",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/app/client/layout.tsx",
+        "bytes": 1458,
+        "sha256": "d601c0bb604887be34cb18464cbfb52598d01f0d3bc299c24e7a36ceabfbf192",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/client/page.tsx",
+        "bytes": 1426,
+        "sha256": "5dc0e316d66a80630a1168bd6d2c5a13f12cff198e6f3507a66c1149275011ff",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/client/placements/page.tsx",
+        "bytes": 3447,
+        "sha256": "45765319c89b35b8888015517f02ae7481c93c474ba14bdbffe849c55b1c750f",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/client/submissions/page.tsx",
+        "bytes": 2964,
+        "sha256": "91e91313e49495e5b479b6d24f59f50dfadcf55c97388b0d868a80b08fd4877b",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/client/submissions/[id]/page.tsx",
+        "bytes": 2357,
+        "sha256": "96b7ed0c3356002cde6723225371241fa45c765d3afd47fb93a85b1302aa0965",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/favicon.ico",
+        "bytes": 25931,
+        "sha256": "2b8ad2d33455a8f736fc3a8ebf8f0bdea8848ad4c0db48a2833bd0f9cd775932"
+      },
+      {
+        "path": "src/app/global-error.tsx",
+        "bytes": 1011,
+        "sha256": "4c40cd362abca1c846e9aa0f4f521a2b1d214f65c1063784bb0057ce1c345c4b",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/globals.css",
+        "bytes": 4615,
+        "sha256": "155086679fadd6642d47a20ad8a179830acb8230fe87fe8ff1ed5ab699a9172d"
+      },
+      {
+        "path": "src/app/layout.tsx",
+        "bytes": 518,
+        "sha256": "1b7ce9b79f7c25e57a9464f7d5e5655ee234285a34c6d5677982450441531318",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/maintenance/page.tsx",
+        "bytes": 632,
+        "sha256": "54e0ac91020dd3fdf3e3d64ff9880971c65f190cf8c4df956f4337afd17a3449",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/notifications/page.tsx",
+        "bytes": 3256,
+        "sha256": "01ff7ac1dadac5dcd201ec9128a07312953ab8c11591dfb1cdbef5974d2158e6",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/page.tsx",
+        "bytes": 687,
+        "sha256": "a5b357f5899a0bfce2f6351d00d7efaf3dff1dc53854bd8432a903bcff8adef7",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/analytics/page.tsx",
+        "bytes": 1464,
+        "sha256": "7bcec0819165c10d7be200b6490944adcc1f4409f7d7147d6c5a8c467eaefbeb",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/applications/page.tsx",
+        "bytes": 3572,
+        "sha256": "a662b454ae800ea7725d4057f301ee3241e1e5229dd46ab7067c875acb74b626",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/applications/[id]/page.tsx",
+        "bytes": 2477,
+        "sha256": "c3a94365fd687450dc236fed9774be5dbd4d98875ad51f2f76e8a6ed19bb4801",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/interviews/page.tsx",
+        "bytes": 4672,
+        "sha256": "b408218bdeb54e0c9f3c8533fd62ce7017fc00f78cc3c079ce46051e94834455",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/app/placement-hr/interviews/[id]/page.tsx",
+        "bytes": 4549,
+        "sha256": "e15d802cb81b6c977de6bcc3a19cfab65e8539c2a2d2c5c3a77e82bdba238e6d",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/jobs/new/actions.ts",
+        "bytes": 774,
+        "sha256": "f09146148160ea2053f8ca6960ec13445e56f1adba27b45ec39e94a7049ef830",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/jobs/new/page.tsx",
+        "bytes": 990,
+        "sha256": "47a434a650ce94391e801153e606e94a57954521e388b7e3baa9f0c58d72bde1",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/jobs/page.tsx",
+        "bytes": 3125,
+        "sha256": "5443f7019c5168e914ef7104b2b4049da87dabf594bb3632b5c292258a666648",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/jobs/[id]/page.tsx",
+        "bytes": 1048,
+        "sha256": "15805743b7fe95d2003a8235a9f116418e7b8e0a00a1a391c58de81299557bfa",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/app/placement-hr/layout.tsx",
+        "bytes": 1729,
+        "sha256": "558034c2977193d76d45e0887cf8f9c359f6dfa56cee71c0ee7ddd6181ceffeb",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/mocks/page.tsx",
+        "bytes": 4283,
+        "sha256": "d763b27bb5a199ee21db6ea3e081e41c7d3a16d8622eb8c96fc923d5b60415c6",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/mocks/[id]/page.tsx",
+        "bytes": 3058,
+        "sha256": "50b63a4764f91c28f397c1602fa40a3b7a3dddc223ca07c00367dd644d6e9307",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/offers/new/page.tsx",
+        "bytes": 1762,
+        "sha256": "3226b7df19b982cc71c435180a8067a295deba377611958a33bcccd23d29f8ea",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/offers/page.tsx",
+        "bytes": 3870,
+        "sha256": "34b93cdf7599d6dcd01ca6ac6707841cf4627634a48044ec12ff67b9650c14fd",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/offers/[id]/page.tsx",
+        "bytes": 3231,
+        "sha256": "11b73f7a04b9873862bcd96a703201c27314ed51dc066cb9160c0c3bf3848cd0",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/page.tsx",
+        "bytes": 1323,
+        "sha256": "afb827ae7a8cf797b2bce20e88c529f38e0339ff4e12d8d250226545d20e560f",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/placements/page.tsx",
+        "bytes": 4287,
+        "sha256": "ad77ae120b49563a2469f4d1ef675a118054312836b854b790aed3fca5dd7a4a",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/placements/[id]/page.tsx",
+        "bytes": 3399,
+        "sha256": "48a51a40c8fe5b9754c938530b29e03b5a3cb6a70cfe95bf1ea406617a857c00",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/reports/page.tsx",
+        "bytes": 2111,
+        "sha256": "d264abbf9d318b1da94cc44789fa30401fba5bcf3171be5ea34090a3bd051d46",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/submissions/new/page.tsx",
+        "bytes": 1385,
+        "sha256": "b621c3f1ecbd13fc5adcf721507c47d4e6a86001be00b15ea7dc413ee20bfc47",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/submissions/page.tsx",
+        "bytes": 3223,
+        "sha256": "e442ef461a747011af1dc334642897bada763f674039aaaf5c6667c0fca2ae4c",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/placement-hr/submissions/[id]/page.tsx",
+        "bytes": 1744,
+        "sha256": "7644424a3c35b8d44a8b63a90c0c67263e9c0cb7c59d64aaa65ba87b4cf450da",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/student/analytics/page.tsx",
+        "bytes": 786,
+        "sha256": "bcf9aded650d2df91f5e93d5beca3a68e18e9de9db14128073522a00fdc599a1",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/student/applications/page.tsx",
+        "bytes": 4171,
+        "sha256": "a954d18ef37a9e3f81f9d540d1465eae1c8e160773ea516a3861e2162740696c",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/student/applications/[id]/page.tsx",
+        "bytes": 3610,
+        "sha256": "4e9a728e8a910a8d9c93c79e9180dcfb48e4f11eb7ace1acbb944421df06242c",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/student/cv/page.tsx",
+        "bytes": 697,
+        "sha256": "0b02ed3024a40bbd2d8231038f382555d3901f16a227a4b622d9abc48ccc8672",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/student/interviews/page.tsx",
+        "bytes": 5588,
+        "sha256": "5fbb8b0cc30bb03ed900b29a3d294a02e9551786d3f2b9257254f09b3255ab1c",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/app/student/jobs/page.tsx",
+        "bytes": 5419,
+        "sha256": "ed1d41fc527739ba2c5e56fcd9263f7026145b2fe2c1668e627245ec392a8037",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/student/jobs/[id]/page.tsx",
+        "bytes": 3201,
+        "sha256": "1c8c6c9acc067440aaa64ecf19cd1441867d3b0cdd5490a77d8dc6b21c0036af",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/student/layout.tsx",
+        "bytes": 1654,
+        "sha256": "9644aa1d973e2114e5176987b69f6ccd3b150406468321a0935f552d038b96ec",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/student/mocks/page.tsx",
+        "bytes": 7863,
+        "sha256": "b2a5b4a1953c02cbf4afd12651ae8de580ba735c46bf27a8898d6b2e7bbca691",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/app/student/offers/page.tsx",
+        "bytes": 4662,
+        "sha256": "ab5f19284da34fcaa5508606d1e4753d694eefb8aca003243764adcf9fe1cfc4",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/app/student/offers/[id]/page.tsx",
+        "bytes": 2643,
+        "sha256": "4b20e5413f0c4252a13b7ec5a384c21691b8a143e29572fac1bdf3dbb540ff7d",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/student/page.tsx",
+        "bytes": 2511,
+        "sha256": "c8fc590969b348ab708146d5560502709f84ae9e0a9a6c185ac83d7af5e497ae",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/student/placements/page.tsx",
+        "bytes": 3806,
+        "sha256": "009d969d25840b3d704c199f6e6703225972c3f3aca03eadc92dfdb661342b2a",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/student/profile/page.tsx",
+        "bytes": 642,
+        "sha256": "1d04bf171d59264f87d5739637e4a3095d73f90553b2dc70001f52a3e6719339",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/app/unauthorized/page.tsx",
+        "bytes": 381,
+        "sha256": "26c1d51aa534ff531be81190053dc65c11da93e21964b6f6fe60b9900988911e",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/checklists/checklist-workflow.tsx",
+        "bytes": 19064,
+        "sha256": "3b4abdb1d7d739e2a4c3ad278b43ee6b50553c83922a61107fe2221b6a62b461",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/components/client/client-decision-actions.tsx",
+        "bytes": 4588,
+        "sha256": "366a2778e2fdeb02704c77cad36e8cb4f373456677b4d7b4e7a28729848e6fd5",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/components/companies/company-actions.tsx",
+        "bytes": 1956,
+        "sha256": "f97985e3ed1acd25d3439659905fe8a4f4588fa6777253d5c33f704a7843b856",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/companies/company-form.tsx",
+        "bytes": 3092,
+        "sha256": "984b825bddeecbe322cfd31f751072692928fb2ff8d022865d636deb2114753a",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/dashboard/funnel-chart.tsx",
+        "bytes": 637,
+        "sha256": "736152d138b161a4c5ee96e9d68003a5c41e87caf2a1ba4efa178b5468a13e53",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/dashboard/kpi-card.tsx",
+        "bytes": 409,
+        "sha256": "65f5e24cd492a407e134c7e6f11c5e028b3163252f91192143b0c23d94994a04",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/feedbacks/interview-feedback-form.tsx",
+        "bytes": 4532,
+        "sha256": "36a72885f91a77fc076cd030c4c169408673711e5b6926624773646ee8a12952",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/components/feedbacks/interview-feedback-revision-form.tsx",
+        "bytes": 4263,
+        "sha256": "2e73f4f0a314bfb3239606df4e85b455875afaed0960b1bbbe2c6388805257e2",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/components/interviews/interview-schedule-form.tsx",
+        "bytes": 8665,
+        "sha256": "dc2228325b088249639b0455bd218925b065b80bb1fe424218f348362858b3f5",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/components/jobs/job-form.tsx",
+        "bytes": 7648,
+        "sha256": "860bd6d6d58887b9d005667f9781fc7dbacce92cf8e268b69712d3efcacdd34f",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/jobs/job-submit-action.tsx",
+        "bytes": 1062,
+        "sha256": "3d0475b8f564c86f54f95f41c6ace5e443eee9872b5c0fc0b24ed91bbbc22791",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/mocks/create-slot-form.tsx",
+        "bytes": 2610,
+        "sha256": "633d20e56a2e3e2e2bee9e30a11dcd0a61b1cf9c3c1f6aaeddb2f8346d2360ef",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/mocks/mock-scorecard-form.tsx",
+        "bytes": 3395,
+        "sha256": "9965c8a413d65aa2845901559c496cc3a656473d33cdc884f5eaa9d5cca44d6a",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/mocks/schedule-mock-form.tsx",
+        "bytes": 4382,
+        "sha256": "e0cfa4e0300044362d4cb944bf08bf401468b6481eb772f1093528f24876380a",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/mocks/student-booking-panel.tsx",
+        "bytes": 3167,
+        "sha256": "0d9a4c15c7be12ebd6fc383e6455dd0e2b9fc5a7eb1f9a22d97a8a59a6d6609f",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/navigation/nav-link.tsx",
+        "bytes": 1007,
+        "sha256": "5e0457a63f5d8fd119e8dc0f70ac8a574d473b82745cae0b6cfd0fba00e4cdf2",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/navigation/sidebar.tsx",
+        "bytes": 1489,
+        "sha256": "2f794d4f7d9b3b5c573e25728808cf1828f4cfb8b5fe13eb374bd29e65041926",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/navigation/topbar.tsx",
+        "bytes": 2444,
+        "sha256": "25cfe7c09f7a7ee0f0e4a92c94c4f9e9ee5c3fd0073f707f13084409e3b3aa6e",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/notifications/notification-bell.tsx",
+        "bytes": 3318,
+        "sha256": "f3bda242382503039d1d1dad7aee713070e0360a12044a1342c3534b8980e045",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/offers/offer-file-button.tsx",
+        "bytes": 1114,
+        "sha256": "e7c599eab5a0b28ceb6e3e99fdbac8c8067c5af9651f474a257ad82d7ecfc1a3",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/components/offers/offer-upload-form.tsx",
+        "bytes": 4332,
+        "sha256": "cceb43cc983ed989055e1cdaf20890be156179ff06e0015adfca6cd6d25d2049",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/components/offers/student-offer-actions.tsx",
+        "bytes": 3123,
+        "sha256": "31616e9453116b4278e399ced2fe50c105d0a52bdff84abff4dec9c1b4e8575e",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/components/offers/team-offer-actions.tsx",
+        "bytes": 4151,
+        "sha256": "af275cf771c6597249b5cd5ee5d7af7740b4922e5cf9afbfe0e0e118ed40bff0",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/components/placements/placement-actions.tsx",
+        "bytes": 2652,
+        "sha256": "76a8fe36ffcea214fc1578dd9f6d6f564b5cc903ee1d9d6cb28510640dbc157e",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/scoring/score-panel.tsx",
+        "bytes": 4567,
+        "sha256": "a8a8efb7eddeb348e4b7f65727ad85723443f6730f92afca2761e8ac43e23021",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/components/student/apply-button.tsx",
+        "bytes": 1084,
+        "sha256": "fdadd20a0e89d0ffa55c810fdf511eb8c0868aaabd2366e1390ebf237edcc3ec",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/student/cv-manager.tsx",
+        "bytes": 4669,
+        "sha256": "81c57c5d03afbaa84c8acaedd0485be1d6d88e675f05472abf4365f09b39397f",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/student/profile-form.tsx",
+        "bytes": 6852,
+        "sha256": "697a18c438b3db9b48d09b7b88c5b1d796e8c60860cd87405fd6094f6b8fc5d0",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/submissions/client-cv-button.tsx",
+        "bytes": 777,
+        "sha256": "5013b5309d551dde96473bf35b6033d7b4473c21e71deb848a658f6739dfb2f1",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/components/submissions/submission-form.tsx",
+        "bytes": 3342,
+        "sha256": "4089220c49fa1ae8a3c61b7f72cbd13fb82df824976e90fbade0cef0d1eb82e3",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/components/ui/badge.tsx",
+        "bytes": 1581,
+        "sha256": "7563ef4dc93fd93f4a1b68b5cf6c0d42577fa08408373d1c38bf87e56654b577",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/ui/button.tsx",
+        "bytes": 3120,
+        "sha256": "329b6493ac0838af04e0b9063d07036ed5b22b276dc26907ca5ea8babab5bd03",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/ui/card.tsx",
+        "bytes": 1724,
+        "sha256": "e630bc75c2878b16d81c6210bda89f93377c395e00e2f21f2792260c505c64ae",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/ui/empty-state.tsx",
+        "bytes": 911,
+        "sha256": "bede635429795c4cad0764226d985b90c4752d068486bf367036dfc83f92b1cf",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/ui/loading-state.tsx",
+        "bytes": 910,
+        "sha256": "112d4de7532014342eb04cf25bdcf708f03468f65917b2bb5e884c9fe6bc7642",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/ui/page-header.tsx",
+        "bytes": 613,
+        "sha256": "2843b0de364c98e8460a34a2bd7c587bca2851be024501736e49847ef112935b",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/ui/stat-card.tsx",
+        "bytes": 1681,
+        "sha256": "d075113d4836f257ef9e70a14219c31dd7d694e48ac7d814c210d95fe99941aa",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/components/verifications/verification-panel.tsx",
+        "bytes": 8352,
+        "sha256": "31718f33e57b97f3034536600eb02945f7c0d5d8cd5026e3774b5e02e901fea3",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/hooks/use-notification-realtime.ts",
+        "bytes": 740,
+        "sha256": "3afc3934df3d9e0492a229f4e932ff6c06c9fee1e4133ccb142ad0d594a62a5d",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/applications/constants.ts",
+        "bytes": 53,
+        "sha256": "8018472c55c8c001e3ec999bb657fef7fab2602bcf1dfd1b642db746fd78f6bb",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/applications/effective-score.ts",
+        "bytes": 1043,
+        "sha256": "828867ca2b6e35784a70d13652a22cb02fa14c9162ca9e7d95cacc827ab27a54",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/applications/rejection-reasons.ts",
+        "bytes": 485,
+        "sha256": "fcc2a23eb4a083af30bd5c2fe742537902edca7b5851abc11a2f9c0d28d2f752",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/applications/status-labels.ts",
+        "bytes": 959,
+        "sha256": "41e212cde4a35cb13518409a69d4be4cc836c89b1fd8a0ce4be92cd747617e2a",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/auth/account-status.ts",
+        "bytes": 180,
+        "sha256": "dcd97e4c7acb1db439e8c68a3c7af04315177fad8e75376a1d72231abaa09395",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/auth/dashboard-route.ts",
+        "bytes": 851,
+        "sha256": "c0f3cec3856155f9fc57e7f237ec4437969da2db083529a529256063b575aebf",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/auth/guards.ts",
+        "bytes": 2357,
+        "sha256": "d8285776e0de19fab6aeee5437cc73a26bf951e860462ead24abd8433e162c93",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/lib/auth/permissions.ts",
+        "bytes": 3087,
+        "sha256": "a584c677f175343717d84d31b60705480594b45bbc1610f61102ff5c11040de9",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/auth/roles.ts",
+        "bytes": 333,
+        "sha256": "2dcb6bbd46585c5a999f40a04f86a23f5b0e89f083d8fadd0116491776e73084",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/auth/service-guard.ts",
+        "bytes": 810,
+        "sha256": "fbe68d0093aebe5e35d89ebfba02b49e95402dbe8f6cc0db031dfd1f948088ee",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/client/rejection-reasons.ts",
+        "bytes": 545,
+        "sha256": "03c8c1ff20ff80542536af4d3b3e3d1dd36c38406b96431281b74d67cbbcc687",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/company/domain.ts",
+        "bytes": 264,
+        "sha256": "e5e5b3ae6e0890e182a04a4d69b0b1e91ef9d39551b28f7de53abf351eaccc5f",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/constants/account-status.ts",
+        "bytes": 464,
+        "sha256": "c0ef65b70eda4680221a92b847c97b359274ce6b64a7dba69cbc9e668a48ae37",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/constants/app.ts",
+        "bytes": 569,
+        "sha256": "ae61b7c8474d4eab9642d3d36a522df389a0d1aaafaf92ff1f4c279e6bf78a8b",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/constants/roles.ts",
+        "bytes": 626,
+        "sha256": "3ee101fff1b275ef0e27763886f0bbf5cc36e0e77b00f8651534b2aa86b17348",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/cron/authorize.ts",
+        "bytes": 465,
+        "sha256": "73f01b0f7f2e1438bce74fb1dc0bdb82fd2331496325d9704440cfef02845bdc",
+        "env": [
+          "CRON_SECRET"
+        ],
+        "flags": []
+      },
+      {
+        "path": "src/lib/cv/constants.ts",
+        "bytes": 260,
+        "sha256": "d7e24edf0066cb826b8deb18a268a9737c5131b3d8dba53f307450c263858a1c",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/email/html.ts",
+        "bytes": 217,
+        "sha256": "29b5e556bea583bae2eb5830c5a1f3dc5af3247e31a4121204c232c03be3e7de",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/email/layout.ts",
+        "bytes": 1733,
+        "sha256": "a46441c69133cc2ffab46eba4a15bdb0dcd3bcbbca9183eca9e152a1b6c85c19",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/email/smtp.ts",
+        "bytes": 816,
+        "sha256": "895b5f0ead9cea9b01efae86644f3f55f495f2285e039bddb27667b5842ba146",
+        "env": [
+          "SMTP_PORT",
+          "SMTP_SECURE",
+          "SMTP_HOST",
+          "SMTP_USER",
+          "SMTP_PASSWORD",
+          "SMTP_FROM_EMAIL",
+          "SMTP_FROM_NAME"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/lib/env/server.ts",
+        "bytes": 2590,
+        "sha256": "a635907a29e2212dfee3148f8c883bb0d335244fb93598ef33ab1de70eaa1559",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/lib/http/api-error.ts",
+        "bytes": 700,
+        "sha256": "fe55af55f67d37b68ce1d88daaa65f486ba7e542146e7c194280102f3ac2ccc3",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/http/client-ip.ts",
+        "bytes": 290,
+        "sha256": "84023ce1303d888e8fb27823e40acafa38e83379acaa7bd8cc375dff5afa338c",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/http/request-id.ts",
+        "bytes": 163,
+        "sha256": "c314c6a0b30d52defd95073cb0b820d112a5c1416f6750c2b75ba49365119332",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/http/route-error.ts",
+        "bytes": 1452,
+        "sha256": "c3bc2f9abfe967553ff84b8d238cbf2339b40b68257ad111fc775435277a509e",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/interviews/constants.ts",
+        "bytes": 666,
+        "sha256": "ebdc652bc353140d049ecd85c5caab3f563db7dfbd1b95688a20b49ce4927402",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/jobs/experience.ts",
+        "bytes": 483,
+        "sha256": "e73c0f136e5e663824c82ac875979a43e30c4989179490dd08ce5cf699943a68",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/json.ts",
+        "bytes": 232,
+        "sha256": "77eb834d79b300ebf794ced59fbd8823a4d31227276ba9e84ba528318593edee",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/logging/logger.ts",
+        "bytes": 903,
+        "sha256": "b8ce837d575dbe9068dbcaa62381ad465943e8fdb56282c9ba9b6082b804d6e6",
+        "env": [
+          "NODE_ENV"
+        ],
+        "flags": []
+      },
+      {
+        "path": "src/lib/maintenance/is-maintenance.ts",
+        "bytes": 90,
+        "sha256": "c8f6f0713527f2cbf7f24ff4b36c68ab03c4d25564a1c4584fa5db3fca6d70d6",
+        "env": [
+          "MAINTENANCE_MODE"
+        ],
+        "flags": []
+      },
+      {
+        "path": "src/lib/notifications/events.ts",
+        "bytes": 1825,
+        "sha256": "0d4cfb8debeedec54d552030bd3d38f202db6922ce6cd2c524adaa5557791030",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/openai/client.ts",
+        "bytes": 255,
+        "sha256": "b8304a13a81d410fa64e6add72d3d9ed1379ae97e91625cf556cbab6b2b7611f",
+        "env": [
+          "OPENAI_API_KEY"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/lib/performance/authorize.ts",
+        "bytes": 823,
+        "sha256": "b828676dbca5feee076bd41d148a898ccff410193cdc96ab16f619c985abdf2d",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/performance/config.ts",
+        "bytes": 596,
+        "sha256": "716bc86b6e9693e8e2048e66eeecccc46f366bfafc32cde15f75a1159e911ec3",
+        "env": [
+          "PERF_TEST_ENABLED",
+          "NODE_ENV",
+          "ALLOW_PRODUCTION_PERF_TEST",
+          "PERF_TEST_SECRET"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/lib/reports/csv.ts",
+        "bytes": 661,
+        "sha256": "8978e3c4ad4b431d4889683263f460329bae1306dd689db64cc3879eda70392d",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/supabase/admin.ts",
+        "bytes": 522,
+        "sha256": "5b9112df98bedd758a1758624d5bc4db3b026a8a5f5924a4064ce161f3f752b0",
+        "env": [
+          "NEXT_PUBLIC_SUPABASE_URL",
+          "SUPABASE_SERVICE_ROLE_KEY"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/lib/supabase/client.ts",
+        "bytes": 560,
+        "sha256": "e86f3b8e8bb06ea740ee6fd2ce720cac4d940f97b84e8e92e897e682cdf372d3",
+        "env": [
+          "NEXT_PUBLIC_SUPABASE_URL",
+          "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
+          "NEXT_PUBLIC_SUPABASE_ANON_KEY"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/lib/supabase/proxy.ts",
+        "bytes": 1185,
+        "sha256": "f328821683242019230bb8d2cdbcd0bf1220f6517490c8376027dd0285a55bcd",
+        "env": [
+          "NEXT_PUBLIC_SUPABASE_URL",
+          "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
+          "NEXT_PUBLIC_SUPABASE_ANON_KEY"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/lib/supabase/server.ts",
+        "bytes": 1142,
+        "sha256": "d9d78c25a79bcfe88170058416825ba8f45ac1385e66af54a926820adbcff7d6",
+        "env": [
+          "NEXT_PUBLIC_SUPABASE_URL",
+          "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
+          "NEXT_PUBLIC_SUPABASE_ANON_KEY"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/lib/types/foundational.ts",
+        "bytes": 3066,
+        "sha256": "8756cb9bea307adcd4adf526f5551680eb46933ac9b3e94509f7aa62f01731d5",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/uat/tests.ts",
+        "bytes": 16884,
+        "sha256": "7b91b71419e8a6a0f6c07b584afd4aad9336357a640ba1844d2a5888d7a1367c",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "bytes": 476,
+        "sha256": "3abe19b03e713616d264f4c957ccc428fd8245d4521981875820a0e70913f7be",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/validators/checklist.schema.ts",
+        "bytes": 817,
+        "sha256": "ab0e47e7a6675c6b349c42444e6facb6b29cd199b2b4a09804d61a37dc1bc801",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/validators/client-decision.schema.ts",
+        "bytes": 609,
+        "sha256": "daf1a2c820b3105ea61607c554eaac04649ebee15def024c4577260e60021859",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/validators/company.schema.ts",
+        "bytes": 1619,
+        "sha256": "24cca644ce6f95009ed364fbd5eb6d036b3fb3423fabcd71b82e395e4df5bf0a",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/validators/create-user.schema.ts",
+        "bytes": 1066,
+        "sha256": "f3c5d4e06774bda43235800ee058d643cc963fa1ae1e876908eea00d039d8e0b",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/validators/cv-upload.schema.ts",
+        "bytes": 366,
+        "sha256": "dc231a93fea7f1b7e19c6f3d5a3181dc6469743e89ba7860cb0148fdbae4f5df",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/validators/forgot-password.schema.ts",
+        "bytes": 156,
+        "sha256": "2f7b6ae046d10f59287617117fe99547ecd85477e73ba4f4563a04fa2c8abf9c",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/validators/interview-feedback.schema.ts",
+        "bytes": 1307,
+        "sha256": "226b0615b48d1e1d81ca4f60d570a1f0332945158dd0791085b1f47b0a97024e",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/validators/interview.schema.ts",
+        "bytes": 2344,
+        "sha256": "ce0978e9bedd4d04bfe02668201b3d9f78b2e7dfe2464a4c41b899946b418005",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/validators/job.schema.ts",
+        "bytes": 1946,
+        "sha256": "4ef2d896bc6cb4582bfecc45ed4f3a8e7ad4ce26aacc0efae176d04e27577b88",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/validators/login.schema.ts",
+        "bytes": 266,
+        "sha256": "3609148e000efa507c37f657356d191f1805abe46886eafa2363d292ade2df7b",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/validators/mock-scorecard.schema.ts",
+        "bytes": 611,
+        "sha256": "36c22fd92c03ee68333eca9efc22773e4806c36b1da97bf3a953f528c1131abf",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/validators/mock.schema.ts",
+        "bytes": 1287,
+        "sha256": "78855ee16e1379507af1c759979430f371dc097d87dab16f372b329e12482058",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/validators/offer.schema.ts",
+        "bytes": 1977,
+        "sha256": "923be1bb5407888b6f6384e047dbbed6259059a5e4ff9d43258683682319cbba",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/validators/placement.schema.ts",
+        "bytes": 1201,
+        "sha256": "ede5878072af654d8dc068a168a68bceb76a8ad0ec640463bca0e7fc3b31b16c",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/validators/reset-password.schema.ts",
+        "bytes": 361,
+        "sha256": "663c40e883fd64dea53848648f679fbe46cc5888fd7a02d0a708f4d223883939",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/validators/student-profile.schema.ts",
+        "bytes": 894,
+        "sha256": "6bbf6a66bb5ad9965760c18afb40ff1902774c5400cd2ca1735ddc33ef383fd8",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/validators/submission.schema.ts",
+        "bytes": 229,
+        "sha256": "36869eafe76fd0eb82ce184d50aebfe458fc9d54ac651f10c9a06670d9bb52c9",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/lib/validators/verification.schema.ts",
+        "bytes": 1543,
+        "sha256": "784d68cd9b4fbe0e229ab918ed8d178935670e3b99a8461343e5161f0b0143ee",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/proxy.ts",
+        "bytes": 663,
+        "sha256": "49ae5e7254f249fed1f5fb98470898612b1e3b0e4958fa8ad0d5029a7ce91a43",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/repositories/checklists.repository.ts",
+        "bytes": 853,
+        "sha256": "043355503c2e3c25e95d597a374794475e609c1fc71943cade73f07aae37e3d7",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/repositories/client-candidates.repository.ts",
+        "bytes": 1248,
+        "sha256": "3cae7a34d2f357375044f08aeebefc810cb5f6d0ed92c674676e1c82d1690549",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/repositories/companies.repository.ts",
+        "bytes": 2196,
+        "sha256": "6977fa3cd2a744e6417d2fc1e5855da17b4caf0cbfe03a6f45e13fae384e0e8d",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/repositories/feedbacks.repository.ts",
+        "bytes": 1041,
+        "sha256": "a000239aeb2db016c5ce4486c839756a225e65b31c3326427aed3e41fddd1ca3",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/repositories/interviews.repository.ts",
+        "bytes": 3169,
+        "sha256": "9d2077a13fe560e5c70ce1203a5f8cbc096310a3dd5f8aa9bdae47b70f2ca0f9",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/repositories/jobs.repository.ts",
+        "bytes": 3473,
+        "sha256": "e6611960870915abbbec2e9b22a4f5b23be562962553d4f09ebcc051ec9885ff",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/repositories/mocks.repository.ts",
+        "bytes": 5930,
+        "sha256": "63884037aaf37f581481dc301520829723f6212915a6c4f171887b80429eb4c1",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/repositories/notifications.repository.ts",
+        "bytes": 993,
+        "sha256": "769a088cbec9de671031fc03bc283da02e1b5c43a07939b021a6bc81ea8959ad",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/repositories/offers.repository.ts",
+        "bytes": 2014,
+        "sha256": "3e94dc8e6eb30856563304d6488ddc4fe9f0149118941985caa8f3f14f74defb",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/repositories/operational-alerts.repository.ts",
+        "bytes": 599,
+        "sha256": "b70da0123ca252c94cd4e4e9f4108f4ae091591c41657def19f616f1c17148e5",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/repositories/placements.repository.ts",
+        "bytes": 2019,
+        "sha256": "0b641fd085a6c7b4018164f7402fe97f1bb8f177c3094263a600158534c2cf15",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/repositories/security.repository.ts",
+        "bytes": 1150,
+        "sha256": "11ed79d7ec78cad8f1fcb49858d4439416083ee7a7dc373f66b4a486ab188c51",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/repositories/student-applications.repository.ts",
+        "bytes": 716,
+        "sha256": "b996e9506682a9f32b759225fb18faf51097266d0b8ab89e2ee9e6fbace8d511",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/repositories/student-jobs.repository.ts",
+        "bytes": 1849,
+        "sha256": "5c422f50b3709e27ae8aa2302e562ba271ce92c90ca2e4ceca53bfcced85cc62",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/repositories/students.repository.ts",
+        "bytes": 1289,
+        "sha256": "b31c7786f3ff9f1dea827924f4f69be1adb09619e392049c4ba3aa04b009d742",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/repositories/submissions.repository.ts",
+        "bytes": 3354,
+        "sha256": "674aa96d38442f423507f3bd3422a40b25574b5a3be3f8edd32a582a4112baea",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/repositories/uat.repository.ts",
+        "bytes": 1274,
+        "sha256": "374bfa91929b55b736c78a25df0ee53930b3a51a7ecd772248f7f4b438b866d8",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/repositories/users.repository.ts",
+        "bytes": 3602,
+        "sha256": "d86d5dfdf336580596c445ca036f40c423bf031557cc26fa4ae800f5c06e3657",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/repositories/verifications.repository.ts",
+        "bytes": 2053,
+        "sha256": "9f9d20a0c5623ce666b0af6cc559e50d84d7d48a69535b27f47aa4dac43d878a",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/admin/dashboard.service.ts",
+        "bytes": 1057,
+        "sha256": "f2b785f9ce2c42d2d70ccfb4770c176ab1c19a490ee51d5e6e399094b8306d64",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/ai/checklist.schema.ts",
+        "bytes": 1160,
+        "sha256": "3aff0b840505ac67587e0a676e6a5243751c8b9ee8f75ce02167ebb706c53e19",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/ai/generate-checklist.service.ts",
+        "bytes": 1417,
+        "sha256": "9d5040f8a92230d3f028ad6a66f61341e4495367ca66e5eaa82b1eecea5026e2",
+        "env": [
+          "OPENAI_CHECKLIST_MODEL"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/ai/prompts/checklist.prompt.ts",
+        "bytes": 1717,
+        "sha256": "a273d0830237c2c95d9ffc1f7bbf80f3fc5d80cfd12306a8b59a291402a6d771",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/analytics/client-analytics.service.ts",
+        "bytes": 565,
+        "sha256": "23d8d6df0e3e4151b924cfbeeac8de128389a3c3f834046edc652ce613795f82",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/analytics/dashboard.service.ts",
+        "bytes": 1491,
+        "sha256": "57de4f4eab2d432c84d17e5874127373e55cc2be9e117cc929ec2481d8220ed0",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/analytics/student-analytics.service.ts",
+        "bytes": 1465,
+        "sha256": "105f8315b9d9b25c0772a6d89fec7536336bb7cb9a655e7c81d4e43036f69e0e",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/applications/application-eligibility.service.ts",
+        "bytes": 1920,
+        "sha256": "c468cce0bf85754cca2e93415f3075143823aa1c80d93f2585e7543a2135356d",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/applications/application-status.ts",
+        "bytes": 541,
+        "sha256": "bf44cd5fe4d806cc3666c0f1615ef7291ad6ec1e0851aab1198e390df13ee028",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/applications/apply.service.ts",
+        "bytes": 1322,
+        "sha256": "bc41083acf643c2e5710594204125a4ccaa0b518f19c0dac1d4d19051d50e1a6",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/audit/audit.service.ts",
+        "bytes": 928,
+        "sha256": "6c90d50d8ed5aca78218c097704689e56cf7e36cedbea09ce1f8ca789aad13f6",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/checklists/approve-checklist.service.ts",
+        "bytes": 2022,
+        "sha256": "2a64a883198afcf0bee0ae65694e8ac3f66a0a3d9e466c69c9ed407d228f89e0",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/checklists/generate-checklist.service.ts",
+        "bytes": 4155,
+        "sha256": "50e64d08df20948a827037181e6d0083eacde9957ea8f086930052046cee6ac8",
+        "env": [
+          "OPENAI_CHECKLIST_MODEL"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/checklists/update-checklist.service.ts",
+        "bytes": 1528,
+        "sha256": "fa8c99f227183e4c8a4af313b775183995b7052c2fc4615eef7450923cf5d665",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/client/client-decision.service.ts",
+        "bytes": 823,
+        "sha256": "925531f1d7ebf9812b3f0ac9fafc9f389137df1e00e235b8b38e1266c6a09a4c",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/client/client-profile.service.ts",
+        "bytes": 618,
+        "sha256": "175802b626addc422269b38aa7b30defa30519425a045a3abdff3f2088669b5e",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/companies/company.service.ts",
+        "bytes": 6679,
+        "sha256": "99b8096edd995e865b4d067b5127e3cf9533f9544945151d21d50b062ef9337e",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/cv/create-upload.service.ts",
+        "bytes": 3451,
+        "sha256": "932169eec7219f96dbbdcf3b8e9b4cae9bb5bdf2d770e7358a0b53084bbba10b",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/cv/cv-extraction.schema.ts",
+        "bytes": 1408,
+        "sha256": "75c0c21794b8a28cdb396e267dc02f6da0a92cf9fae3fc71a7cc87f52b82e660",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/cv/extract-cv-profile.service.ts",
+        "bytes": 1792,
+        "sha256": "ff04f5587e9bda96534865cd1991e972b5e76f6b3b1326e2c65ffb886efec691",
+        "env": [
+          "OPENAI_CV_MODEL"
+        ],
+        "flags": []
+      },
+      {
+        "path": "src/services/cv/parsers/docx.parser.ts",
+        "bytes": 427,
+        "sha256": "2ee63b42e8624956a36441b4107aeac702fe17cd1bfa7f73ad26f6d46c86071a",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/cv/parsers/pdf.parser.ts",
+        "bytes": 584,
+        "sha256": "4adaaa22a90de6a8961be11e2ea79379b640f1015b249b926b06d662bb3f76fe",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/cv/parsers/types.ts",
+        "bytes": 146,
+        "sha256": "b243858f35df7fcda8d6fdf855efefdb416d222312ac14ee0520ab2f38ade994",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/cv/set-primary.service.ts",
+        "bytes": 1743,
+        "sha256": "05493723c6e8f838c7fd1a3ded9d6f4b54060745f5455edf8b26d48e7b07a552",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/feedbacks/interview-feedback.service.ts",
+        "bytes": 1728,
+        "sha256": "980de4466c8d1e088cbdeb9569bd134498325f3f61d84c1afb65c175a51662e5",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/interviews/calendar-invite.service.ts",
+        "bytes": 1512,
+        "sha256": "8605aed1de06573f86318bead2ea51f085cd6f57cf54f96c9c9a7ac6505f8848",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/interviews/interview-eligibility.service.ts",
+        "bytes": 2158,
+        "sha256": "67e94112a634812701e3d3b4a877b44078b90656331a60e9e594ad93552bab8c",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/interviews/interview.service.ts",
+        "bytes": 3814,
+        "sha256": "27183599072f796f2c83ca7d8323360fd8ef5f2e5e663a1e6ce27483763fc09a",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/interviews/next-round.service.ts",
+        "bytes": 510,
+        "sha256": "10fcd2ab9eea4542cd97b34081626e1d8121194b31378c822f235b4b4e59cbef",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/jobs/create-job.service.ts",
+        "bytes": 3652,
+        "sha256": "e589fcc180190d86926c92ebfa83acc8bd8958ebf9937cbaf340e697b0f2126a",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/jobs/job-permissions.service.ts",
+        "bytes": 2038,
+        "sha256": "6d3ff4fb286f9c4712da3bc49a9b793774c71149dcb2c7a628537ef8a28e3083",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/jobs/job-status.ts",
+        "bytes": 486,
+        "sha256": "9ce495a024663adca754fdc358ccab8660370e8f66ff5d0a08b5c2efb70d274a",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/jobs/publish-job.service.ts",
+        "bytes": 4225,
+        "sha256": "9eb2e630dd817a5a0599739c63ece70d49abe64385b61f082cc2a8f41c9ef6ea",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/jobs/submit-job.service.ts",
+        "bytes": 2021,
+        "sha256": "40ea3bc2456716474fcd2b830640597134daab1b9e0e38d301b9375b8c16afe6",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/jobs/update-job.service.ts",
+        "bytes": 4024,
+        "sha256": "fd60abc89b4a5c6d879cf2d19668c51746333f090cf9e2d073f1b6f4f0b07d9a",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/mocks/calculate-mock-score.ts",
+        "bytes": 263,
+        "sha256": "741ebe45567d6768f4a87f6f83fe268e74e810f7135ac8892e3dbbf0bf2d482a",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/mocks/mock-score.service.ts",
+        "bytes": 521,
+        "sha256": "eb87b4bd8554a0b59c06ce66df347323504267312ff463aa3ed6a482dabf2e47",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/mocks/mock.service.ts",
+        "bytes": 2880,
+        "sha256": "e9f112f9f1649268f4abe71b89247c1d143a7ef2b29ffd03a07ca0c63b88d498",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/notifications/calendar-resolver.service.ts",
+        "bytes": 1374,
+        "sha256": "1b257a96bb5af78f79ffb6edd4b1e0b3d80f87cfb909ae418655e42de25ae2d6",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/notifications/channels/email.channel.ts",
+        "bytes": 787,
+        "sha256": "fd99e8464894daef3ccdfe49b68bbca2f0e3835b45db1cb825a09c1b77fc4f96",
+        "env": [
+          "EMAIL_ENABLED"
+        ],
+        "flags": []
+      },
+      {
+        "path": "src/services/notifications/channels/in-app.channel.ts",
+        "bytes": 1010,
+        "sha256": "d0324e19e57a0eab649117b310ee5bcab48985bc4c5539c3a42f049de4e2194b",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/notifications/channels/telegram.channel.ts",
+        "bytes": 973,
+        "sha256": "5dbcbec2f05e763691b4160fdde85f249f9ad53ac8d8c88d49e11436018befa7",
+        "env": [
+          "TELEGRAM_ENABLED",
+          "TELEGRAM_BOT_TOKEN"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/notifications/channels/whatsapp.channel.ts",
+        "bytes": 1055,
+        "sha256": "45e0702624bab65c065e75be65095226dc25c77260844225d59e28b0fcbaaffc",
+        "env": [
+          "WHATSAPP_ENABLED",
+          "WHATSAPP_WEBHOOK_URL",
+          "WHATSAPP_WEBHOOK_TOKEN"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/notifications/delivery-log.service.ts",
+        "bytes": 920,
+        "sha256": "1f24adbc844511a6f710c450525cacfadde6a8af5d467570b6ae350eedeea4d0",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/notifications/notification-renderer.service.ts",
+        "bytes": 10518,
+        "sha256": "62ce5c48a46674b71038f8e03c94445c446ce40957f4a5f389a2b3d01a58f4be",
+        "env": [
+          "NEXT_PUBLIC_APP_URL"
+        ],
+        "flags": []
+      },
+      {
+        "path": "src/services/notifications/notification-worker.service.ts",
+        "bytes": 6689,
+        "sha256": "06b6100aff93e4528e27eb231817c09edd91722ffe6a5bae4537035d234e14a5",
+        "env": [
+          "NOTIFICATION_BATCH_SIZE"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/notifications/queue.service.ts",
+        "bytes": 1120,
+        "sha256": "dc6567b713eeaf898c525f96c84dde8ad4b99b060d41ed581645899ac54f690f",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/notifications/recipient.service.ts",
+        "bytes": 460,
+        "sha256": "095575e27fac29c0ec443e193fd0198835fcd4f7e26359b7229bac61bca23672",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/offers/offer-file.service.ts",
+        "bytes": 1986,
+        "sha256": "adeb1b019b39599d5b0e8b82398e992c8c17d67bc7eb7a82f75464b4bc9f51da",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/offers/offer.service.ts",
+        "bytes": 2871,
+        "sha256": "d23bc93ed5c486f59ace916d4a01d7c164fded6817719a38e25618e376cda20f",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/operations/cv-reminder.service.ts",
+        "bytes": 1704,
+        "sha256": "642345a0bee92926d010776464085d00f4ccee1d13ad1fd95023643841c6a90f",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/operations/operations.service.ts",
+        "bytes": 725,
+        "sha256": "45e1dd07c108ff7b7acc055a7fefa049bb9db94df7f7e60ca6b268af0bae50b1",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/operations/reminder.service.ts",
+        "bytes": 7845,
+        "sha256": "b8228caf165fe029e7578a5976478e670c4a343edc0584781ef8a17ce9ba7ea4",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/performance/feed.service.ts",
+        "bytes": 1506,
+        "sha256": "4ba4aefac30db094ad7b9d26a1cada016a2c031719820f16b2a0540dab30a8c9",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/performance/verification-queue.service.ts",
+        "bytes": 969,
+        "sha256": "8805e3a05a9314c1442b1472dd921999d34987cb5a0488bda35089662381658e",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/placements/placement.service.ts",
+        "bytes": 2477,
+        "sha256": "c33fdf3e0ab69460d97569ba0cb75acc1a49b5a739d03296d3f2645d25e3cb27",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/publications/job-broadcast.service.ts",
+        "bytes": 5040,
+        "sha256": "35b54297d399bf3537b63588f899bdb104ee7f6c163fd695f8d10885b6191678",
+        "env": [
+          "TELEGRAM_JOB_CHANNEL_ID"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/releases/release-gate.service.ts",
+        "bytes": 887,
+        "sha256": "d307cd4609a5ecad38f12b870af9b436a8dc7e6df0c27baf09de4a6bffa38da9",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/releases/release.service.ts",
+        "bytes": 1280,
+        "sha256": "64e4980d2df130f28784395a325d804c641c8aab4eb245d58f9b4da5f1cbd02d",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/reports/report.service.ts",
+        "bytes": 4417,
+        "sha256": "eb5fd5d514abe1ba097f6770b41949f0a7a271e5a6fe8800a1c888565052dc68",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/scoring/calculate-ats.ts",
+        "bytes": 1935,
+        "sha256": "cf56e94c00e9832f62c3ed20698dc7413316bcedb3a5bfa0a7921e440b7aa8d7",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/scoring/calculate-match.ts",
+        "bytes": 1333,
+        "sha256": "c9f021b229f3197dc6eed68c132421720bf404b74d11bd6e0cd218b0166ef1ab",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/scoring/get-application-score.service.ts",
+        "bytes": 1639,
+        "sha256": "23b1bb8d5e2e938d1f29f3cad48054e6536fc94395d2c3b660dc5a7512c9d5b9",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/scoring/get-student-score.service.ts",
+        "bytes": 1382,
+        "sha256": "b31ea86657713dbf4eed2169c475b238c3cce685dc304a4df417596b24ed1e30",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/scoring/list-scoring-applications.service.ts",
+        "bytes": 964,
+        "sha256": "4e62c148192bc5096b0aa9c03195e11e63f9e07774bfa65796dc675dc4a1aeec",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/scoring/match-requirements.ts",
+        "bytes": 2261,
+        "sha256": "dc7c545d9048e92247d92b60267f7370bd7398d0ce0c2fa29c0c77dfb1447a16",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/scoring/normalize-term.ts",
+        "bytes": 912,
+        "sha256": "8e36c64feb5270c4b077cc2659159fe5bc91cb7f9798f2a19d001c864916f938",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/scoring/process-application.service.ts",
+        "bytes": 5647,
+        "sha256": "33bf5bd15c6a2846cd14c9c41c9e6dd2d03865126acf34360b6b1bb8ce687311",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/scoring/types.ts",
+        "bytes": 341,
+        "sha256": "df2845dd691bff2cdf7c4f7b8bd7e4c0b966227c371b8c41190d3a3095dd6313",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/scoring/versions.ts",
+        "bytes": 289,
+        "sha256": "b2361b3bdff07c83affd88d4bc2fbec0c11b35653cbde1856fac051237cca737",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/security/api-rate-limit.service.ts",
+        "bytes": 793,
+        "sha256": "70ae746728e722bc4a637e85e055368952437dc50c13c832e599d8c0528f4ae7",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/security/login-rate-limit.service.ts",
+        "bytes": 698,
+        "sha256": "6166f11f05f4818b41905375bbe88087ad296e76adca60d7a260675ae6cc8186",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/security/rate-limit.service.ts",
+        "bytes": 802,
+        "sha256": "fa9137a4d4b8488001152b36a038e66ae1c35836ef369a19723616ff7496cdab",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/students/dashboard.service.ts",
+        "bytes": 1275,
+        "sha256": "e987433965dd43708e5333d87944a338509a65591b4ed0096c3f5710387c411d",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/students/student-verification.service.ts",
+        "bytes": 1959,
+        "sha256": "3d02242a23b26c0ce89b297cac101f634f6fab619c992dfe24c6d1208c970923",
+        "env": [
+          "HRANALYST_STUDENT_VERIFY_URL",
+          "HRANALYST_STUDENT_VERIFY_TOKEN"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/students/update-profile.service.ts",
+        "bytes": 1629,
+        "sha256": "3f50fefdd18124ebb61c2fabcee8e32a4cfba95de70037645928b2572584be6e",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/submissions/client-cv-access.service.ts",
+        "bytes": 1745,
+        "sha256": "e31ed02cadd2941b239a85c6e55cf49b55a1aa9a4e38e62357226b0bf62848f3",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/submissions/submission-eligibility.service.ts",
+        "bytes": 703,
+        "sha256": "5180b607329b0bc7b786214f6c703d1240cdc9787e57487b377129a09dc3c0af",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/submissions/submission.service.ts",
+        "bytes": 1303,
+        "sha256": "d30c261e064b58c90f98800dab740b7856565a6ccb90886b517b8c97c3d88e23",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/uat/uat.service.ts",
+        "bytes": 2739,
+        "sha256": "0b1782a79deeea14ab1c138e9d3f0a0c4e1ccaaa86a8543d5745160752fdeb3a",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/users/create-user.service.ts",
+        "bytes": 7580,
+        "sha256": "8220fdb5bd0608cd80f601976e37db769641dc760a41c7f58cc6b2cfaaec4ff1",
+        "env": [
+          "NEXT_PUBLIC_APP_URL"
+        ],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/users/current-user.service.ts",
+        "bytes": 1185,
+        "sha256": "6110f51de91a0d11d8e986f7d54ba36d51b3198a105c4394eb78c82d71b1d9fc",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/users/user-status.service.ts",
+        "bytes": 4187,
+        "sha256": "c9a42e593b5e4af59a403d35a7605c2e4d550061cb593710d6b1d3a8e2c0408f",
+        "env": [],
+        "flags": [
+          "throw new Error"
+        ]
+      },
+      {
+        "path": "src/services/users/users.service.ts",
+        "bytes": 285,
+        "sha256": "66f0ee799cad94fcae905a29f286d5373e7c230ca4e87bf1f49769d5d14c879d",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/verifications/claim-application.service.ts",
+        "bytes": 1196,
+        "sha256": "e23dabcc1501835ee890f5cd746702dccbfb4e6b81157c0d09d925fe40b93085",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/verifications/finalize-verification.service.ts",
+        "bytes": 1372,
+        "sha256": "b1b7e51b2871f051aeaefee11f6e24b21546f4cbd64ffbe002ed1019519277aa",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/services/verifications/get-verification.service.ts",
+        "bytes": 1426,
+        "sha256": "b4815024a5ad2170e357952488f5ca6629265f920317892deb5744ad124c891d",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/types/auth.ts",
+        "bytes": 598,
+        "sha256": "48787d4b61441da4cf92a215dd39f38aa42adbf7360230a1fe97d81ef0c205f9",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/types/common.ts",
+        "bytes": 276,
+        "sha256": "630c7e330966b33680dda6423780c951636c07ef8b51b3da144cc8c60aab8a77",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/types/database.ts",
+        "bytes": 99584,
+        "sha256": "adc44de58d5aa20ccfa8557d20e6a03c8ceab70772d09d6e1b2a5ec285a19ba2",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "src/types/index.ts",
+        "bytes": 241,
+        "sha256": "50f5f24cfa3a34b671f6386a3e8db565e9875910ea2b7431e99cdb2c296f2e14",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "STAGE2_AUDIT_AND_APPLY.md",
+        "bytes": 3069,
+        "sha256": "19ada7238d0948456f95ea1599d31bc949f3b90f9a68d27fc2d5dc5700042115"
+      },
+      {
+        "path": "STAGE2_DELETE_THESE_FILES.txt",
+        "bytes": 277,
+        "sha256": "9b26c7a7168ff6a580411ad861e248efd7a34d50fdaad60611b4d3cf30194693"
+      },
+      {
+        "path": "supabase/.branches/_current_branch",
+        "bytes": 4,
+        "sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605"
+      },
+      {
+        "path": "supabase/.gitignore",
+        "bytes": 72,
+        "sha256": "507699eb91144818edf61d3a079212cacf31d8db520eae428e3b48fcf0d6919c"
+      },
+      {
+        "path": "supabase/.temp/cli-latest",
+        "bytes": 8,
+        "sha256": "103e9d7a97f9a66c28586ffae6f8d81a90630d5cb2c537b23ed886a5e0e5ff01"
+      },
+      {
+        "path": "supabase/.temp/gotrue-version",
+        "bytes": 8,
+        "sha256": "edd7ec89eb825b9b493b8d50c805d706111f50b26f5245657c9cd2cac643cb1d"
+      },
+      {
+        "path": "supabase/.temp/linked-project.json",
+        "bytes": 146,
+        "sha256": "bd9bcd4f313e0b3d643327b6c71b143124e5a168d191c9699ba1bd7d9133f548",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/.temp/pooler-url",
+        "bytes": 93,
+        "sha256": "611490a8380efc4710192988f3c319a504263568743399da52e1f6c38686144b"
+      },
+      {
+        "path": "supabase/.temp/postgres-version",
+        "bytes": 10,
+        "sha256": "cbe206566a93239f1b817730ee61cd39782fe3e29fabb54b6412ea86139a529d"
+      },
+      {
+        "path": "supabase/.temp/project-ref",
+        "bytes": 20,
+        "sha256": "3809292212052fc39f54f801d9275a456661981b302c6e86d46c23008d0dcbe5"
+      },
+      {
+        "path": "supabase/.temp/rest-version",
+        "bytes": 5,
+        "sha256": "b25de4a023eef82d4780a9f7816c5685ca35437308a9d457585eece9945485dc"
+      },
+      {
+        "path": "supabase/.temp/start-secrets/supabase_edge_runtime_hranalyst-placement/env/docker.env",
+        "bytes": 1144,
+        "sha256": "484831ac49768f2620c5ae19c7b996bcfe17e8d5b04dea2c6f10f5915edb2e36"
+      },
+      {
+        "path": "supabase/.temp/storage-migration",
+        "bytes": 26,
+        "sha256": "375641061775d66da619db893bace32ff83394ea2169f95af20f34c543be4f34"
+      },
+      {
+        "path": "supabase/.temp/storage-version",
+        "bytes": 7,
+        "sha256": "2ee3333d1edee9a6877adf71465d8ccdd8f29c91668a2bdc56da4a1c6c45a035"
+      },
+      {
+        "path": "supabase/config.toml",
+        "bytes": 15633,
+        "sha256": "53c86b0c76b032cea554ae40eec63a2a01449d40c0db5d3a0c1c21f4fa53ed32"
+      },
+      {
+        "path": "supabase/migrations/202609080001_stage01_foundation.sql",
+        "bytes": 26059,
+        "sha256": "6d14dbfea8498df2846cf781430f575504109ac8b1eb742429b925aa32e84679",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/migrations/202609080002_stage02_auth_rbac.sql",
+        "bytes": 12323,
+        "sha256": "5bea9d0a11ce1e80bec579f0b958ac75694d24155dfa4c1ed4810c5d9e4050d9",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/migrations/202609080003_stage03_companies_client_hr_jobs.sql",
+        "bytes": 9019,
+        "sha256": "5359155906f2b5fb8765e1cf0af2accf56c963694812e5e30647fe048ef847ee",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/migrations/202609080004_stage04_checklist_publish.sql",
+        "bytes": 19555,
+        "sha256": "7b59ad7bafed20e3a9bc023a7e14622b288fef9d1356edc03899066a907814bb",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/migrations/202609080005_stage05_student_cv_apply.sql",
+        "bytes": 15156,
+        "sha256": "f77b29cb3a49a877e2bff6afaebf14290c6fd1edd83689627bd3f77552ed9ef5",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/migrations/202609080006_stage06_cv_parsing_scoring.sql",
+        "bytes": 15057,
+        "sha256": "9f1a90bc166b4a569ec8edd6fa7b8eb4880af107c2f216e43a989a767fb7853b",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/migrations/202609080007_stage07_hr_verification.sql",
+        "bytes": 17734,
+        "sha256": "8ac3a0ff02f0103cbd6cd8640c0a658534e6f6da910b71de455b4093722bb2eb",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/migrations/202609080008_stage08_client_submission.sql",
+        "bytes": 12120,
+        "sha256": "7df87249a044ff712a9b64b1368309b3d79017a01b02bea50507e7e71af452a8",
+        "env": [],
+        "flags": [
+          "any"
+        ]
+      },
+      {
+        "path": "supabase/migrations/202609080009_stage09_mock_interviews.sql",
+        "bytes": 26193,
+        "sha256": "2a4427d5f477f1f85b27c2b6f03998a5d53e619305816189d555ecdc906c3069",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/migrations/202609090010_stage10_client_interviews.sql",
+        "bytes": 31431,
+        "sha256": "bcc6219dac6ce3af4dea4b9da95a62665b884fe783ed5642fd5bdb4db55e8b25",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/migrations/202609090011_stage11_feedback_offer_placement.sql",
+        "bytes": 65594,
+        "sha256": "8bf71281f948ac9c225e16ee0ccc0571a73255bc61fc304366e6e3c02db059c4",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/migrations/202609090012_stage12_notifications_analytics.sql",
+        "bytes": 21399,
+        "sha256": "5756acfea4009ca945915a3f123f3cb16e7535a335abe126719c8783f730ec28",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/migrations/202609090013_stage13_security_consolidation.sql",
+        "bytes": 36470,
+        "sha256": "933aaa1ff19ec1b7bc43405ebefdbb17e02c3f67eb2212fcad0687c343c31b25",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/migrations/202609090014_stage14_performance_indexes.sql",
+        "bytes": 1975,
+        "sha256": "ea00efb57693670fa279e1357013569c1edcb64b1c7541ead6a6727724d95546",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/migrations/202609090015_stage15_production_release.sql",
+        "bytes": 6913,
+        "sha256": "87d23e6ed6829f0998dcc2ec8c7bb73045c2114b64d6cedbaf52566b4cf02672",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/migrations/202609090016_notification_claiming.sql",
+        "bytes": 2695,
+        "sha256": "b4ea8b0c0b1247979f32d6f24861473afc1eca93d147c68ed6e98753de6e21a7",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/migrations/202609090017_recovery_contracts.sql",
+        "bytes": 6370,
+        "sha256": "2a248c6765a1098340db4cf2e51f6f8e97b98af65311131f527c36e8f707a062",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/migrations/202609090018_public_privilege_hardening.sql",
+        "bytes": 1932,
+        "sha256": "a319a40124af96407c290db76f525efa5dc89d5a6ea1754605ad40397df0a2e5",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/migrations/202609150019_schema_alignment_patch.sql",
+        "bytes": 11141,
+        "sha256": "152609323fcaadee52961e841d3aa272d257c41d3a2780ed515825c85d468ae9",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/seed.sql",
+        "bytes": 867,
+        "sha256": "a2fb9debe45b4c1ea98434a27d76995b8389493f1c0508de035623f547382939",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/seeds/01_example_seed_all_roles.sql",
+        "bytes": 13228,
+        "sha256": "1153ea0a8481225595c2da91950ea79da5128bbe25ef8f6477d0543f80d1748d",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/database_connections.sql",
+        "bytes": 452,
+        "sha256": "40e8d15e71038f32b30766ed17b2636680080eb42950be8c9f012c7eb1c4b0d5",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/database_size.sql",
+        "bytes": 417,
+        "sha256": "40f1dfc0bef9d2ea08bd429c54399974f8f0bba2bc36c15822fad3283103e62b",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/duplicate_records.sql",
+        "bytes": 857,
+        "sha256": "db04bb75b36afcadeeed13b69c3bbe76d7ff9e7d0e40da56f68478823c945ac8",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/index_usage.sql",
+        "bytes": 488,
+        "sha256": "fc3abc70b9283d54f48efec5ae73f0d82017c0d2fc28857d9aa565df7836fdb8",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/notification_queue_audit.sql",
+        "bytes": 522,
+        "sha256": "2e9b96e7047241ecf966bb4d81abf5a4b3ae5c75fd9c2061e9052e4cea611c8a",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/operational_health.sql",
+        "bytes": 918,
+        "sha256": "1747e167722e7958e60e13e09faf265e3e6544c0ac9cd469259bade3568d6214",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/orphan_records.sql",
+        "bytes": 1116,
+        "sha256": "b9e572006a8151c60e8c90d2363f17069b9d6f134ff0137564aad0ee2ffd7967",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/performance_query_plans.sql",
+        "bytes": 2446,
+        "sha256": "85d22cd18e36f8e43135cfae011c51f90c0f4f35fafbb00a2182c3dc32e24670",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/production_integrity.sql",
+        "bytes": 5303,
+        "sha256": "23aedd4bb606f5719829dc872b7a4e7cb3620c44c8c5520aad261a90b4d5d048",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/production_smoke.sql",
+        "bytes": 2553,
+        "sha256": "3d70058b00009559e1a5f9cc8f7c1b9392be907ace504f27c690dd5c5d375ffb",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/scoring_queue_concurrency.sql",
+        "bytes": 898,
+        "sha256": "982f6eb7abdcd73a1fd66e7875510ad75cc4d8d06ed0bfcfdcff4a773e282eca",
+        "env": [],
+        "flags": [
+          "any"
+        ]
+      },
+      {
+        "path": "supabase/tests/security_audit.sql",
+        "bytes": 1329,
+        "sha256": "af9c26a9fb43afc09ea2bc6505c9cb10b2c78249d93e490ea2ac75742050fb51",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/slow_queries.sql",
+        "bytes": 579,
+        "sha256": "20f0704ec9e1db9b3a41d76fd139e644ca987b14e18568e8d3a7493334582217",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/stage01_integrity.sql",
+        "bytes": 6358,
+        "sha256": "8e2dd58660a99b1b8ad4f3bba13fcde00c9ec10cd3f8d74cb8d133e02ba8212e",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/stage01_security.sql",
+        "bytes": 1534,
+        "sha256": "756125940b4fdaaaac2d49611c43eec4c0cb6a54fc61b03ca23dcede5864310b",
+        "env": [],
+        "flags": [
+          "any"
+        ]
+      },
+      {
+        "path": "supabase/tests/stage02_auth_rbac.sql",
+        "bytes": 2226,
+        "sha256": "904e69dc7357047c577d349c0ff28708617f5ee62312bfcafb59923bfe15194a",
+        "env": [],
+        "flags": [
+          "any"
+        ]
+      },
+      {
+        "path": "supabase/tests/stage03_companies_jobs.sql",
+        "bytes": 1063,
+        "sha256": "12a33aad1ea02cea4ac7ee428bbdb0625bd78ab64333a762d8da2242a3bb20fc",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/stage04_checklist_publish.sql",
+        "bytes": 2531,
+        "sha256": "b6e3fbc0cd233377693a83291aa0f6644e437b104ad1d8bf13935af81399d928",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/stage05_student_cv_apply.sql",
+        "bytes": 1646,
+        "sha256": "8320a4360a24823d0d0049df88411ebbc9fb7b29f4c2f965beff0e841325daf4",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/stage06_cv_scoring.sql",
+        "bytes": 1978,
+        "sha256": "11320bae1af608f7a46d2219c473e6f6944e99bd3ef1559ae3511d3fd5a903b9",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/stage07_hr_verification.sql",
+        "bytes": 1587,
+        "sha256": "2c3907575847915d37dd91fd9a0c3056313eed79681a564c6dbc35865d3e3ee0",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/stage08_client_submission.sql",
+        "bytes": 1016,
+        "sha256": "a27705d8662bb0521336eddca67526cd79274d32cf6bb79775ea7c73c6d30b0d",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/stage09_mocks.sql",
+        "bytes": 1975,
+        "sha256": "8ef76fb178fac183d74b2c472efb83c9ae3430912d23637bed0157d39cb86244",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/stage10_client_interviews.sql",
+        "bytes": 2418,
+        "sha256": "3ee97bf21ae51af8875b9716e34d0af1e46d6daa4cf6a9336508e75df7040472",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/stage11_feedback_offer_placement.sql",
+        "bytes": 2783,
+        "sha256": "371c1e81bd0d650ea0e14615109a5834e57b6909fe8e8851aa890b5a8be64b94",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/stage12_notification_delivery.sql",
+        "bytes": 1987,
+        "sha256": "f88986149679d621f9f8afb28a1b043b153838d605d5251c683fe01e853af07b",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/stage13_security.sql",
+        "bytes": 1969,
+        "sha256": "dc6fea466e22281af1da8318f7518746456520aba6378ffc9285b863e56a9051",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/stage17_tenant_isolation.sql",
+        "bytes": 2787,
+        "sha256": "afd4ad1c2e5a1a99ad70fbb521b903f1ac38f4c27a304fdaedba56cc658795d0",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/stage18_privilege_hardening.sql",
+        "bytes": 1851,
+        "sha256": "cad83e259210a5c9267a4da1843bb5d19443602f5311fada5b82e8c6b2a0b1a6",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "supabase/tests/stage19_company_schema_alignment.sql",
+        "bytes": 1655,
+        "sha256": "5114a72f2f4a0d096669a38586ef4c06813214737e648aea902f74e3226fec7e",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "SUPABASE_AUTH_EMAIL_TEMPLATES.md",
+        "bytes": 1119,
+        "sha256": "106f79e15b805e08a9a72ba269a77aafca20fcf4bbbf29396ac1412e70e2095c"
+      },
+      {
+        "path": "tests/domain.test.ts",
+        "bytes": 6033,
+        "sha256": "4a33c050cce8f58a929a88df5c0f9777be54fa0d992c778833a45dd150ada253",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "tests/e2e/access.spec.ts",
+        "bytes": 1613,
+        "sha256": "f714e3cc7da4119d8f022ad42cad5a9976778efc8077b889cc7f171e556f8529",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "tests/e2e/role-journeys.spec.ts",
+        "bytes": 808,
+        "sha256": "829f4b784b894e67f8190aba39d9f1a5102f8de0ecd483c8c73603a443713fec",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "tsconfig.json",
+        "bytes": 670,
+        "sha256": "5c51df4c59f4510d8c7dadf07a5c32132228826a3b331da5e286207b4df7ef9c",
+        "env": [],
+        "flags": []
+      },
+      {
+        "path": "tsconfig.tsbuildinfo",
+        "bytes": 341151,
+        "sha256": "f06c302c61c2f574af8e5260d0ca6891e515e6edc527ef2e3e892ba58d179b2b"
+      },
+      {
+        "path": "vitest.config.mts",
+        "bytes": 191,
+        "sha256": "a8a569bb16934b44efd5ce37a98c499d24c71935dfa71378eae32e67735f1ea8"
+      },
+      {
+        "path": "zod_test.ts",
+        "bytes": 410,
+        "sha256": "b7c33664e15bf7e32a8d205ec94e02a284d0ca9a7dc60b86d57d678e220b68eb",
+        "env": [],
+        "flags": []
+      }
+    ]
+  },
+  {
+    "directory": "S:\\COEPD HRAnalyst\\HRAnalyst_Codex_Recovery_Package (1)",
+    "files": [
+      {
+        "path": "03_PRD_REQUIREMENTS_CHECKLIST(1).md",
+        "bytes": 6598,
+        "sha256": "e9ed18c3edef0907f47cddbeedfde04b168d32e8ea40d35e652e3a73f9ab5201"
+      },
+      {
+        "path": "04_CANONICAL_ARCHITECTURE_AND_DECISIONS(1).md",
+        "bytes": 4763,
+        "sha256": "9d2ceb458638ebbe716844c85228df1028c7a318cc9c5a881043f05788a9adf6"
+      },
+      {
+        "path": "06_ACCEPTANCE_TEST_MATRIX(1).md",
+        "bytes": 6088,
+        "sha256": "15a718c8548480e0354e5bdd291d766534059cf43dba523d6262dab408875e18"
+      },
+      {
+        "path": "ARCHITECTURE_AND_DATA_FLOW.md",
+        "bytes": 1362,
+        "sha256": "96c69576a3a8fbdf1282d39f46a9b0c4a40f50adab800484e1e44babcfcfe325"
+      },
+      {
+        "path": "CODEX_MASTER_RECOVERY_PROMPT.md",
+        "bytes": 20005,
+        "sha256": "92bca2eba9646218ed4847e0570a2d4bad62b8c8e7b6226f29f3107137fedc85"
+      },
+      {
+        "path": "DEPLOYMENT_AND_RELEASE_CHECKLIST.md",
+        "bytes": 1033,
+        "sha256": "eace72ce19e771694e37f8efe9ced382eccbb335dd73cf561ed764ed9cda1259"
+      },
+      {
+        "path": "ENVIRONMENT_CONFIGURATION_TEMPLATE.md",
+        "bytes": 689,
+        "sha256": "0662ec9f28d06fb1e6d6b8d9be93f9aebd0fd007d409801b757b422b96605aef"
+      },
+      {
+        "path": "FINAL_RECOVERY_REPORT_TEMPLATE.md",
+        "bytes": 1290,
+        "sha256": "61ef88151b2e3e577b482ad72f97a0412586f6107bf53bfc9bb4557955f33571"
+      },
+      {
+        "path": "NOTIFICATION_OUTBOX_AND_CRON.md",
+        "bytes": 589,
+        "sha256": "39e6e66452a49e3cdbcd516ff6ffb09a92a005c2c2e2d3a3158c3da35dcbf09e"
+      },
+      {
+        "path": "PRD_IMPLEMENTATION_TRACEABILITY_TEMPLATE.md",
+        "bytes": 2881,
+        "sha256": "bfdf5c76be4991f80c276b065fa0d90d0675375e7b0cda6b84139f78af718bbc"
+      },
+      {
+        "path": "RBAC_AND_SECURITY_MODEL.md",
+        "bytes": 861,
+        "sha256": "0e62faec3eaf22b63269f19a19f4c73c085c72664033d507f63b73187d636a1a"
+      },
+      {
+        "path": "README.md",
+        "bytes": 955,
+        "sha256": "522e693ad3ac5eb37d0c3b9dc90117d7c03a19e1d64c3fd690e4dfbfc425d54f"
+      },
+      {
+        "path": "RECOVERY_PLAN.md",
+        "bytes": 2423,
+        "sha256": "d794b97e4597eeb56a8c6175f1f828e01ba0ecfc98d401325867063a49778a59"
+      },
+      {
+        "path": "SCORING_AND_AI_SPEC.md",
+        "bytes": 812,
+        "sha256": "f79c6b7451088f81387eb5bb8c7578ad24a1b9cbf4e891133f0f5962878013b4"
+      },
+      {
+        "path": "STATE_MACHINE_AND_LIFECYCLE.md",
+        "bytes": 1054,
+        "sha256": "66ce585d7c3e2dc7ccf5d4fac551fde07677c7b9c9b7e66ced2e7b18f41aca9f"
+      },
+      {
+        "path": "TESTING_AND_ACCEPTANCE_STRATEGY.md",
+        "bytes": 998,
+        "sha256": "52323f45805a62359bcc0fb0b42f4922b67ea50c3e076e7b7ba350dbca580d31"
+      }
+    ]
+  }
+]

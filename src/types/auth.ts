@@ -30,28 +30,5 @@ export interface CurrentUser {
 export interface AuthActionState {
   success: boolean;
   message: string;
+  fields?: Record<string, string>;
 }
-
-
-// export type UserRole =
-//   | "super_admin"
-//   | "admin"
-//   | "placement_hr"
-//   | "client_hr"
-//   | "student";
-
-// export type AccountStatus =
-//   | "pending"
-//   | "approved"
-//   | "rejected"
-//   | "suspended"
-//   | "inactive";
-
-// export interface CurrentUser {
-//   id: string;
-//   email: string;
-//   firstName?: string | null;
-//   lastName?: string | null;
-//   accountStatus: AccountStatus;
-//   roles: UserRole[];
-// }

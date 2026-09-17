@@ -21,5 +21,6 @@ export type ApplicationStatus =
   | "rejected_interview"
   | "offer_pending"
   | "offer_received"
+  | "offer_accepted"
   | "placed"
   | "withdrawn";

@@ -2,74 +2,35 @@ import "server-only";
 
 import crypto from "node:crypto";
 
-import {
-  assertPerformanceEnabled,
-  getPerformanceSecret,
-} from "./config";
+import { assertPerformanceEnabled, getPerformanceSecret } from "./config";
 
-function secureEqual(
-  left:
-    string,
-  right:
-    string
-) {
+function secureEqual(left: string, right: string) {
+  const leftBuffer = Buffer.from(left);
 
-  const leftBuffer =
-    Buffer.from(left);
+  const rightBuffer = Buffer.from(right);
 
-  const rightBuffer =
-    Buffer.from(right);
-
-  if (
-    leftBuffer.length !==
-    rightBuffer.length
-  ) {
+  if (leftBuffer.length !== rightBuffer.length) {
     return false;
   }
 
-  return crypto
-    .timingSafeEqual(
-      leftBuffer,
-      rightBuffer
-    );
+  return crypto.timingSafeEqual(leftBuffer, rightBuffer);
 }
 
-export function
-authorizePerformanceRequest(
-  request:
-    Request
-) {
-
+export function authorizePerformanceRequest(request: Request) {
   assertPerformanceEnabled();
 
-  const expected =
-    getPerformanceSecret();
+  const expected = getPerformanceSecret();
 
-  const supplied =
-    request.headers.get(
-      "x-perf-secret"
-    ) ?? "";
+  const supplied = request.headers.get("x-perf-secret") ?? "";
 
-  if (
-    !secureEqual(
-      expected,
-      supplied
-    )
-  ) {
-
-    const error =
-      new Error(
-        "Unauthorized performance request"
-      );
+  if (!secureEqual(expected, supplied)) {
+    const error = new Error("Unauthorized performance request");
 
     (
-      error as
-      Error & {
-        status?:
-          number;
+      error as Error & {
+        status?: number;
       }
-    ).status =
-      401;
+    ).status = 401;
 
     throw error;
   }

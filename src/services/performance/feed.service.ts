@@ -1,33 +1,20 @@
 import "server-only";
 
-import {
-  supabaseAdmin,
-} from "@/lib/supabase/admin";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
-export async function
-getPerformanceStudentFeed({
+export async function getPerformanceStudentFeed({
   cursor,
   limit,
 }: {
-  cursor?:
-    string | null;
-  limit:
-    number;
+  cursor?: string | null;
+  limit: number;
 }) {
+  const safeLimit = Math.min(Math.max(limit, 1), 50);
 
-  const safeLimit =
-    Math.min(
-      Math.max(
-        limit,
-        1
-      ),
-      50
-    );
-
-  let query =
-    supabaseAdmin
-      .from("jobs")
-      .select(`
+  let query = supabaseAdmin
+    .from("jobs")
+    .select(
+      `
         id,
         job_code,
         job_title,
@@ -47,88 +34,43 @@ getPerformanceStudentFeed({
           name,
           logo
         )
-      `)
-      .eq(
-        "status",
-        "published"
-      )
-      .is(
-        "deleted_at",
-        null
-      )
-      .order(
-        "published_at",
-        {
-          ascending:
-            false,
-        }
-      )
-      .order(
-        "id",
-        {
-          ascending:
-            false,
-        }
-      )
-      .limit(
-        safeLimit + 1
-      );
+      `,
+    )
+    .eq("status", "published")
+    .is("deleted_at", null)
+    .order("published_at", {
+      ascending: false,
+    })
+    .order("id", {
+      ascending: false,
+    })
+    .limit(safeLimit + 1);
 
   if (cursor) {
+    const [publishedAt, id] = cursor.split("|");
 
-    const [
-      publishedAt,
-      id,
-    ] =
-      cursor.split("|");
-
-    if (
-      publishedAt &&
-      id
-    ) {
-
-      query =
-        query.or(
-          `published_at.lt.${publishedAt},and(published_at.eq.${publishedAt},id.lt.${id})`
-        );
+    if (publishedAt && id) {
+      query = query.or(
+        `published_at.lt.${publishedAt},and(published_at.eq.${publishedAt},id.lt.${id})`,
+      );
     }
   }
 
-  const {
-    data,
-    error,
-  } =
-    await query;
+  const { data, error } = await query;
 
   if (error) {
-    throw new Error(
-      error.message
-    );
+    throw new Error(error.message);
   }
 
-  const rows =
-    data ?? [];
+  const rows = data ?? [];
 
-  const hasMore =
-    rows.length >
-    safeLimit;
+  const hasMore = rows.length > safeLimit;
 
-  const items =
-    rows.slice(
-      0,
-      safeLimit
-    );
+  const items = rows.slice(0, safeLimit);
 
-  const last =
-    items[
-      items.length - 1
-    ];
+  const last = items[items.length - 1];
 
-  const nextCursor =
-    hasMore &&
-    last
-      ? `${last.published_at}|${last.id}`
-      : null;
+  const nextCursor = hasMore && last ? `${last.published_at}|${last.id}` : null;
 
   return {
     items,

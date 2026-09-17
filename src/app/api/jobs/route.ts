@@ -1,3 +1,4 @@
+import { routeError } from "@/lib/http/route-error";
 import { NextResponse } from "next/server";
 import { createJob } from "@/services/jobs/create-job.service";
 import { getJobs } from "@/repositories/jobs.repository";
@@ -12,10 +13,7 @@ export async function GET(req: Request) {
       }),
     );
   } catch (e) {
-    return NextResponse.json(
-      { error: e instanceof Error ? e.message : "Request failed" },
-      { status: 400 },
-    );
+    return routeError(e);
   }
 }
 export async function POST(req: Request) {
@@ -24,9 +22,6 @@ export async function POST(req: Request) {
       status: 201,
     });
   } catch (e) {
-    return NextResponse.json(
-      { error: e instanceof Error ? e.message : "Request failed" },
-      { status: 400 },
-    );
+    return routeError(e);
   }
 }
