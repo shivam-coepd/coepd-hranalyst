@@ -3,6 +3,7 @@ import { getJobById } from "@/repositories/jobs.repository";
 import { getChecklistForJob } from "@/repositories/checklists.repository";
 import JobSubmitAction from "@/components/jobs/job-submit-action";
 import ChecklistWorkflow from "@/components/checklists/checklist-workflow";
+import JobActions from "@/components/jobs/job-actions";
 export default async function Page({
   params,
 }: {
@@ -25,12 +26,11 @@ export default async function Page({
             {job.job_code} · {job.status}
           </p>
         </div>
-        <a 
-          href={`/admin/jobs/${job.id}/edit`} 
-          className="rounded-lg border bg-white px-4 py-2 text-sm font-medium hover:bg-slate-50"
-        >
-          Edit job
-        </a>
+        <JobActions
+          jobId={job.id}
+          editHref={`/admin/jobs/${job.id}/edit`}
+          returnHref="/admin/jobs"
+        />
       </div>
       <div className="mt-6">
         <JobSubmitAction jobId={job.id} disabled={job.status !== "draft"} />

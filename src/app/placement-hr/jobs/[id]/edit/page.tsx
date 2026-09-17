@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { requireAdmin } from "@/lib/auth/guards";
+import { requireRole } from "@/lib/auth/guards";
 import { getJobById } from "@/repositories/jobs.repository";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import JobForm from "@/components/jobs/job-form";
@@ -10,12 +10,24 @@ export default async function EditJobPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  await requireAdmin();
+  const user = await requireRole(["placement_hr", "admin", "super_admin"]);
   const { id } = await params;
   
   const job = await getJobById(id);
   if (!job) {
     notFound();
+  }
+
+  if (
+    user.roles.includes("placement_hr") &&
+    !user.roles.some((r) => r === "admin" || r === "super_admin")
+  ) {
+    if (
+      job.assigned_placement_hr &&
+      job.assigned_placement_hr !== user.id
+    ) {
+      throw new Error("Job not assigned to you");
+    }
   }
 
   // Need active companies and placement HRs for the dropdowns
@@ -77,6 +89,7 @@ export default async function EditJobPage({
           action={actionWithId}
           companies={companies || []}
           placementHrs={hrs || []}
+          lockedPlacementHrId={user.roles.includes("placement_hr") && !user.roles.some((r) => r === "admin" || r === "super_admin") ? user.id : undefined}
           defaults={defaults}
         />
       </div>

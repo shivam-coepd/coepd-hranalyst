@@ -18,6 +18,8 @@ export async function updateJobAction(
     }
   }
 
+  let success = false;
+
   try {
     const dataToSubmit = { ...raw };
     for (const k of [
@@ -32,8 +34,8 @@ export async function updateJobAction(
     await updateJob(jobId, dataToSubmit as unknown as JobInput);
     revalidatePath(`/admin/jobs/${jobId}`);
     revalidatePath("/admin/jobs");
+    success = true;
   } catch (e) {
-    if (isRedirectError(e)) throw e;
     return {
       success: false,
       message: e instanceof Error ? e.message : "Unable to update job",
@@ -41,5 +43,8 @@ export async function updateJobAction(
     };
   }
 
-  redirect(`/admin/jobs/${jobId}`);
+  if (success) {
+    redirect(`/admin/jobs/${jobId}`);
+  }
+  return { success: false, message: "An unexpected error occurred" };
 }

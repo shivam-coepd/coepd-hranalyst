@@ -13,12 +13,14 @@ export default function JobForm({
   companies,
   placementHrs,
   lockedCompanyId,
+  lockedPlacementHrId,
   defaults = {},
 }: {
   action: (s: State, f: FormData) => Promise<State>;
   companies: Company[];
   placementHrs: Hr[];
   lockedCompanyId?: string;
+  lockedPlacementHrId?: string;
   defaults?: Record<string, string | number | null | undefined>;
 }) {
   const [state, formAction, pending] = useActionState(action, {
@@ -33,20 +35,29 @@ export default function JobForm({
     <form action={formAction} className="mt-6 grid gap-4 md:grid-cols-2">
       <label>
         <span className="mb-1 block text-sm font-medium">Company</span>
-        <select
-          name="companyId"
-          defaultValue={lockedCompanyId ?? String(initialValues.companyId ?? "")}
-          disabled={!!lockedCompanyId}
-          className="w-full rounded border px-3 py-2"
-        >
-          {companies.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-        {lockedCompanyId && (
-          <input type="hidden" name="companyId" value={lockedCompanyId} />
+        {lockedCompanyId ? (
+          <>
+            <input
+              type="text"
+              readOnly
+              disabled
+              className="w-full rounded border px-3 py-2 bg-slate-50 text-slate-500"
+              value={companies.find((c) => c.id === lockedCompanyId)?.name || ""}
+            />
+            <input type="hidden" name="companyId" value={lockedCompanyId} />
+          </>
+        ) : (
+          <select
+            name="companyId"
+            defaultValue={String(initialValues.companyId ?? "")}
+            className="w-full rounded border px-3 py-2"
+          >
+            {companies.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name}
+              </option>
+            ))}
+          </select>
         )}
       </label>
       <label>
@@ -72,18 +83,35 @@ export default function JobForm({
       </label>
       <label>
         <span className="mb-1 block text-sm font-medium">Placement HR</span>
-        <select
-          name="assignedPlacementHr"
-          defaultValue={String(initialValues.assignedPlacementHr ?? "")}
-          className="w-full rounded border px-3 py-2"
-        >
-          <option value="">Unassigned</option>
-          {placementHrs.map((h) => (
-            <option key={h.id} value={h.id}>
-              {[h.first_name, h.last_name].filter(Boolean).join(" ") || h.email}
-            </option>
-          ))}
-        </select>
+        {lockedPlacementHrId ? (
+          <>
+            <input
+              type="text"
+              readOnly
+              disabled
+              className="w-full rounded border px-3 py-2 bg-slate-50 text-slate-500"
+              value={
+                placementHrs
+                  .filter((h) => h.id === lockedPlacementHrId)
+                  .map((h) => [h.first_name, h.last_name].filter(Boolean).join(" ") || h.email)[0] || ""
+              }
+            />
+            <input type="hidden" name="assignedPlacementHr" value={lockedPlacementHrId} />
+          </>
+        ) : (
+          <select
+            name="assignedPlacementHr"
+            defaultValue={String(initialValues.assignedPlacementHr ?? "")}
+            className="w-full rounded border px-3 py-2"
+          >
+            <option value="">Unassigned</option>
+            {placementHrs.map((h) => (
+              <option key={h.id} value={h.id}>
+                {[h.first_name, h.last_name].filter(Boolean).join(" ") || h.email}
+              </option>
+            ))}
+          </select>
+        )}
       </label>
       <label>
         <span className="mb-1 block text-sm font-medium">Location type</span>

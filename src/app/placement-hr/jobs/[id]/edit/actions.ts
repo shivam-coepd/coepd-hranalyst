@@ -1,16 +1,16 @@
 "use server";
 import { redirect } from "next/navigation";
-import { createJob } from "@/services/jobs/create-job.service";
+import { updateJob } from "@/services/jobs/update-job.service";
 import type { JobInput } from "@/lib/validators/job.schema";
+import type { State } from "@/app/placement-hr/jobs/new/actions";
+import { revalidatePath } from "next/cache";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 
-export type State = {
-  success: boolean;
-  message: string;
-  fields?: Record<string, any>;
-};
-
-export async function createJobAction(_: State, fd: FormData): Promise<State> {
+export async function updateJobAction(
+  jobId: string,
+  _: State,
+  fd: FormData,
+): Promise<State> {
   const raw: Record<string, any> = {};
   for (const [key, value] of fd.entries()) {
     if (!key.startsWith("$")) {
@@ -18,7 +18,6 @@ export async function createJobAction(_: State, fd: FormData): Promise<State> {
     }
   }
 
-  let jobId: string | undefined;
   let success = false;
 
   try {
@@ -31,20 +30,21 @@ export async function createJobAction(_: State, fd: FormData): Promise<State> {
     ]) {
       if (dataToSubmit[k] === "") delete dataToSubmit[k];
     }
-    const j = await createJob(dataToSubmit as unknown as JobInput);
-    jobId = j.id;
+    
+    await updateJob(jobId, dataToSubmit as unknown as JobInput);
+    revalidatePath(`/placement-hr/jobs/${jobId}`);
+    revalidatePath("/placement-hr/jobs");
     success = true;
   } catch (e) {
     return {
       success: false,
-      message: e instanceof Error ? e.message : "Unable to create job",
+      message: e instanceof Error ? e.message : "Unable to update job",
       fields: raw,
     };
   }
 
-  if (success && jobId) {
+  if (success) {
     redirect(`/placement-hr/jobs/${jobId}`);
   }
-  
   return { success: false, message: "An unexpected error occurred" };
 }

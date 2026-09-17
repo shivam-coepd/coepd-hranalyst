@@ -7,6 +7,7 @@ type State = {
   message: string;
 };
 export async function createJobAction(_: State, fd: FormData): Promise<State> {
+  let jobId: string | undefined;
   try {
     const o = Object.fromEntries(fd.entries());
     for (const k of [
@@ -17,11 +18,16 @@ export async function createJobAction(_: State, fd: FormData): Promise<State> {
     ])
       if (o[k] === "") delete o[k];
     const j = await createJob(o as unknown as JobInput);
-    redirect(`/admin/jobs/${j.id}`);
+    jobId = j.id;
   } catch (e) {
     return {
       success: false,
       message: e instanceof Error ? e.message : "Unable to create job",
     };
   }
+
+  if (jobId) {
+    redirect(`/admin/jobs/${jobId}`);
+  }
+  return { success: false, message: "An unexpected error occurred" };
 }

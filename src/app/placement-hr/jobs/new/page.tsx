@@ -17,6 +17,7 @@ export default async function Page() {
           action={createJobAction}
           companies={c}
           placementHrs={h}
+          lockedPlacementHrId={u.roles.includes("placement_hr") && !u.roles.some((r) => r === "admin" || r === "super_admin") ? u.id : undefined}
           defaults={{
             assignedPlacementHr: u.roles.includes("placement_hr") ? u.id : "",
           }}
