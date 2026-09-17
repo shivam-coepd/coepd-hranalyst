@@ -3,6 +3,7 @@ import { getAdminDashboardMetrics } from "@/services/admin/dashboard.service";
 import { PageHeader } from "@/components/ui/page-header";
 import { StatCard } from "@/components/ui/stat-card";
 import { Users, Building2, UserCheck, Briefcase } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function PlacementHRDashboardPage() {
   const user = await requireRole(["placement_hr", "admin", "super_admin"]);
@@ -36,6 +37,25 @@ export default async function PlacementHRDashboardPage() {
           value="24" // Placeholder until job metrics are added
           icon={Briefcase}
         />
+      </div>
+
+      <div className="mt-8 grid gap-5 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Job Postings</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">Recent jobs will appear here.</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Upcoming Interviews</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">No upcoming interviews scheduled.</p>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

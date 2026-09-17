@@ -23,10 +23,10 @@ export default async function StudentLayout({
   ];
 
   return (
-    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-900">
+    <div className="flex min-h-screen bg-muted dark:bg-primary">
       <Sidebar title="Student Portal" items={navItems} />
       <div className="flex flex-1 flex-col md:pl-64">
-        <Topbar user={user} />
+        <Topbar user={user} navTitle="Student Portal" navItems={navItems} />
         <main className="flex-1 overflow-y-auto">
           {children}
         </main>

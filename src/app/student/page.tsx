@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/ui/page-header";
 import { StatCard } from "@/components/ui/stat-card";
 import { Badge } from "@/components/ui/badge";
 import { User, FileText, Send, Briefcase } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function Page() {
   const d = await getStudentDashboard();
@@ -60,6 +61,25 @@ export default async function Page() {
             className="group-hover:shadow-md transition-all group-hover:border-primary/20"
           />
         </Link>
+      </div>
+
+      <div className="mt-8 grid gap-5 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Applications</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">Your recent job applications will appear here.</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Upcoming Interviews</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">No upcoming interviews scheduled.</p>
+          </CardContent>
+        </Card>
       </div>
     </main>
   );

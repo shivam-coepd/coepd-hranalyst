@@ -42,7 +42,7 @@ export function StatCard({
                     trend.value > 0
                       ? "text-green-600 dark:text-green-400"
                       : trend.value < 0
-                      ? "text-red-600 dark:text-red-400"
+                      ? "text-destructive dark:text-red-400"
                       : "text-muted-foreground"
                   )}
                 >

@@ -3,6 +3,7 @@ import { getClientAnalytics } from "@/services/analytics/client-analytics.servic
 import { PageHeader } from "@/components/ui/page-header";
 import { StatCard } from "@/components/ui/stat-card";
 import { Users, Briefcase, CheckCircle, Calendar, UserCheck } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function ClientDashboardPage() {
   const user = await requireRole(["client_hr", "admin", "super_admin"]);
@@ -41,6 +42,25 @@ export default async function ClientDashboardPage() {
           value={metrics.placements || 0}
           icon={CheckCircle}
         />
+      </div>
+
+      <div className="mt-8 grid gap-5 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Submissions</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">Recent candidates will appear here.</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Upcoming Interviews</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">No upcoming interviews scheduled.</p>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
