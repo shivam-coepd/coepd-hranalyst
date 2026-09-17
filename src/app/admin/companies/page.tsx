@@ -5,16 +5,17 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Plus, Search, Filter } from "lucide-react";
+import { Plus } from "lucide-react";
+import { CompanyFilters } from "./company-filters";
 
 export default async function Page({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; status?: string }>;
+  searchParams: Promise<{ search?: string; status?: string; isActive?: string }>;
 }) {
   await requireAdmin();
   const p = await searchParams;
-  const r = await getCompanies({ search: p.q, status: p.status });
+  const r = await getCompanies({ search: p.search, status: p.status, isActive: p.isActive });
   
   return (
     <main className="p-8">
@@ -23,7 +24,7 @@ export default async function Page({
         description="Verify and manage client organizations."
         actions={
           <Link href="/admin/companies/new">
-            <Button>
+            <Button variant="create">
               <Plus className="mr-2 h-4 w-4" />
               Add company
             </Button>
@@ -32,31 +33,11 @@ export default async function Page({
       />
       
       <Card>
-        <form className="flex items-center gap-4 border-b p-4">
-          <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <input 
-              name="q"
-              defaultValue={p.q}
-              placeholder="Search companies..." 
-              className="w-full rounded-md border pl-9 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
-            />
-          </div>
-          <select 
-            name="status"
-            defaultValue={p.status ?? ""}
-            className="rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
-          >
-            <option value="">All statuses</option>
-            <option value="pending">Pending</option>
-            <option value="verified">Verified</option>
-            <option value="rejected">Rejected</option>
-          </select>
-          <Button type="submit" variant="outline" size="sm">
-            <Filter className="mr-2 h-4 w-4" />
-            Filter
-          </Button>
-        </form>
+        <CompanyFilters 
+          defaultSearch={p.search} 
+          defaultStatus={p.status} 
+          defaultIsActive={p.isActive}
+        />
         
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">

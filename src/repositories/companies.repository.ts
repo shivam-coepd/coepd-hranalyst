@@ -4,11 +4,13 @@ import { createClient } from "@/lib/supabase/server";
 export async function getCompanies({
   status,
   search,
+  isActive,
   page = 1,
   limit = 25,
 }: {
   status?: string;
   search?: string;
+  isActive?: string;
   page?: number;
   limit?: number;
 } = {}) {
@@ -45,6 +47,10 @@ export async function getCompanies({
 
   if (status) {
     query = query.eq("verification_status", status);
+  }
+
+  if (isActive !== undefined && isActive !== "") {
+    query = query.eq("is_active", isActive === "true");
   }
 
   if (search?.trim()) {

@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Search, Briefcase, MapPin, Building2, ExternalLink } from "lucide-react";
+import { StudentJobFilters } from "./student-job-filters";
 
 export default async function Page({
   searchParams,
@@ -26,39 +27,11 @@ export default async function Page({
         description="Find and apply for opportunities matching your profile."
       />
 
-      <form className="mt-8 flex flex-col md:flex-row gap-3 rounded-xl border bg-white p-4 shadow-sm dark:bg-slate-950">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <input
-            className="w-full rounded-md border-0 bg-slate-50 px-9 py-2.5 text-sm outline-none ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-primary dark:bg-slate-900 dark:ring-slate-800"
-            name="q"
-            placeholder="Search title, location, or code..."
-            defaultValue={q.q}
-          />
-        </div>
-        <select
-          className="rounded-md border-0 bg-slate-50 px-4 py-2.5 text-sm outline-none ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-primary dark:bg-slate-900 dark:ring-slate-800"
-          name="role"
-          defaultValue={q.role ?? ""}
-        >
-          <option value="">All roles</option>
-          <option>BA</option>
-          <option>PO</option>
-          <option>PM</option>
-          <option>SM</option>
-        </select>
-        <select
-          className="rounded-md border-0 bg-slate-50 px-4 py-2.5 text-sm outline-none ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-primary dark:bg-slate-900 dark:ring-slate-800"
-          name="workplace"
-          defaultValue={q.workplace ?? ""}
-        >
-          <option value="">All workplaces</option>
-          <option value="onsite">Onsite</option>
-          <option value="hybrid">Hybrid</option>
-          <option value="remote">Remote</option>
-        </select>
-        <Button type="submit">Filter Jobs</Button>
-      </form>
+      <StudentJobFilters 
+        defaultSearch={q.q}
+        defaultRole={q.role}
+        defaultWorkplace={q.workplace}
+      />
 
       <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {r.jobs.length === 0 && (

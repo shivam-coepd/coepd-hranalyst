@@ -8,6 +8,8 @@ import {
 } from "@/repositories/feedbacks.repository";
 import { InterviewFeedbackForm } from "@/components/feedbacks/interview-feedback-form";
 import { InterviewFeedbackRevisionForm } from "@/components/feedbacks/interview-feedback-revision-form";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default async function PlacementInterviewDetailPage({
   params,
@@ -81,7 +83,7 @@ export default async function PlacementInterviewDetailPage({
           />
           {feedback.decision === "selected" && (
             <Link
-              className="inline-flex rounded-md bg-black px-4 py-2 text-sm font-medium text-white"
+              className={cn(buttonVariants({ variant: "create" }), "mt-4")}
               href={`/placement-hr/offers/new?applicationId=${interview.application_id}&feedbackId=${feedback.id}`}
             >
               Create Offer

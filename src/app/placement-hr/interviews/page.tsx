@@ -3,9 +3,15 @@ import { supabaseAdmin } from "@/lib/supabase/admin";
 import { PageHeader } from "@/components/ui/page-header";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { InterviewFilters } from "@/components/interviews/interview-filters";
 
-export default async function PlacementHrInterviewsPage() {
+export default async function PlacementHrInterviewsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ search?: string; status?: string; mode?: string }>;
+}) {
   const user = await requireRole(["placement_hr", "admin", "super_admin"]);
+  const p = await searchParams;
 
   let query = supabaseAdmin
     .from("interviews")
@@ -38,6 +44,23 @@ export default async function PlacementHrInterviewsPage() {
     query = query.eq("jobs.assigned_placement_hr", user.id);
   }
 
+  if (p.status) {
+    query = query.eq("status", p.status);
+  }
+
+  if (p.mode) {
+    query = query.eq("mode", p.mode);
+  }
+
+  if (p.search?.trim()) {
+    const term = p.search.trim();
+    // Since candidate_name is inside a JSONB column `candidate_snapshot`, doing ilike on JSONB text representation 
+    // or related tables is required. We'll search by interview_code, companies.name or round_name
+    query = query.or(
+      `interview_code.ilike.%${term}%,round_name.ilike.%${term}%`
+    );
+  }
+
   const { data, error } = await query.order("scheduled_at", { ascending: true });
 
   if (error) {
@@ -54,6 +77,11 @@ export default async function PlacementHrInterviewsPage() {
       />
 
       <Card>
+        <InterviewFilters
+          defaultSearch={p.search}
+          defaultStatus={p.status}
+          defaultMode={p.mode}
+        />
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead className="bg-slate-50/50 dark:bg-slate-900/50">

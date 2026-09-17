@@ -5,7 +5,8 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, Search, Filter } from "lucide-react";
+import { Plus } from "lucide-react";
+import { UserFilters } from "./user-filters";
 
 export default async function AdminUsersPage({
   searchParams,
@@ -13,6 +14,7 @@ export default async function AdminUsersPage({
   searchParams: Promise<{
     status?: string;
     search?: string;
+    role?: string;
     page?: string;
   }>;
 }) {
@@ -22,17 +24,18 @@ export default async function AdminUsersPage({
   const result = await listUsers({
     status: params.status,
     search: params.search,
+    role: params.role,
     page,
   });
 
   return (
     <div className="p-8">
-      <PageHeader 
-        title="Users" 
+      <PageHeader
+        title="Users"
         description="Manage all HRAnalyst Placement Platform accounts."
         actions={
           <Link href="/admin/users/create">
-            <Button>
+            <Button variant="create">
               <Plus className="mr-2 h-4 w-4" />
               Create User
             </Button>
@@ -41,30 +44,11 @@ export default async function AdminUsersPage({
       />
 
       <Card>
-        <div className="flex items-center gap-4 border-b p-4">
-          <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <input 
-              type="text" 
-              placeholder="Search users..." 
-              className="w-full rounded-md border pl-9 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
-              defaultValue={params.search}
-            />
-          </div>
-          <select 
-            className="rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
-            defaultValue={params.status || ""}
-          >
-            <option value="">All Statuses</option>
-            <option value="pending">Pending</option>
-            <option value="approved">Approved</option>
-            <option value="suspended">Suspended</option>
-          </select>
-          <Button variant="outline" size="sm">
-            <Filter className="mr-2 h-4 w-4" />
-            Filter
-          </Button>
-        </div>
+        <UserFilters
+          defaultSearch={params.search}
+          defaultStatus={params.status}
+          defaultRole={params.role}
+        />
 
         <div className="overflow-x-auto">
           <table className="w-full text-sm">

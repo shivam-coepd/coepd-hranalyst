@@ -24,9 +24,9 @@ export default async function UserDetailPage({
   if (!user) {
     notFound();
   }
-  
-  const roles = user.user_roles?.map((item) => item.roles?.display_name).filter(Boolean) ?? [];
-  
+
+  const roles = user.user_roles?.map((item: { roles: { display_name: any; }; }) => item.roles?.display_name).filter(Boolean) ?? [];
+
   let statusVariant: "default" | "success" | "warning" | "destructive" | "pending" | "secondary" = "secondary";
   if (user.account_status === "approved") statusVariant = "success";
   if (user.account_status === "pending") statusVariant = "pending";
@@ -34,7 +34,7 @@ export default async function UserDetailPage({
 
   return (
     <div className="p-8">
-      <PageHeader 
+      <PageHeader
         title={`${user.first_name || ""} ${user.last_name || ""}`.trim() || user.email}
         description={user.first_name ? user.email : "Email user"}
         actions={<UserApprovalActions userId={user.id} status={user.account_status} />}
@@ -47,12 +47,12 @@ export default async function UserDetailPage({
           </CardHeader>
           <CardContent>
             <dl className="space-y-4 text-sm">
-              <Info 
-                label="Status" 
-                value={<Badge variant={statusVariant} className="capitalize">{user.account_status}</Badge>} 
+              <Info
+                label="Status"
+                value={<Badge variant={statusVariant} className="capitalize">{user.account_status}</Badge>}
               />
-              <Info 
-                label="Roles" 
+              <Info
+                label="Roles"
                 value={
                   <div className="flex flex-wrap gap-1 mt-1">
                     {roles.length > 0 ? (
@@ -61,7 +61,7 @@ export default async function UserDetailPage({
                       <span className="text-muted-foreground text-xs italic">Not assigned</span>
                     )}
                   </div>
-                } 
+                }
               />
               <Info label="Phone" value={user.phone ?? "—"} />
               <Info
@@ -84,4 +84,3 @@ function Info({ label, value }: { label: string; value: React.ReactNode }) {
     </div>
   );
 }
-

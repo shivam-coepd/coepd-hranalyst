@@ -5,10 +5,20 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { InterviewFilters } from "@/components/interviews/interview-filters";
 
-export default async function ClientInterviewsPage() {
+export default async function ClientInterviewsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ search?: string; status?: string; mode?: string }>;
+}) {
   const { clientProfile } = await requireActiveClientHr();
-  const interviews = await getClientInterviews(clientProfile.company_id);
+  const p = await searchParams;
+  const interviews = await getClientInterviews(clientProfile.company_id, {
+    search: p.search,
+    status: p.status,
+    mode: p.mode,
+  });
 
   return (
     <div className="p-8">
@@ -18,6 +28,11 @@ export default async function ClientInterviewsPage() {
       />
 
       <Card>
+        <InterviewFilters
+          defaultSearch={p.search}
+          defaultStatus={p.status}
+          defaultMode={p.mode}
+        />
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead className="bg-slate-50/50 dark:bg-slate-900/50">
