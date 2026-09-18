@@ -63,10 +63,30 @@ export default async function UserDetailPage({
                   </div>
                 }
               />
+              {user.student_profiles && user.student_profiles.enrollment_id && (
+                <Info label="Enrollment ID" value={user.student_profiles.enrollment_id} />
+              )}
+              <Info label="First Name" value={user.first_name ?? "—"} />
+              <Info label="Last Name" value={user.last_name ?? "—"} />
+              <Info label="Email" value={user.email ?? "—"} />
               <Info label="Phone" value={user.phone ?? "—"} />
+              {user.avatar_url && (
+                <Info 
+                  label="Avatar URL" 
+                  value={<a href={user.avatar_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">View Avatar</a>} 
+                />
+              )}
+              {user.rejection_reason && <Info label="Rejection Reason" value={user.rejection_reason} />}
+              <Info label="Approved By" value={user.approved_by ?? "—"} />
+              <Info label="Approved At" value={user.approved_at ? new Date(user.approved_at).toLocaleString() : "—"} />
+              <Info label="Last Login At" value={user.last_login_at ? new Date(user.last_login_at).toLocaleString() : "—"} />
               <Info
                 label="Created At"
-                value={new Date(user.created_at).toLocaleString()}
+                value={user.created_at ? new Date(user.created_at).toLocaleString() : "—"}
+              />
+              <Info
+                label="Updated At"
+                value={user.updated_at ? new Date(user.updated_at).toLocaleString() : "—"}
               />
             </dl>
           </CardContent>

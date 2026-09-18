@@ -5,14 +5,12 @@ import {
   createUserSchema,
   type CreateUserInput,
 } from "@/lib/validators/create-user.schema";
-import { verifyExistingHRAnalystStudent } from "@/services/students/student-verification.service";
+
 type CreateUserResult = {
   success: true;
   userId: string;
 };
-type VerifiedStudent = Awaited<
-  ReturnType<typeof verifyExistingHRAnalystStudent>
->;
+
 function normalizeEmail(email: string): string {
   return email.trim().toLowerCase();
 }
@@ -73,27 +71,48 @@ export async function createUser(
   }
   /*
    * --------------------------------------------------------
-   * 5. Student-specific validation
+   * 5. Student-specific validation and ID generation
    * --------------------------------------------------------
    */
-  let verifiedStudent: VerifiedStudent = null;
+  let generatedEnrollmentId: string | null = null;
   if (parsed.role === "student") {
-    verifiedStudent = await verifyExistingHRAnalystStudent(
-      parsed.enrollmentId!,
-    );
-    if (!verifiedStudent) {
-      throw new Error(
-        "Only existing HRAnalyst students can be created in the placement platform",
-      );
+    if (!parsed.location || !parsed.batchDate) {
+      throw new Error("Location and Batch Date are required for students");
     }
-    const verifiedEmail = verifiedStudent.email
-      ? normalizeEmail(verifiedStudent.email)
-      : null;
-    if (verifiedEmail && verifiedEmail !== parsed.email) {
-      throw new Error(
-        "Enrollment ID does not match the supplied student email",
-      );
+
+    const date = new Date(parsed.batchDate);
+    const yy = date.getFullYear().toString().slice(-2);
+    const mm = (date.getMonth() + 1).toString().padStart(2, "0");
+    const dd = date.getDate().toString().padStart(2, "0");
+    const prefix = `${yy}${parsed.location}${dd}${mm}`; // e.g. 26PU0406
+    const searchPrefix = `${yy}__${dd}${mm}`; // Wildcard for location
+
+    // Find all existing serials for this batch date across all locations
+    const { data: students, error: studentsError } = await supabaseAdmin
+      .from("student_profiles")
+      .select("enrollment_id")
+      .like("enrollment_id", `${searchPrefix}%`);
+
+    if (studentsError) {
+      throw new Error(`Failed to generate enrollment ID: ${studentsError.message}`);
     }
+
+    let nextSerial = 1;
+    if (students && students.length > 0) {
+      let maxSerial = 0;
+      for (const student of students) {
+        if (student.enrollment_id && student.enrollment_id.length >= 11) {
+          const serialStr = student.enrollment_id.slice(-3);
+          const parsedSerial = parseInt(serialStr, 10);
+          if (!isNaN(parsedSerial) && parsedSerial > maxSerial) {
+            maxSerial = parsedSerial;
+          }
+        }
+      }
+      nextSerial = maxSerial + 1;
+    }
+    
+    generatedEnrollmentId = `${prefix}${nextSerial.toString().padStart(3, "0")}`;
   }
   /*
    * --------------------------------------------------------
@@ -168,11 +187,8 @@ export async function createUser(
    * 9. Prepare RPC data
    * --------------------------------------------------------
    */
-  const enrollmentId = parsed.role === "student" ? parsed.enrollmentId! : null;
-  const verificationReference =
-    parsed.role === "student"
-      ? (verifiedStudent?.enrollmentId ?? parsed.enrollmentId!)
-      : null;
+  const enrollmentId = generatedEnrollmentId;
+  const verificationReference = null; // Removed external verification logic
   const companyId = parsed.role === "client_hr" ? parsed.companyId! : null;
   const workEmail =
     parsed.role === "placement_hr" || parsed.role === "client_hr"
@@ -184,27 +200,46 @@ export async function createUser(
    * --------------------------------------------------------
    */
   try {
-    const { error: transactionError } = await supabaseAdmin.rpc(
-      "create_platform_user",
-      {
-        p_user_id: userId,
-        p_role_id: role.id,
-        p_assigned_by: admin.id,
-        p_first_name: parsed.firstName,
-        p_last_name: parsed.lastName,
-        p_phone: parsed.phone || null,
-        p_email: parsed.email,
-        p_role: parsed.role,
-        p_enrollment_id: enrollmentId,
-        p_verification_reference: verificationReference,
-        p_verified_by: parsed.role === "student" ? admin.id : null,
-        p_company_id: companyId ?? null,
-        p_work_email: workEmail,
-      },
-    );
-    if (transactionError) {
-      throw new Error(transactionError.message);
+    const { error: profileError } = await supabaseAdmin.from("profiles").upsert({
+      id: userId,
+      first_name: parsed.firstName,
+      last_name: parsed.lastName,
+      email: parsed.email,
+      phone: parsed.phone || null,
+    });
+    if (profileError) throw new Error(`Profile creation failed: ${profileError.message}`);
+
+    const { error: userRoleError } = await supabaseAdmin.from("user_roles").insert({
+      user_id: userId,
+      role_id: role.id,
+      assigned_by: admin.id,
+    });
+    if (userRoleError) throw new Error(`User role creation failed: ${userRoleError.message}`);
+
+    if (parsed.role === "student") {
+      const { error: studentProfileError } = await supabaseAdmin.from("student_profiles").insert({
+        user_id: userId,
+        enrollment_id: enrollmentId!,
+        verification_status: "verified",
+        // @ts-ignore: the live database uses verified_at instead of verification_at
+        verified_at: new Date().toISOString(),
+      } as any);
+      if (studentProfileError) throw new Error(`Student profile creation failed: ${studentProfileError.message}`);
+    } else if (parsed.role === "client_hr") {
+      const { error: clientHrError } = await supabaseAdmin.from("client_hr_profiles").insert({
+        user_id: userId,
+        company_id: companyId!,
+        work_email: workEmail,
+      });
+      if (clientHrError) throw new Error(`Client HR profile creation failed: ${clientHrError.message}`);
+    } else if (parsed.role === "placement_hr") {
+      const { error: placementHrError } = await supabaseAdmin.from("placement_hr_profiles").insert({
+        user_id: userId,
+        work_email: workEmail,
+      });
+      if (placementHrError) throw new Error(`Placement HR profile creation failed: ${placementHrError.message}`);
     }
+
     /*
      * ------------------------------------------------------
      * 11. Success

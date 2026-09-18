@@ -141,6 +141,10 @@ export async function getUserById(userId: string) {
       rejection_reason,
       approved_at,
       created_at,
+      avatar_url,
+      approved_by,
+      last_login_at,
+      updated_at,
 
       user_roles!user_id (
         roles (

@@ -86,13 +86,39 @@ export default function CreateUserForm({
       </div>
 
       {role === "student" ? (
-        <Field
-          label="Enrollment ID"
-          name="enrollmentId"
-          required
-          defaultValue={state.fields?.enrollmentId}
-          error={state.fieldErrors?.enrollmentId?.[0]}
-        />
+        <div className="grid gap-5 md:grid-cols-2">
+          <div>
+            <label className="mb-2 block text-sm font-medium" htmlFor="location">
+              Location
+            </label>
+            <select
+              id="location"
+              name="location"
+              required
+              defaultValue={state.fields?.location || ""}
+              className="w-full rounded-lg border px-3 py-2.5"
+            >
+              <option value="">Select location</option>
+              <option value="PU">Pune (PU)</option>
+              <option value="MU">Mumbai (MU)</option>
+              <option value="BG">Bangalore (BG)</option>
+              <option value="DL">Delhi (DL)</option>
+            </select>
+            {state.fieldErrors?.location?.[0] ? (
+              <p className="mt-1 text-sm text-red-600">
+                {state.fieldErrors.location[0]}
+              </p>
+            ) : null}
+          </div>
+          <Field
+            label="Batch Date"
+            name="batchDate"
+            type="date"
+            required
+            defaultValue={state.fields?.batchDate}
+            error={state.fieldErrors?.batchDate?.[0]}
+          />
+        </div>
       ) : null}
 
       {role === "client_hr" ? (

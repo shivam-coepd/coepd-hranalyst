@@ -25,7 +25,8 @@ export async function createUserAction(
     password: raw.password,
     phone: raw.phone || undefined,
     role: raw.role,
-    enrollmentId: raw.enrollmentId || undefined,
+    location: raw.location || undefined,
+    batchDate: raw.batchDate || undefined,
     companyId: raw.companyId || undefined,
   });
 
