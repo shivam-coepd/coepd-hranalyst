@@ -20,9 +20,11 @@ const schema = z
 
     SUPABASE_SERVICE_ROLE_KEY: z.string().min(20),
 
-    OPENAI_API_KEY: z.string().min(20),
+    GEMINI_API_KEY: z.string().min(20),
 
-    OPENAI_CHECKLIST_MODEL: z.string().min(2),
+    GEMINI_CHECKLIST_MODEL: z.string().min(2),
+
+    GEMINI_CV_MODEL: z.string().min(2).optional(),
 
     SMTP_HOST: z.string().min(1),
 

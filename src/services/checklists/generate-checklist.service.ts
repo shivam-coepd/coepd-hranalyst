@@ -35,7 +35,7 @@ export async function generateJobChecklist(jobId: string) {
       "JOB_NOT_ASSIGNED",
     );
   }
-  const model = process.env.OPENAI_CHECKLIST_MODEL?.trim();
+  const model = process.env.GEMINI_CHECKLIST_MODEL?.trim();
   if (!model)
     throw new AppError(
       "AI checklist model is not configured",
@@ -48,7 +48,7 @@ export async function generateJobChecklist(jobId: string) {
       entity_type: "job",
       entity_id: jobId,
       operation: "generate_checklist",
-      provider: "openai",
+      provider: "gemini",
       model,
       prompt_version: "checklist-v2",
       status: "started",
@@ -77,19 +77,52 @@ export async function generateJobChecklist(jobId: string) {
       experienceMaxMonths: job.experience_max_months ?? 0,
       jdText: job.jd_text,
     });
-    const { data: checklistId, error: saveError } = await supabaseAdmin.rpc(
-      "save_generated_job_checklist",
-      {
-        p_job_id: jobId,
-        p_actor_id: user.id,
-        p_payload: result.checklist,
-        p_ai_model: result.model,
-        p_ai_response_id: result.responseId,
-        p_prompt_version: result.promptVersion,
-      },
-    );
-    if (saveError || !checklistId)
+    const { data: previous } = await supabaseAdmin
+      .from("job_checklists")
+      .select("version")
+      .eq("job_id", jobId)
+      .order("version", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    const nextVersion = (previous?.version ?? 0) + 1;
+
+    const { data: created, error: saveError } = await supabaseAdmin
+      .from("job_checklists")
+      .insert({
+        job_id: jobId,
+        version: nextVersion,
+        status: "draft",
+        source: "ai",
+        must_have: result.checklist.must_have,
+        good_to_have: result.checklist.good_to_have,
+        tools: result.checklist.tools,
+        domain: result.checklist.domain,
+        exp_required: result.checklist.exp_required,
+        top_3_skills: result.checklist.top_3_skills,
+        checklist_summary: result.checklist.checklist_summary,
+        ai_model: result.model,
+        ai_response_id: result.responseId,
+        prompt_version: result.promptVersion,
+        generated_by: user.id,
+        generated_at: new Date().toISOString(),
+        created_by: user.id,
+        updated_by: user.id,
+      })
+      .select("*")
+      .single();
+
+    if (saveError || !created)
       throw new Error(saveError?.message ?? "Unable to save checklist");
+
+    await supabaseAdmin.from("audit_logs").insert({
+      actor_id: user.id,
+      entity_type: "job_checklist",
+      entity_id: created.id,
+      action: "CHECKLIST_AI_GENERATED",
+      new_values: { job_id: jobId, version: nextVersion },
+      metadata: {}
+    });
     await supabaseAdmin
       .from("ai_generation_runs")
       .update({
@@ -102,13 +135,6 @@ export async function generateJobChecklist(jobId: string) {
         completed_at: new Date().toISOString(),
       })
       .eq("id", run.id);
-    const { data: created, error: fetchError } = await supabaseAdmin
-      .from("job_checklists")
-      .select("*")
-      .eq("id", checklistId as string)
-      .single();
-    if (fetchError || !created)
-      throw new Error("Checklist saved but could not be reloaded");
     return created;
   } catch (error) {
     await supabaseAdmin
