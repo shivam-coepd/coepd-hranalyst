@@ -13,8 +13,8 @@ export async function generateChecklistFromJD(job: {
   roleType: string;
   locationType: string;
   location?: string | null;
-  experienceMinMonths: number;
-  experienceMaxMonths?: number | null;
+  experienceMinYears: number;
+  experienceMaxYears?: number | null;
   jdText: string;
 }) {
   const model = process.env.GEMINI_CHECKLIST_MODEL;

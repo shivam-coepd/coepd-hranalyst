@@ -46,7 +46,7 @@ export default async function ClientCandidatePage({ params }: Props) {
   const eligibility = await getInterviewEligibility(candidate.application_id);
 
   return (
-    <div className="mx-auto max-w-6xl space-y-8 p-6">
+    <div className="p-8 space-y-8">
       <div className="rounded-xl border bg-white p-6">
         <p className="text-sm text-gray-500">{submission.submission_code}</p>
 

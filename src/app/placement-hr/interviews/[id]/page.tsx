@@ -35,7 +35,7 @@ export default async function PlacementInterviewDetailPage({
     Record<string, unknown> | undefined;
 
   return (
-    <div className="mx-auto max-w-5xl space-y-6 p-6">
+    <div className="p-8 space-y-6">
       <div className="rounded-xl border bg-white p-6">
         <p className="text-sm text-gray-500">{interview.interview_code}</p>
         <h1 className="mt-2 text-2xl font-bold">{interview.round_name}</h1>

@@ -12,7 +12,7 @@ export default async function Page({
   const { id } = await params;
   const c = await getCompanyById(id);
   return (
-    <main className="mx-auto max-w-5xl p-8">
+    <main className="p-8 space-y-6">
       <h1 className="text-3xl font-bold">{c.name}</h1>
       <p className="mt-1 text-slate-600">
         {c.domain ?? "No domain"} · {c.industry ?? "Industry not set"}

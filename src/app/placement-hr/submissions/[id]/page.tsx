@@ -24,7 +24,7 @@ export default async function Page({
   )
     notFound();
   return (
-    <div className="mx-auto max-w-6xl space-y-6 p-6">
+    <div className="p-8 space-y-6">
       <div className="rounded-xl border bg-white p-6">
         <p className="text-sm text-gray-500">{sub.submission_code}</p>
         <h1 className="text-2xl font-bold">{sub.jobs?.job_title}</h1>

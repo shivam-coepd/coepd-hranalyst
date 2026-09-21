@@ -20,7 +20,7 @@ export default async function Page({
     : app.student_profiles;
   const job = Array.isArray(app.jobs) ? app.jobs[0] : app.jobs;
   return (
-    <main className="mx-auto max-w-6xl p-8 space-y-6">
+    <main className="p-8 space-y-6">
       <div>
         <h1 className="text-3xl font-bold">Application Verification</h1>
         <p className="mt-2 text-slate-500">

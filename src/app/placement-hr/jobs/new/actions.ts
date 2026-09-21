@@ -24,7 +24,7 @@ export async function createJobAction(_: State, fd: FormData): Promise<State> {
   try {
     const dataToSubmit = { ...raw };
     for (const k of [
-      "experienceMaxMonths",
+      "experienceMaxYears",
       "salaryMin",
       "salaryMax",
       "assignedPlacementHr",

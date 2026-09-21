@@ -239,28 +239,28 @@ export default function JobForm({
           <div className="space-y-4 rounded-xl border bg-muted/20 p-4">
             <h3 className="flex items-center gap-2 text-sm font-medium text-foreground">
               <Clock className="h-4 w-4 text-muted-foreground" />
-              Experience Required (Months)
+              Experience Required (Years)
             </h3>
             <div className="grid grid-cols-2 gap-4">
               <label className="space-y-2">
                 <span className="text-xs text-muted-foreground">Minimum</span>
                 <input
-                  name="experienceMinMonths"
+                  name="experienceMinYears"
                   type="number"
                   min="0"
                   placeholder="0"
-                  defaultValue={initialValues.experienceMinMonths ?? ""}
+                  defaultValue={initialValues.experienceMinYears ?? ""}
                   className={inputClass}
                 />
               </label>
               <label className="space-y-2">
                 <span className="text-xs text-muted-foreground">Maximum</span>
                 <input
-                  name="experienceMaxMonths"
+                  name="experienceMaxYears"
                   type="number"
                   min="0"
                   placeholder="e.g. 60"
-                  defaultValue={initialValues.experienceMaxMonths ?? ""}
+                  defaultValue={initialValues.experienceMaxYears ?? ""}
                   className={inputClass}
                 />
               </label>

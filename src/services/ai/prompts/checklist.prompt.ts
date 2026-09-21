@@ -6,9 +6,9 @@ interface JobPromptInput {
   locationType: string;
   location?: string | null;
 
-  experienceMinMonths: number;
+  experienceMinYears: number;
 
-  experienceMaxMonths?: number | null;
+  experienceMaxYears?: number | null;
 
   jdText: string;
 }
@@ -70,11 +70,11 @@ ${job.locationType}
 Location:
 ${job.location ?? "Not specified"}
 
-Minimum Experience Months:
-${job.experienceMinMonths}
+Minimum Experience years:
+${job.experienceMinYears}
 
-Maximum Experience Months:
-${job.experienceMaxMonths ?? "Not specified"}
+Maximum Experience years:
+${job.experienceMaxYears ?? "Not specified"}
 
 JOB DESCRIPTION:
 

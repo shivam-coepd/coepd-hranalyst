@@ -32,7 +32,7 @@ export default async function PlacementDetailPage({ params }: Props) {
     : placement.student_profiles;
 
   return (
-    <div className="mx-auto max-w-5xl space-y-6 p-6">
+    <div className="p-8 space-y-6">
       <div className="rounded-xl border bg-white p-6">
         <p className="text-sm text-gray-500">{placement.placement_code}</p>
 

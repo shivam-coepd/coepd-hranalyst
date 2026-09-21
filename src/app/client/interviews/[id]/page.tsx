@@ -35,7 +35,7 @@ export default async function ClientInterviewDetailPage({ params }: Props) {
     Record<string, unknown> | undefined;
 
   return (
-    <div className="mx-auto max-w-5xl space-y-6 p-6">
+    <div className="p-8 space-y-6">
       <div className="rounded-xl border bg-white p-6">
         <p className="text-sm text-gray-500">{interview.interview_code}</p>
 

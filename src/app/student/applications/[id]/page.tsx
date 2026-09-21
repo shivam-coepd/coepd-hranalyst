@@ -17,7 +17,7 @@ export default async function Page({
   );
   const effectiveAts = getEffectiveScore(app.verified_ats_score, app.ats_score);
   return (
-    <main className="mx-auto max-w-5xl p-8">
+    <main className="p-8 space-y-6">
       <h1 className="text-3xl font-bold">Application</h1>
       <p className="mt-2 text-slate-500">
         {j?.job_title} · {j?.job_code}

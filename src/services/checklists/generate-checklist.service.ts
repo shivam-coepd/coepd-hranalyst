@@ -12,7 +12,7 @@ export async function generateJobChecklist(jobId: string) {
   const { data: job, error } = await supabaseAdmin
     .from("jobs")
     .select(
-      "id,job_title,role_type,location_type,location,experience_min_months,experience_max_months,jd_text,status,assigned_placement_hr",
+      "id,job_title,role_type,location_type,location,experience_min_years,experience_max_years,jd_text,status,assigned_placement_hr",
     )
     .eq("id", jobId)
     .is("deleted_at", null)
@@ -73,8 +73,8 @@ export async function generateJobChecklist(jobId: string) {
       roleType: job.role_type,
       locationType: job.location_type,
       location: job.location,
-      experienceMinMonths: job.experience_min_months ?? 0,
-      experienceMaxMonths: job.experience_max_months ?? 0,
+      experienceMinYears: job.experience_min_years ?? 0,
+      experienceMaxYears: job.experience_max_years ?? 0,
       jdText: job.jd_text,
     });
     const { data: previous } = await supabaseAdmin

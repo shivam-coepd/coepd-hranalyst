@@ -12,7 +12,7 @@ export default async function PlacementHrAnalyticsPage() {
   const funnel = analytics.funnel as Record<string, number>;
 
   return (
-    <div className="mx-auto max-w-7xl space-y-6 p-6">
+    <div className="p-8 space-y-6">
       <div>
         <h1 className="text-2xl font-bold">Placement Operations</h1>
 
