@@ -1,6 +1,9 @@
 import "server-only";
 import { requireRole } from "@/lib/auth/guards";
 import { supabaseAdmin } from "@/lib/supabase/admin";
+import { s3Client } from "@/lib/supabase/s3";
+import { DeleteObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 export async function setPrimaryCv(cvId: string) {
   const user = await requireRole("student");
   const { data, error } = await supabaseAdmin.rpc("set_primary_student_cv", {
@@ -24,7 +27,10 @@ export async function deleteCv(cvId: string) {
     p_actor_id: user.id,
   });
   if (error) throw new Error(error.message);
-  await supabaseAdmin.storage.from("student-cvs").remove([cv.storage_path]);
+  await s3Client.send(new DeleteObjectCommand({
+    Bucket: "student-cvs",
+    Key: cv.storage_path,
+  }));
   return { success: true };
 }
 export async function getCvDownloadUrl(cvId: string) {
@@ -43,9 +49,13 @@ export async function getCvDownloadUrl(cvId: string) {
     .is("deleted_at", null)
     .single();
   if (!cv) throw new Error("CV not found");
-  const { data, error } = await supabaseAdmin.storage
-    .from("student-cvs")
-    .createSignedUrl(cv.storage_path, 60);
-  if (error || !data) throw new Error("Unable to create CV download link");
-  return data.signedUrl;
+  try {
+    const command = new GetObjectCommand({
+      Bucket: "student-cvs",
+      Key: cv.storage_path,
+    });
+    return await getSignedUrl(s3Client, command, { expiresIn: 60 });
+  } catch (error) {
+    throw new Error("Unable to create CV download link");
+  }
 }

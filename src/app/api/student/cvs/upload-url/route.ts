@@ -4,7 +4,8 @@ import { createCvUpload } from "@/services/cv/create-upload.service";
 export async function POST(req: Request) {
   try {
     return NextResponse.json(await createCvUpload(await req.json()));
-  } catch (e) {
+  } catch (e: any) {
+    require("fs").writeFileSync("error.log", e?.stack || e?.message || String(e));
     return routeError(e);
   }
 }

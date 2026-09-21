@@ -1,4 +1,8 @@
 import { randomUUID } from "crypto";
+import { AppError } from "@/lib/http/route-error";
+import { s3Client } from "@/lib/supabase/s3";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 import { extname } from "path";
 
@@ -14,7 +18,7 @@ export async function createCvUpload(input: unknown) {
   const parsed = cvUploadSchema.safeParse(input);
 
   if (!parsed.success) {
-    throw new Error(parsed.error.issues[0]?.message ?? "Invalid CV file");
+    throw new AppError(parsed.error.issues[0]?.message ?? "Invalid CV file");
   }
 
   const { data: student } = await supabaseAdmin
@@ -29,11 +33,11 @@ export async function createCvUpload(input: unknown) {
     .single();
 
   if (!student) {
-    throw new Error("Student profile not found");
+    throw new AppError("Student profile not found");
   }
 
   if (student.verification_status !== "verified") {
-    throw new Error("Only verified HRAnalyst students can upload CVs");
+    throw new AppError("Only verified HRAnalyst students can upload CVs");
   }
 
   const values = parsed.data;
@@ -41,7 +45,7 @@ export async function createCvUpload(input: unknown) {
   const extension = extname(values.fileName).toLowerCase().replace(".", "");
 
   if (!["pdf", "docx"].includes(extension)) {
-    throw new Error("Only PDF or DOCX CVs are allowed");
+    throw new AppError("Only PDF or DOCX CVs are allowed");
   }
 
   const cvId = randomUUID();
@@ -50,21 +54,25 @@ export async function createCvUpload(input: unknown) {
 
   const storagePath = `${student.id}/${cvId}/${safeFileName}`;
 
-  const { data: upload, error } = await supabaseAdmin.storage
-    .from("student-cvs")
-    .createSignedUploadUrl(storagePath);
-
-  if (error || !upload) {
-    throw new Error("Unable to prepare CV upload");
+  let signedUrl = "";
+  try {
+    const command = new PutObjectCommand({
+      Bucket: "student-cvs",
+      Key: storagePath,
+      ContentType: values.mimeType,
+    });
+    signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 300 });
+  } catch (error: any) {
+    throw new AppError(error?.message ?? "Unable to prepare CV upload", 400);
   }
 
   return {
     cvId,
     storagePath,
 
-    uploadToken: upload.token,
+    uploadToken: "", // No longer needed for S3
 
-    signedUrl: upload.signedUrl,
+    signedUrl,
   };
 }
 
@@ -84,19 +92,19 @@ export async function completeCvUpload(input: {
     .single();
 
   if (!student) {
-    throw new Error("Student not found");
+    throw new AppError("Student not found", 400);
   }
 
   const expectedPrefix = `${student.id}/${input.cvId}/`;
 
   if (!input.storagePath.startsWith(expectedPrefix)) {
-    throw new Error("Invalid storage path");
+    throw new AppError("Invalid storage path", 400);
   }
 
   const extension = input.storagePath.split(".").pop()?.toLowerCase();
 
   if (!extension || !["pdf", "docx"].includes(extension)) {
-    throw new Error("Unsupported CV type");
+    throw new AppError("Unsupported CV type", 400);
   }
 
   const { data: existingPrimary } = await supabaseAdmin
@@ -136,7 +144,7 @@ export async function completeCvUpload(input: {
     .single();
 
   if (error) {
-    throw new Error(error.message);
+    throw new AppError(error.message, 400);
   }
 
   await supabaseAdmin.from("audit_logs").insert({

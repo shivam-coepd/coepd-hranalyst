@@ -6,7 +6,8 @@ export async function POST(req: Request) {
     return NextResponse.json(await completeCvUpload(await req.json()), {
       status: 201,
     });
-  } catch (e) {
+  } catch (e: any) {
+    require("fs").writeFileSync("complete-error.log", e?.stack || e?.message || String(e));
     return routeError(e);
   }
 }

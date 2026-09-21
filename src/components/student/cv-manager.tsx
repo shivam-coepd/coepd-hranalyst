@@ -35,15 +35,18 @@ export default function CvManager({ initialCvs }: { initialCvs: CV[] }) {
       setBusy(false);
       return;
     }
-    const supabase = createClient();
-    const { error: uploadError } = await supabase.storage
-      .from("student-cvs")
-      .uploadToSignedUrl(p.storagePath, p.uploadToken, f, {
-        contentType: f.type,
-        upsert: false,
-      });
-    if (uploadError) {
-      setMsg(uploadError.message || "CV upload failed");
+    const uploadRes = await fetch(p.signedUrl, {
+      method: "PUT",
+      body: f,
+      headers: {
+        "Content-Type": f.type,
+      },
+    });
+
+    if (!uploadRes.ok) {
+      const errorText = await uploadRes.text();
+      console.error("S3 Upload Error:", uploadRes.status, uploadRes.statusText, errorText);
+      setMsg(`Upload failed: ${uploadRes.status} ${uploadRes.statusText}. Please try again.`);
       setBusy(false);
       return;
     }
@@ -53,14 +56,15 @@ export default function CvManager({ initialCvs }: { initialCvs: CV[] }) {
       body: JSON.stringify({
         cvId: p.cvId,
         storagePath: p.storagePath,
-        fileName: f.name,
+        originalFileName: f.name,
         fileSize: f.size,
         mimeType: f.type,
       }),
     });
     const d = await done.json();
     if (!done.ok) {
-      setMsg(d.error);
+      console.error("Complete Error:", d.error);
+      setMsg(`Finalizing upload failed: ${d.error || 'Unknown Error'}`);
       setBusy(false);
       return;
     }

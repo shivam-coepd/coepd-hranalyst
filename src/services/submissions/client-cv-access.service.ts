@@ -2,6 +2,9 @@ import "server-only";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { requireRole } from "@/lib/auth/guards";
 import { AppError } from "@/lib/http/route-error";
+import { s3Client } from "@/lib/supabase/s3";
+import { GetObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 export async function createSubmittedCvSignedUrl(
   submissionCandidateId: string,
 ) {
@@ -32,10 +35,16 @@ export async function createSubmittedCvSignedUrl(
     if (!cp?.is_active || cp.company_id !== submission.company_id)
       throw new AppError("Not authorized for this candidate", 403, "FORBIDDEN");
   }
-  const { data, error: signedError } = await supabaseAdmin.storage
-    .from("student-cvs")
-    .createSignedUrl(cv.storage_path, 300, { download: cv.original_file_name });
-  if (signedError || !data?.signedUrl)
+  let url = "";
+  try {
+    const command = new GetObjectCommand({
+      Bucket: "student-cvs",
+      Key: cv.storage_path,
+      ResponseContentDisposition: `attachment; filename="${cv.original_file_name}"`,
+    });
+    url = await getSignedUrl(s3Client, command, { expiresIn: 300 });
+  } catch (signedError) {
     throw new AppError("Unable to create CV link", 500, "CV_LINK_FAILED");
-  return { url: data.signedUrl, expiresIn: 300 };
+  }
+  return { url, expiresIn: 300 };
 }

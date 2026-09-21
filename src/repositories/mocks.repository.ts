@@ -113,7 +113,7 @@ export async function listAvailableMockSlots() {
   const { data, error } = await supabaseAdmin
     .from("mock_availability_slots")
     .select(
-      `id,evaluator_user_id,starts_at,duration_minutes,mode,meeting_link,location,status`,
+      `id,evaluator_user_id,starts_at,ends_at,mode,meeting_provider,location,status`,
     )
     .eq("status", "available")
     .gt("starts_at", new Date().toISOString())

@@ -26,6 +26,7 @@ export default async function UserDetailPage({
   }
 
   const roles = user.user_roles?.map((item: { roles: { display_name: any; }; }) => item.roles?.display_name).filter(Boolean) ?? [];
+  const studentProfile = (Array.isArray(user.student_profiles) ? user.student_profiles[0] : user.student_profiles) as any;
 
   let statusVariant: "default" | "success" | "warning" | "destructive" | "pending" | "secondary" = "secondary";
   if (user.account_status === "approved") statusVariant = "success";
@@ -63,8 +64,8 @@ export default async function UserDetailPage({
                   </div>
                 }
               />
-              {user.student_profiles && user.student_profiles.enrollment_id && (
-                <Info label="Enrollment ID" value={user.student_profiles.enrollment_id} />
+              {studentProfile && studentProfile.enrollment_id && (
+                <Info label="Enrollment ID" value={studentProfile.enrollment_id} />
               )}
               <Info label="First Name" value={user.first_name ?? "—"} />
               <Info label="Last Name" value={user.last_name ?? "—"} />

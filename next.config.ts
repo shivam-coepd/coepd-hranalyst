@@ -109,6 +109,8 @@ const nextConfig:
   reactStrictMode:
     true,
 
+  serverExternalPackages: ["pdf-parse", "pdfjs-dist"],
+
   async headers() {
 
     return [

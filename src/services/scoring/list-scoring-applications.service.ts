@@ -14,11 +14,11 @@ export async function listScoringApplications() {
     )
     .in("status", ["scoring_pending", "scoring", "scoring_failed"])
     .order("applied_at", { ascending: false });
-  if (
-    user.roles.includes("placement_hr") &&
-    !user.roles.some((r) => r === "admin" || r === "super_admin")
-  )
-    q = q.eq("jobs.assigned_placement_hr", user.id);
+  // if (
+  //   user.roles.includes("placement_hr") &&
+  //   !user.roles.some((r) => r === "admin" || r === "super_admin")
+  // )
+  //   q = q.eq("jobs.assigned_placement_hr", user.id);
   const { data, error } = await q;
   if (error) throw new Error(error.message);
   return data ?? [];

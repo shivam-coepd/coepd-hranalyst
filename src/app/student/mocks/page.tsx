@@ -41,7 +41,7 @@ export default async function Page() {
             <h2 className="text-xl font-bold tracking-tight text-foreground">Available slots</h2>
             <Badge variant="outline" className="font-normal">{slots.length} available</Badge>
           </div>
-          <StudentBookingPanel applications={applications} slots={slots} />
+          <StudentBookingPanel applications={applications as any} slots={slots as any} />
         </section>
 
         <section>

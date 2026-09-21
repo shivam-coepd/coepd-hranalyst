@@ -15,6 +15,7 @@ export default async function Page({
 }) {
   const { clientProfile } = await requireActiveClientHr();
   const p = await searchParams;
+  console.log("CLIENT JOBS PAGE: Fetching jobs for company:", clientProfile.company_id);
   const r = await getJobs({ 
     companyId: clientProfile.company_id,
     search: p.search,

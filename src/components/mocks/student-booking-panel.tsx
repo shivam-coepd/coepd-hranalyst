@@ -12,8 +12,8 @@ type Application = {
 type Slot = {
   id: string;
   starts_at: string;
+  ends_at: string;
   mode: string;
-  duration_minutes: number;
 };
 export function StudentBookingPanel({
   applications,
@@ -77,13 +77,17 @@ export function StudentBookingPanel({
       </label>
       {error && <p className="text-sm text-red-600">{error}</p>}
       <div className="grid gap-3 md:grid-cols-2">
-        {slots.map((slot) => (
+        {slots.map((slot) => {
+          const duration = Math.round(
+            (new Date(slot.ends_at).getTime() - new Date(slot.starts_at).getTime()) / 60000
+          );
+          return (
           <div key={slot.id} className="rounded-xl border p-4">
             <p className="font-medium">
               {new Date(slot.starts_at).toLocaleString()}
             </p>
             <p className="text-sm capitalize">
-              {slot.mode} · {slot.duration_minutes} minutes
+              {slot.mode} · {duration} minutes
             </p>
             <button
               disabled={busySlot !== null}
@@ -93,7 +97,8 @@ export function StudentBookingPanel({
               {busySlot === slot.id ? "Booking..." : "Book slot"}
             </button>
           </div>
-        ))}
+          );
+        })}
         {slots.length === 0 && (
           <p className="text-sm text-gray-500">
             No available mock slots right now.
