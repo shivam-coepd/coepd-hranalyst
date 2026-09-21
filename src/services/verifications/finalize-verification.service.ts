@@ -20,7 +20,6 @@ export async function finalizeApplicationVerification(
     "finalize_application_verification",
     {
       p_application_id: parsed.applicationId,
-      p_user_id: user.id,
       p_decision: parsed.decision,
       p_verified_match_score: parsed.verifiedMatchScore ?? null,
       p_verified_ats_score: parsed.verifiedAtsScore ?? null,
