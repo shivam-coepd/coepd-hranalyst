@@ -62,12 +62,24 @@ export default async function Page() {
                 </p>
               </div>
 
-              <div className="mt-4 flex items-center justify-between text-xs font-medium text-muted-foreground">
-                <span>Code: {j?.job_code}</span>
-                <span className="flex gap-2">
-                  <span className="text-primary font-semibold">Match: {a.verified_match_score ?? a.match_score ?? "—"}%</span>
-                  <span className="text-secondary-foreground font-semibold">ATS: {a.verified_ats_score ?? a.ats_score ?? "—"}%</span>
-                </span>
+              <div className="mt-6 border-t pt-4">
+                <div className="grid grid-cols-2 gap-4 text-sm mb-4">
+                  <div>
+                    <div className="text-muted-foreground">Match Score</div>
+                    <div className="font-medium text-primary text-xl">
+                      {a.verified_match_score ?? a.match_score ?? "—"}%
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-muted-foreground">ATS Score</div>
+                    <div className="font-medium text-secondary-foreground text-xl">
+                      {a.verified_ats_score ?? a.ats_score ?? "—"}%
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between text-xs font-medium text-muted-foreground">
+                  <span>Code: {j?.job_code}</span>
+                </div>
               </div>
             </Link>
           );
