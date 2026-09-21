@@ -26,8 +26,19 @@ export async function getOwnStudentCvs(studentId: string) {
 }
 
 export async function getStudentApplicationList() {
-  const supabase = await createClient();
-  const { data, error } = await supabase
+  const supabaseAuth = await createClient();
+  const { data: { user } } = await supabaseAuth.auth.getUser();
+  if (!user) throw new Error("Unauthorized");
+
+  const { data: student } = await supabaseAdmin
+    .from("student_profiles")
+    .select("id")
+    .eq("user_id", user.id)
+    .single();
+
+  if (!student) throw new Error("Student profile not found");
+
+  const { data, error } = await supabaseAdmin
     .from("applications")
     .select(
       `
@@ -35,6 +46,7 @@ export async function getStudentApplicationList() {
     jobs(id,job_code,job_title,role_type,location,workplace_type,companies(name,logo))
   `,
     )
+    .eq("student_id", student.id)
     .order("applied_at", { ascending: false });
   if (error) throw new Error(error.message);
   return data ?? [];

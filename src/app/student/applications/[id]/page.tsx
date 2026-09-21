@@ -1,5 +1,7 @@
 import { getStudentScore } from "@/services/scoring/get-student-score.service";
 import { getEffectiveScore } from "@/lib/applications/effective-score";
+import WithdrawApplicationButton from "@/components/student/withdraw-application-button";
+
 export default async function Page({
   params,
 }: {
@@ -18,10 +20,17 @@ export default async function Page({
   const effectiveAts = getEffectiveScore(app.verified_ats_score, app.ats_score);
   return (
     <main className="p-8 space-y-6">
-      <h1 className="text-3xl font-bold">Application</h1>
-      <p className="mt-2 text-slate-500">
-        {j?.job_title} · {j?.job_code}
-      </p>
+      <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold">Application</h1>
+          <p className="mt-2 text-slate-500">
+            {j?.job_title} · {j?.job_code}
+          </p>
+        </div>
+        <div className="flex shrink-0 items-center gap-3">
+          <WithdrawApplicationButton applicationId={app.id} />
+        </div>
+      </div>
       <p className="mt-2 text-sm">
         Status: <strong>{app.status}</strong>
       </p>

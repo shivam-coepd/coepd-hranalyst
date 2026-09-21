@@ -57,7 +57,7 @@ BEGIN
 
     -- Delete application scores and scoring runs
     DELETE FROM application_scores WHERE application_id = p_application_id;
-    DELETE FROM application_scoring_runs WHERE application_id = p_application_id;
+    -- DELETE FROM application_scoring_runs WHERE application_id = p_application_id;
 
     -- Delete application verifications
     DELETE FROM application_verifications WHERE application_id = p_application_id;

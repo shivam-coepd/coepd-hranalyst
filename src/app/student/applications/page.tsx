@@ -12,8 +12,8 @@ export default async function Page() {
 
   return (
     <main className="p-8">
-      <PageHeader 
-        title="My Applications" 
+      <PageHeader
+        title="My Applications"
         description="Track the status of your job applications."
       />
 
@@ -25,6 +25,9 @@ export default async function Page() {
         )}
         {apps.map((a) => {
           const j = Array.isArray(a.jobs) ? a.jobs[0] : a.jobs;
+          console.log(j);
+          const c = j?.companies;
+          console.log(c);
 
           let statusVariant: "default" | "success" | "warning" | "destructive" | "pending" | "secondary" = "secondary";
           if (a.status === "verification_pending" || a.status === "under_verification") statusVariant = "pending";
@@ -40,13 +43,13 @@ export default async function Page() {
                   </div>
                   <Badge variant={statusVariant} className="capitalize">{a.status.replace('_', ' ')}</Badge>
                 </div>
-                
+
                 <Link href={`/student/jobs/${j?.id}`} className="block mt-4">
                   <h3 className="text-lg font-semibold tracking-tight text-foreground hover:text-primary transition-colors">
                     {j?.job_title ?? "Job"}
                   </h3>
                 </Link>
-                
+
                 <div className="mt-2 space-y-1 text-sm text-muted-foreground">
                   <div className="flex items-center gap-2">
                     <Building2 className="h-4 w-4 shrink-0" />
@@ -58,7 +61,7 @@ export default async function Page() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="mt-6 border-t pt-4">
                 <div className="grid grid-cols-2 gap-4 text-sm mb-4">
                   <div>
