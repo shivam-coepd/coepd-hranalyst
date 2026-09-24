@@ -52,7 +52,34 @@ export async function getClientCandidate(submissionCandidateId: string) {
 
         applications (
           id,
-          status
+          status,
+          student_profiles (
+            id,
+            enrollment_id,
+            first_name,
+            last_name,
+            phone,
+            city,
+            state,
+            country,
+            total_experience_months,
+            current_company,
+            current_designation,
+            current_ctc,
+            expected_ctc,
+            notice_period_days,
+            linkedin_url,
+            github_url,
+            portfolio_url,
+            headline,
+            summary,
+            highest_qualification,
+            graduation_year,
+            specialization,
+            preferred_role,
+            willing_to_relocate,
+            current_employment_status
+          )
         )
       `,
     )

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { ZodError } from "zod";
 import { routeError } from "@/lib/http/route-error";
 import { createMockAvailabilitySlot } from "@/services/mocks/mock.service";
 export async function POST(req: NextRequest) {

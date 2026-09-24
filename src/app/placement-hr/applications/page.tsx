@@ -55,31 +55,19 @@ export default async function Page() {
                 </div>
                 
                 <h3 className="mt-4 text-lg font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors">
-                  {s?.first_name} {s?.last_name}
+                  {s?.profiles?.first_name} {s?.profiles?.last_name}
                 </h3>
                 <p className="mt-1 text-sm text-muted-foreground line-clamp-1">
                   {s?.enrollment_id} · {j?.job_title}
                 </p>
               </div>
 
-              <div className="mt-6 border-t pt-4">
-                <div className="grid grid-cols-2 gap-4 text-sm mb-4">
-                  <div>
-                    <div className="text-muted-foreground">Match Score</div>
-                    <div className="font-medium text-primary text-xl">
-                      {a.verified_match_score ?? a.match_score ?? "—"}%
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-muted-foreground">ATS Score</div>
-                    <div className="font-medium text-secondary-foreground text-xl">
-                      {a.verified_ats_score ?? a.ats_score ?? "—"}%
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between text-xs font-medium text-muted-foreground">
-                  <span>Code: {j?.job_code}</span>
-                </div>
+              <div className="mt-4 flex items-center justify-between text-xs font-medium text-muted-foreground">
+                <span>Code: {j?.job_code}</span>
+                <span className="flex gap-2">
+                  <span className="text-primary font-semibold">Match: {a.verified_match_score ?? a.match_score ?? "—"}%</span>
+                  <span className="text-secondary-foreground font-semibold">ATS: {a.verified_ats_score ?? a.ats_score ?? "—"}%</span>
+                </span>
               </div>
             </Link>
           );

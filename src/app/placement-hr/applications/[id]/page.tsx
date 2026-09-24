@@ -24,7 +24,7 @@ export default async function Page({
       <div>
         <h1 className="text-3xl font-bold">Application Verification</h1>
         <p className="mt-2 text-slate-500">
-          {student?.first_name} {student?.last_name} · {student?.enrollment_id}{" "}
+          {student?.profiles?.first_name} {student?.profiles?.last_name} · {student?.enrollment_id}{" "}
           · {job?.job_title} · {job?.job_code}
         </p>
       </div>

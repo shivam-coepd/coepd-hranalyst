@@ -19,6 +19,7 @@ export default async function Page({
   if (
     !job ||
     (user.roles.includes("placement_hr") &&
+      job.assigned_placement_hr &&
       job.assigned_placement_hr !== user.id)
   )
     notFound();

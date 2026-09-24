@@ -42,9 +42,14 @@ export async function listPlacementMockApplications(
       "mock_completed",
     ])
     .order("updated_at", { ascending: false });
-  if (!isAdmin) q = q.eq("jobs.assigned_placement_hr", userId);
-  const { data, error } = await q;
+  const { data: qData, error } = await q;
   if (error) throw new Error(error.message);
+  
+  const data = isAdmin ? (qData ?? []) : (qData ?? []).filter((row: any) => {
+    const job = Array.isArray(row.jobs) ? row.jobs[0] : row.jobs;
+    return !job?.assigned_placement_hr || job.assigned_placement_hr === userId;
+  });
+
   const studentProfileIds = [...new Set((data ?? []).map((x) => x.student_id))];
   const { data: students, error: studentError } = studentProfileIds.length
     ? await supabaseAdmin
@@ -79,10 +84,17 @@ export async function listPlacementMocks(userId: string, isAdmin: boolean) {
       `id,mock_code,application_id,evaluator_user_id,scheduled_at,duration_minutes,mode,meeting_link,location,status,booking_source,completed_at,applications!inner(id,student_id,jobs!inner(id,job_code,job_title,assigned_placement_hr,companies(name))),mock_scorecards(id,status,scoring_version,overall_score,recommendation,student_visible_notes,submitted_at)`,
     )
     .order("scheduled_at", { ascending: true });
-  if (!isAdmin) q = q.eq("applications.jobs.assigned_placement_hr", userId);
   const { data, error } = await q;
   if (error) throw new Error(error.message);
-  return data ?? [];
+  
+  const rows = data ?? [];
+  if (isAdmin) return rows;
+  
+  return rows.filter((row: any) => {
+    const app = Array.isArray(row.applications) ? row.applications[0] : row.applications;
+    const job = Array.isArray(app?.jobs) ? app.jobs[0] : app?.jobs;
+    return !job?.assigned_placement_hr || job.assigned_placement_hr === userId;
+  });
 }
 export async function getMockDetail(id: string) {
   const { data, error } = await supabaseAdmin
@@ -95,18 +107,21 @@ export async function getMockDetail(id: string) {
   if (error) return null;
   const studentId = data.applications?.student_id;
   if (!studentId) return data;
-  const [{ data: profile }, { data: student }] = await Promise.all([
-    supabaseAdmin
-      .from("profiles")
-      .select("id,first_name,last_name,email")
-      .eq("id", studentId)
-      .maybeSingle(),
-    supabaseAdmin
-      .from("student_profiles")
-      .select("id,enrollment_id,headline")
-      .eq("id", studentId)
-      .maybeSingle(),
-  ]);
+
+  const { data: student } = await supabaseAdmin
+    .from("student_profiles")
+    .select("id,user_id,enrollment_id,headline")
+    .eq("id", studentId)
+    .maybeSingle();
+
+  const { data: profile } = student?.user_id
+    ? await supabaseAdmin
+        .from("profiles")
+        .select("id,first_name,last_name,email")
+        .eq("id", student.user_id)
+        .maybeSingle()
+    : { data: null };
+
   return { ...data, profile, student_profile: student };
 }
 export async function listAvailableMockSlots() {

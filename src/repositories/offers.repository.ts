@@ -11,7 +11,7 @@ const OFFER_SELECT = `
   student_decided_at, student_decision_reason, withdrawn_at, withdrawal_reason,
   companies ( id, name, logo ),
   jobs!inner ( id, job_code, job_title, role_type, assigned_placement_hr ),
-  student_profiles ( id, first_name, last_name, enrollment_id ),
+  student_profiles ( id, user_id, enrollment_id, profiles ( first_name, last_name ) ),
   offer_status_history ( id, old_status, new_status, reason, changed_at )
 `;
 

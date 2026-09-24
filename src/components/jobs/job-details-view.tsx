@@ -145,6 +145,14 @@ export default function JobDetailsView({
             </div>
 
             <div className="flex justify-between text-sm py-2 border-b">
+              <span className="text-muted-foreground">Applicants</span>
+              <span className="font-medium flex items-center gap-1">
+                <Users className="h-3 w-3" />
+                {job.candidates_count ?? 0}
+              </span>
+            </div>
+
+            <div className="flex justify-between text-sm py-2 border-b">
               <span className="text-muted-foreground">Deadline</span>
               <span className="font-medium">
                 {job.application_deadline

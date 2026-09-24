@@ -12,7 +12,7 @@ export async function getVerificationContext(applicationId: string) {
       verification_notes, rejection_reason, update_request, verified_by, verified_at,
       verification_due_at, applied_at,
       jobs(id, job_title, job_code, assigned_placement_hr, companies(name)),
-      student_profiles(id, user_id, enrollment_id, first_name, last_name)
+      student_profiles(id, user_id, enrollment_id, profiles(first_name, last_name))
     `,
     )
     .eq("id", applicationId)
@@ -52,7 +52,7 @@ export async function listVerificationQueue() {
       id, status, score_status, match_score, ats_score,
       verified_match_score, verified_ats_score, verification_due_at, applied_at,
       jobs(id, job_title, job_code, assigned_placement_hr, companies(name)),
-      student_profiles(id, enrollment_id, first_name, last_name)
+      student_profiles(id, enrollment_id, user_id, profiles(first_name, last_name))
     `,
     )
     .in("status", ["verification_pending", "under_verification"])

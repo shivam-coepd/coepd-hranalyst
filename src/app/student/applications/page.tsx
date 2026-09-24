@@ -25,9 +25,7 @@ export default async function Page() {
         )}
         {apps.map((a) => {
           const j = Array.isArray(a.jobs) ? a.jobs[0] : a.jobs;
-          console.log(j);
           const c = j?.companies;
-          console.log(c);
 
           let statusVariant: "default" | "success" | "warning" | "destructive" | "pending" | "secondary" = "secondary";
           if (a.status === "verification_pending" || a.status === "under_verification") statusVariant = "pending";

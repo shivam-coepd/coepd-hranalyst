@@ -45,7 +45,7 @@ export default async function PlacementsPage() {
                 return (
                   <tr key={placement.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50">
                     <td className="px-5 py-4 font-medium text-foreground">
-                      {[student?.first_name, student?.last_name].filter(Boolean).join(" ")}
+                      {[student?.profiles?.first_name, student?.profiles?.last_name].filter(Boolean).join(" ")}
                     </td>
                     <td className="px-5 py-4">{company?.name}</td>
                     <td className="px-5 py-4 text-muted-foreground">{placement.placed_designation}</td>

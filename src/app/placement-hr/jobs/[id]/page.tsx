@@ -1,3 +1,4 @@
+import Link from "next/link";
 import JobDetailsView from "@/components/jobs/job-details-view";
 import { requireRole } from "@/lib/auth/guards";
 import { getJobById } from "@/repositories/jobs.repository";
@@ -25,6 +26,14 @@ export default async function Page({
       <JobDetailsView job={j} actions={
         <>
           <JobSubmitAction jobId={j.id} disabled={j.status !== "draft"} />
+          {j.status === "published" && j.candidates_count > 0 && (
+            <Link
+              href={`/placement-hr/submissions/new?jobId=${j.id}`}
+              className="flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
+            >
+              Submit Candidates
+            </Link>
+          )}
           <JobActions
             jobId={j.id}
             editHref={`/placement-hr/jobs/${j.id}/edit`}

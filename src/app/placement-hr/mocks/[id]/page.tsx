@@ -21,8 +21,10 @@ export default async function Page({
     m.evaluator_user_id === u.id ||
     job?.assigned_placement_hr === u.id;
   if (!can) notFound();
-  const cards = [...(m.mock_scorecards ?? [])].sort(
-    (a, b) =>
+  const rawSc = m.mock_scorecards;
+  const scList = Array.isArray(rawSc) ? rawSc : (rawSc ? [rawSc] : []);
+  const cards = [...scList].sort(
+    (a: any, b: any) =>
       parseInt(b.scoring_version || "0") - parseInt(a.scoring_version || "0"),
   );
   const profile = "profile" in m ? m.profile : null;

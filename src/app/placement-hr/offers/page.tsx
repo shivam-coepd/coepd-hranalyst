@@ -44,7 +44,7 @@ export default async function PlacementOffersPage() {
                 return (
                   <tr key={offer.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50">
                     <td className="px-5 py-4 font-medium text-foreground">
-                      {[student?.first_name, student?.last_name].filter(Boolean).join(" ") || "Candidate"}
+                      {[student?.profiles?.first_name, student?.profiles?.last_name].filter(Boolean).join(" ") || "Candidate"}
                     </td>
                     <td className="px-5 py-4">{company?.name ?? "—"}</td>
                     <td className="px-5 py-4 text-muted-foreground">{offer.designation}</td>

@@ -22,9 +22,9 @@ export async function getVerification(applicationId: string) {
     user.roles.includes("placement_hr") &&
     !user.roles.some((r) => r === "admin" || r === "super_admin")
   ) {
-    if (job?.assigned_placement_hr !== user.id)
+    if (job?.assigned_placement_hr && job?.assigned_placement_hr !== user.id)
       throw new AppError(
-        "This application is not assigned to you",
+        "This application is assigned to another HR",
         403,
         "FORBIDDEN",
       );
@@ -40,6 +40,9 @@ export async function getVerificationQueue() {
   const rows = await listVerificationQueue();
   if (user.roles.some((r) => r === "admin" || r === "super_admin")) return rows;
   return rows.filter(
-    (row) => relationOne(row.jobs)?.assigned_placement_hr === user.id,
+    (row) => {
+      const assigned = relationOne(row.jobs)?.assigned_placement_hr;
+      return !assigned || assigned === user.id;
+    }
   );
 }

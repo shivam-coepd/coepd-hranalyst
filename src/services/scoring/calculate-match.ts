@@ -7,7 +7,7 @@ interface Coverage {
 
 function ratio({ matched, total }: Coverage) {
   if (total === 0) {
-    return 0;
+    return 1;
   }
 
   return matched / total;

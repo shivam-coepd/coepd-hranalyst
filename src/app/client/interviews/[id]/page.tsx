@@ -6,6 +6,8 @@ import { getInterviewById } from "@/repositories/interviews.repository";
 
 import { InterviewFeedbackForm } from "@/components/feedbacks/interview-feedback-form";
 
+import { CompleteInterviewButton } from "@/components/interviews/complete-interview-button";
+
 import { getFeedbackByInterviewId } from "@/repositories/feedbacks.repository";
 
 type Props = {
@@ -130,6 +132,16 @@ export default async function ClientInterviewDetailPage({ params }: Props) {
             <InterviewFeedbackForm interviewId={interview.id} />
           )}
         </>
+      )}
+
+      {(interview.status === "scheduled" || interview.status === "in_progress") && (
+        <div className="rounded-xl border bg-white p-6 mt-6 flex justify-between items-center">
+          <div>
+            <h2 className="text-lg font-semibold">Complete Interview</h2>
+            <p className="text-sm text-gray-500 mt-1">Once the interview has concluded, mark it as completed to unlock the feedback form.</p>
+          </div>
+          <CompleteInterviewButton interviewId={interview.id} />
+        </div>
       )}
     </div>
   );

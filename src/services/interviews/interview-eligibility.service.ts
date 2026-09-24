@@ -34,12 +34,14 @@ export async function getInterviewEligibility(
 
   if (
     application.status !== "shortlisted" &&
-    application.status !== "mock_completed"
+    application.status !== "mock_completed" &&
+    application.status !== "interview_scheduled" &&
+    application.status !== "on_hold"
   ) {
     return {
       eligible: false,
       reason:
-        "Candidate must be shortlisted before client interview scheduling",
+        "Candidate must be shortlisted or in-progress before client interview scheduling",
       completedMockId: null,
       mockScore: null,
     };

@@ -30,8 +30,11 @@ export default async function NewOfferPage({ searchParams }: Props) {
         status,
 
         student_profiles (
-          first_name,
-          last_name
+          user_id,
+          profiles (
+            first_name,
+            last_name
+          )
         ),
 
         jobs!inner (

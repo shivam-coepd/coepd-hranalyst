@@ -55,8 +55,12 @@ export default async function Page() {
                 ? mock.applications.jobs[0]
                 : mock.applications?.jobs;
 
-              const cards = [...(mock.mock_scorecards ?? [])].sort(
-                (a, b) => parseInt(b.scoring_version || "0") - parseInt(a.scoring_version || "0"),
+              const rawSc = mock.mock_scorecards;
+              const scList = Array.isArray(rawSc) ? rawSc : (rawSc ? [rawSc] : []);
+              const cards = [...scList].sort(
+                (a: any, b: any) =>
+                  parseInt(b.scoring_version || "0") -
+                  parseInt(a.scoring_version || "0"),
               );
               const scorecard = cards.find((x) => x.status === "submitted");
 

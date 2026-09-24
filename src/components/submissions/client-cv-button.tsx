@@ -21,7 +21,7 @@ export function ClientCvButton({ candidateId }: { candidateId: string }) {
       disabled={busy}
       className="rounded border px-3 py-2 text-sm"
     >
-      {busy ? "Opening..." : "View CV"}
+      {busy ? "Opening..." : "View/Download CV"}
     </button>
   );
 }

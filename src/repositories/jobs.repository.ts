@@ -174,7 +174,8 @@ export async function getJobById(jobId: string) {
           email
         ),
 
-        job_status_history(id,old_status,new_status,reason,changed_at,changed_by)
+        job_status_history(id,old_status,new_status,reason,changed_at,changed_by),
+        applications(count)
       `,
     )
     .eq("id", jobId)
@@ -220,7 +221,13 @@ export async function getJobById(jobId: string) {
     throw new Error(error.message);
   }
 
-  return data;
+  const applications = Array.isArray(data.applications) ? data.applications[0] : data.applications;
+  const candidates_count = applications?.count ?? 0;
+
+  return {
+    ...data,
+    candidates_count
+  };
 }
 
 export async function getPlacementHrOptions() {

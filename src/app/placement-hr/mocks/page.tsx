@@ -47,9 +47,11 @@ export default async function Page() {
             </thead>
             <tbody className="divide-y">
               {mocks.map((m) => {
-                const sc = [...(m.mock_scorecards ?? [])]
-                  .sort((a, b) => parseInt(b.scoring_version || "0") - parseInt(a.scoring_version || "0"))
-                  .find((x) => x.status === "submitted");
+                const rawSc = m.mock_scorecards;
+                const scList = Array.isArray(rawSc) ? rawSc : (rawSc ? [rawSc] : []);
+                const sc = [...scList]
+                  .sort((a: any, b: any) => parseInt(b.scoring_version || "0") - parseInt(a.scoring_version || "0"))
+                  .find((x: any) => x.status === "submitted");
 
                 let statusVariant: "default" | "success" | "warning" | "destructive" | "pending" | "secondary" = "secondary";
                 if (m.status === "scheduled") statusVariant = "pending";
