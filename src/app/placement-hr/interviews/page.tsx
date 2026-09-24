@@ -1,8 +1,10 @@
+import Link from "next/link";
 import { requireRole } from "@/lib/auth/guards";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { PageHeader } from "@/components/ui/page-header";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { InterviewFilters } from "@/components/interviews/interview-filters";
 
 export default async function PlacementHrInterviewsPage({
@@ -91,6 +93,7 @@ export default async function PlacementHrInterviewsPage({
                 <th className="px-5 py-3 font-medium text-muted-foreground">Round & Mode</th>
                 <th className="px-5 py-3 font-medium text-muted-foreground">Schedule</th>
                 <th className="px-5 py-3 font-medium text-muted-foreground">Status</th>
+                <th className="px-5 py-3 font-medium text-right text-muted-foreground">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y">
@@ -130,12 +133,17 @@ export default async function PlacementHrInterviewsPage({
                     <td className="px-5 py-4">
                       <Badge variant={statusVariant} className="capitalize">{interview.status}</Badge>
                     </td>
+                    <td className="px-5 py-4 text-right">
+                      <Link href={`/placement-hr/interviews/${interview.id}`}>
+                        <Button variant="ghost" size="sm">View</Button>
+                      </Link>
+                    </td>
                   </tr>
                 );
               })}
               {interviews.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-5 py-12 text-center text-muted-foreground">
+                  <td colSpan={6} className="px-5 py-12 text-center text-muted-foreground">
                     No interviews scheduled.
                   </td>
                 </tr>

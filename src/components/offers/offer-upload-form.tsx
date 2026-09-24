@@ -42,6 +42,7 @@ export function OfferUploadForm({ applicationId, feedbackId }: Props) {
         throw new Error(result.error ?? "Unable to upload offer");
       }
 
+      router.push(`/placement-hr/offers/${result.offerId}`);
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to upload offer");
