@@ -10,8 +10,8 @@ export default async function ClientPlacementsPage() {
 
   return (
     <div className="p-8">
-      <PageHeader 
-        title="Placements" 
+      <PageHeader
+        title="Placements"
         description="Candidates placed with your company."
       />
 
@@ -39,7 +39,8 @@ export default async function ClientPlacementsPage() {
                 return (
                   <tr key={p.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50">
                     <td className="px-5 py-4 font-medium text-foreground">
-                      {[student?.first_name, student?.last_name].filter(Boolean).join(" ")}
+                      {/* {[student?.first_name, student?.last_name].filter(Boolean).join(" ")} */}
+                      {[student?.profiles?.first_name, student?.profiles?.last_name].filter(Boolean).join(" ")}
                     </td>
                     <td className="px-5 py-4 text-muted-foreground">{p.placed_designation}</td>
                     <td className="px-5 py-4 font-medium">
