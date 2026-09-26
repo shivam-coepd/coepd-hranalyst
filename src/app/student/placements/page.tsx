@@ -5,6 +5,8 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Building2, Briefcase, Calendar, CheckCircle } from "lucide-react";
 
+import { Card } from "@/components/ui/card";
+
 export default async function StudentPlacementsPage() {
   const user = await requireRole("student");
   const { data: student } = await supabaseAdmin
@@ -21,7 +23,8 @@ export default async function StudentPlacementsPage() {
         description="Track placement confirmation and joining status."
       />
 
-      <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <Card className="mt-8">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4">
         {placements.length === 0 && (
           <div className="col-span-full rounded-xl border border-dashed bg-slate-50/50 p-12 text-center text-muted-foreground">
             No confirmed placements yet.
@@ -79,6 +82,7 @@ export default async function StudentPlacementsPage() {
           );
         })}
       </div>
+      </Card>
     </div>
   );
 }

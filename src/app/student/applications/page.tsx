@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { FileText, Building2, Briefcase } from "lucide-react";
 
+import { Card } from "@/components/ui/card";
+
 export default async function Page() {
   await requireRole("student");
   const apps = await getStudentApplicationList();
@@ -17,7 +19,8 @@ export default async function Page() {
         description="Track the status of your job applications."
       />
 
-      <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <Card className="mt-8">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4">
         {apps.length === 0 && (
           <div className="col-span-full rounded-xl border border-dashed bg-slate-50/50 p-12 text-center text-muted-foreground">
             No applications yet.
@@ -88,6 +91,7 @@ export default async function Page() {
           );
         })}
       </div>
+      </Card>
     </main>
   );
 }

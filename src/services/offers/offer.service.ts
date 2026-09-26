@@ -1,6 +1,7 @@
 import "server-only";
 import { createClient } from "@/lib/supabase/server";
 import { requireRole } from "@/lib/auth/guards";
+import { AppError } from "@/lib/http/route-error";
 import {
   registerOfferSchema,
   studentOfferDecisionSchema,
@@ -47,7 +48,7 @@ export async function registerOffer({
       p_file_size: uploaded.fileSize,
       p_file_hash: uploaded.fileHash,
     });
-    if (error) throw new Error(error.message);
+    if (error) throw new AppError(error.message, 400);
     return { offerId: data as string };
   } catch (error) {
     await deleteOfferFile(uploaded.storagePath);
@@ -61,9 +62,9 @@ export async function decideOffer(input: StudentOfferDecisionInput) {
   const { error } = await supabase.rpc("student_decide_offer", {
     p_offer_id: parsed.offerId,
     p_decision: parsed.decision,
-    p_reason: parsed.reason ?? undefined,
+    p_reason: parsed.reason ?? null,
   });
-  if (error) throw new Error(error.message);
+  if (error) throw new AppError(error.message, 400);
   return { success: true };
 }
 export async function withdrawOffer(input: WithdrawOfferInput) {
@@ -74,6 +75,6 @@ export async function withdrawOffer(input: WithdrawOfferInput) {
     p_offer_id: parsed.offerId,
     p_reason: parsed.reason,
   });
-  if (error) throw new Error(error.message);
+  if (error) throw new AppError(error.message, 400);
   return { success: true };
 }

@@ -34,68 +34,59 @@ export default async function Page() {
       </div>
       
       <Card>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-slate-50/50 dark:bg-slate-900/50">
-              <tr>
-                <th className="p-4 font-medium text-muted-foreground">Mock</th>
-                <th className="p-4 font-medium text-muted-foreground">Schedule</th>
-                <th className="p-4 font-medium text-muted-foreground">Status</th>
-                <th className="p-4 font-medium text-muted-foreground">Score</th>
-                <th className="p-4 font-medium text-right text-muted-foreground">Action</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y">
-              {mocks.map((m) => {
-                const rawSc = m.mock_scorecards;
-                const scList = Array.isArray(rawSc) ? rawSc : (rawSc ? [rawSc] : []);
-                const sc = [...scList]
-                  .sort((a: any, b: any) => parseInt(b.scoring_version || "0") - parseInt(a.scoring_version || "0"))
-                  .find((x: any) => x.status === "submitted");
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4">
+          {mocks.length === 0 && (
+            <div className="col-span-full rounded-xl border border-dashed bg-slate-50/50 p-12 text-center text-muted-foreground">
+              No mock interviews found.
+            </div>
+          )}
+          {mocks.map((m) => {
+            const rawSc = m.mock_scorecards;
+            const scList = Array.isArray(rawSc) ? rawSc : (rawSc ? [rawSc] : []);
+            const sc = [...scList]
+              .sort((a: any, b: any) => parseInt(b.scoring_version || "0") - parseInt(a.scoring_version || "0"))
+              .find((x: any) => x.status === "submitted");
 
-                let statusVariant: "default" | "success" | "warning" | "destructive" | "pending" | "secondary" = "secondary";
-                if (m.status === "scheduled") statusVariant = "pending";
-                if (m.status === "completed") statusVariant = "success";
-                if (m.status === "cancelled") statusVariant = "destructive";
+            let statusVariant: "default" | "success" | "warning" | "destructive" | "pending" | "secondary" = "secondary";
+            if (m.status === "scheduled") statusVariant = "pending";
+            if (m.status === "completed") statusVariant = "success";
+            if (m.status === "cancelled") statusVariant = "destructive";
 
-                return (
-                  <tr key={m.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50">
-                    <td className="p-4 font-medium text-foreground">{m.mock_code}</td>
-                    <td className="p-4 text-muted-foreground">
-                      {new Date(m.scheduled_at).toLocaleString("en-US", {
-                        dateStyle: "medium",
-                        timeStyle: "short",
-                      })}
-                    </td>
-                    <td className="p-4">
-                      <Badge variant={statusVariant} className="capitalize">
-                        {m.status.replaceAll("_", " ")}
-                      </Badge>
-                    </td>
-                    <td className="p-4">
-                      {sc?.overall_score ? (
-                        <Badge variant="outline">{sc.overall_score}</Badge>
-                      ) : (
-                        <span className="text-muted-foreground">—</span>
-                      )}
-                    </td>
-                    <td className="p-4 text-right">
-                      <Link href={`/placement-hr/mocks/${m.id}`}>
-                        <Button variant="ghost" size="sm">Open</Button>
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
-              {mocks.length === 0 && (
-                <tr>
-                  <td colSpan={5} className="p-12 text-center text-muted-foreground">
-                    No mock interviews found.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+            return (
+              <Link
+                href={`/placement-hr/mocks/${m.id}`}
+                key={m.id}
+                className="group flex flex-col justify-between rounded-xl border bg-white p-6 shadow-sm transition-all hover:shadow-md dark:bg-slate-950"
+              >
+                <div>
+                  <div className="flex items-start justify-between">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/5 text-primary dark:bg-indigo-900/50 dark:text-indigo-400">
+                      <span className="font-semibold text-lg">M</span>
+                    </div>
+                    <Badge variant={statusVariant} className="capitalize">{m.status.replaceAll("_", " ")}</Badge>
+                  </div>
+                  <h3 className="mt-4 text-lg font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors">
+                    {m.mock_code}
+                  </h3>
+                  <p className="mt-1 text-sm text-muted-foreground line-clamp-1">
+                    {new Date(m.scheduled_at).toLocaleString("en-US", {
+                      dateStyle: "medium",
+                      timeStyle: "short",
+                    })}
+                  </p>
+                </div>
+                
+                <div className="mt-4 pt-4 border-t flex items-center justify-between text-xs font-medium text-muted-foreground">
+                  <span>Score:</span>
+                  {sc?.overall_score ? (
+                    <Badge variant="outline">{sc.overall_score}/100</Badge>
+                  ) : (
+                    <span className="italic">—</span>
+                  )}
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </Card>
     </main>

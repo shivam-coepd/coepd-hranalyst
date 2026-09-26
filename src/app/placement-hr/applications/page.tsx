@@ -5,6 +5,8 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Badge } from "@/components/ui/badge";
 import { FileText } from "lucide-react";
 
+import { Card } from "@/components/ui/card";
+
 export default async function Page() {
   const [scoring, verification] = await Promise.all([
     listScoringApplications(),
@@ -26,7 +28,8 @@ export default async function Page() {
         description="Scoring failures, pending scores and HR verification work in one queue."
       />
 
-      <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <Card className="mt-8">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4">
         {merged.length === 0 && (
           <div className="col-span-full rounded-xl border border-dashed bg-slate-50/50 p-12 text-center text-muted-foreground">
             No applications awaiting action.
@@ -73,6 +76,7 @@ export default async function Page() {
           );
         })}
       </div>
+      </Card>
     </main>
   );
 }

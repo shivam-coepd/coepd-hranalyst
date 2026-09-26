@@ -33,68 +33,58 @@ export default async function ClientInterviewsPage({
           defaultStatus={p.status}
           defaultMode={p.mode}
         />
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-slate-50/50 dark:bg-slate-900/50">
-              <tr>
-                <th className="px-5 py-4 font-medium text-muted-foreground">Candidate</th>
-                <th className="px-5 py-4 font-medium text-muted-foreground">Job</th>
-                <th className="px-5 py-4 font-medium text-muted-foreground">Round & Mode</th>
-                <th className="px-5 py-4 font-medium text-muted-foreground">Date</th>
-                <th className="px-5 py-4 font-medium text-muted-foreground">Status</th>
-                <th className="px-5 py-4 font-medium text-right text-muted-foreground">Action</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y">
-              {interviews.map((interview) => {
-                const candidate = Array.isArray(interview.submission_candidates)
-                  ? interview.submission_candidates[0]
-                  : interview.submission_candidates;
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4">
+          {interviews.length === 0 && (
+            <div className="col-span-full rounded-xl border border-dashed bg-slate-50/50 p-12 text-center text-muted-foreground">
+              No interviews scheduled.
+            </div>
+          )}
+          {interviews.map((interview) => {
+            const candidate = Array.isArray(interview.submission_candidates)
+              ? interview.submission_candidates[0]
+              : interview.submission_candidates;
 
-                const snapshot = candidate?.candidate_snapshot as Record<string, unknown> | undefined;
-                const job = Array.isArray(interview.jobs) ? interview.jobs[0] : interview.jobs;
+            const snapshot = candidate?.candidate_snapshot as Record<string, unknown> | undefined;
+            const job = Array.isArray(interview.jobs) ? interview.jobs[0] : interview.jobs;
 
-                let statusVariant: "default" | "success" | "warning" | "destructive" | "pending" | "secondary" = "secondary";
-                if (interview.status === "scheduled") statusVariant = "pending";
-                if (interview.status === "completed") statusVariant = "success";
-                if (interview.status === "cancelled") statusVariant = "destructive";
+            let statusVariant: "default" | "success" | "warning" | "destructive" | "pending" | "secondary" = "secondary";
+            if (interview.status === "scheduled") statusVariant = "pending";
+            if (interview.status === "completed") statusVariant = "success";
+            if (interview.status === "cancelled") statusVariant = "destructive";
 
-                return (
-                  <tr key={interview.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50">
-                    <td className="px-5 py-4 font-medium text-foreground">
-                      {String(snapshot?.candidate_name ?? "Candidate")}
-                    </td>
-                    <td className="px-5 py-4 text-muted-foreground">{job?.job_title ?? "—"}</td>
-                    <td className="px-5 py-4">
-                      <div className="font-medium">{interview.round_name}</div>
-                      <div className="text-xs text-muted-foreground uppercase">{interview.mode}</div>
-                    </td>
-                    <td className="px-5 py-4 text-muted-foreground">
-                      {new Date(interview.scheduled_at).toLocaleString("en-US", {
-                        dateStyle: "medium",
-                        timeStyle: "short",
-                      })}
-                    </td>
-                    <td className="px-5 py-4">
-                      <Badge variant={statusVariant} className="capitalize">{interview.status}</Badge>
-                    </td>
-                    <td className="px-5 py-4 text-right">
-                      <Link href={`/client/interviews/${interview.id}`}>
-                        <Button variant="ghost" size="sm">View</Button>
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
-              {interviews.length === 0 && (
-                <tr>
-                  <td colSpan={6} className="px-5 py-12 text-center text-muted-foreground">
-                    No interviews scheduled.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+            return (
+              <Link
+                key={interview.id}
+                href={`/client/interviews/${interview.id}`}
+                className="group flex flex-col justify-between rounded-xl border bg-white p-6 shadow-sm transition-all hover:shadow-md dark:bg-slate-950"
+              >
+                <div>
+                  <div className="flex items-start justify-between">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/5 text-primary dark:bg-indigo-900/50 dark:text-indigo-400">
+                      <span className="font-semibold text-lg">I</span>
+                    </div>
+                    <Badge variant={statusVariant} className="capitalize">{interview.status}</Badge>
+                  </div>
+                  <h3 className="mt-4 text-lg font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors line-clamp-1">
+                    {String(snapshot?.candidate_name ?? "Candidate")}
+                  </h3>
+                  <p className="mt-1 text-sm text-muted-foreground line-clamp-1">
+                    {interview.round_name} • {job?.job_title ?? "—"}
+                  </p>
+                </div>
+                
+                <div className="mt-4 pt-4 border-t flex items-center justify-between text-xs font-medium text-muted-foreground">
+                  <span>
+                    {new Date(interview.scheduled_at).toLocaleString("en-US", {
+                      dateStyle: "medium",
+                      timeStyle: "short",
+                    })}
+                  </span>
+                  <span className="uppercase">{interview.mode}</span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </Card>
     </div>

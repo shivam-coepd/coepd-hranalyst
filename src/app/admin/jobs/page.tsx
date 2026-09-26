@@ -55,33 +55,27 @@ export default async function Page({
             <Link
               key={j.id}
               href={`/admin/jobs/${j.id}`}
-              className="group relative flex flex-col justify-between rounded-xl border border-border/50 bg-gradient-to-br from-card to-muted/20 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-primary/20 dark:from-slate-950 dark:to-slate-900"
+              className="group relative flex flex-col justify-between rounded-xl border bg-white p-6 shadow-sm transition-all hover:shadow-md dark:bg-slate-950"
             >
               <div>
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-sm transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                    <Briefcase className="h-6 w-6" />
+                <div className="flex items-start justify-between">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/5 text-primary dark:bg-indigo-900/50 dark:text-indigo-400">
+                    <Briefcase className="h-5 w-5" />
                   </div>
-                  <Badge variant={statusVariant} className="capitalize shadow-sm backdrop-blur-md">
+                  <Badge variant={statusVariant} className="capitalize">
                     {j.status.replace('_', ' ')}
                   </Badge>
                 </div>
-                <h3 className="mt-5 text-lg font-bold tracking-tight text-foreground transition-colors group-hover:text-primary line-clamp-2">
+                <h3 className="mt-4 text-lg font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors">
                   {j.job_title}
                 </h3>
-                <p className="mt-1.5 text-sm font-medium text-muted-foreground line-clamp-1">
+                <p className="mt-1 text-sm text-muted-foreground line-clamp-1">
                   {j.companies?.name || "Unknown Company"}
                 </p>
               </div>
-              <div className="mt-6 flex items-center gap-4 text-xs font-semibold text-muted-foreground border-t pt-4">
-                <span className="flex items-center gap-1.5 bg-muted/50 px-2 py-1 rounded-md">
-                  <Hash className="h-3.5 w-3.5" />
-                  {j.job_code}
-                </span>
-                <span className="flex items-center gap-1.5 bg-muted/50 px-2 py-1 rounded-md">
-                  <Users className="h-3.5 w-3.5" />
-                  {j.role_type}
-                </span>
+              <div className="mt-4 flex items-center gap-4 text-xs font-medium text-muted-foreground">
+                <span>Code: {j.job_code}</span>
+                <span>Type: {j.role_type}</span>
               </div>
             </Link>
           );

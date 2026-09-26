@@ -6,6 +6,8 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Building2, Award, Briefcase, ExternalLink, IndianRupee } from "lucide-react";
 
+import { Card } from "@/components/ui/card";
+
 export default async function StudentOffersPage() {
   const user = await requireRole(["student"]);
 
@@ -28,7 +30,8 @@ export default async function StudentOffersPage() {
         description="Review your official placement offers."
       />
 
-      <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <Card className="mt-8">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4">
         {offers.length === 0 && (
           <div className="col-span-full rounded-xl border border-dashed bg-slate-50/50 p-12 text-center text-muted-foreground">
             No offers available.
@@ -98,6 +101,7 @@ export default async function StudentOffersPage() {
           );
         })}
       </div>
+      </Card>
     </div>
   );
 }

@@ -50,83 +50,52 @@ export default async function AdminUsersPage({
           defaultRole={params.role}
         />
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-slate-50/50 dark:bg-slate-900/50">
-              <tr>
-                <th className="px-5 py-3 text-left font-medium text-muted-foreground">User</th>
-                <th className="px-5 py-3 text-left font-medium text-muted-foreground">Role</th>
-                <th className="px-5 py-3 text-left font-medium text-muted-foreground">Status</th>
-                <th className="px-5 py-3 text-left font-medium text-muted-foreground">Created</th>
-                <th className="px-5 py-3 text-right font-medium text-muted-foreground">Action</th>
-              </tr>
-            </thead>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4">
+          {result.users.length === 0 && (
+            <div className="col-span-full rounded-xl border border-dashed bg-slate-50/50 p-12 text-center text-muted-foreground">
+              No users found matching your criteria.
+            </div>
+          )}
+          {result.users.map((user) => {
+            let statusVariant: "default" | "success" | "warning" | "destructive" | "pending" | "secondary" = "secondary";
+            if (user.account_status === "approved") statusVariant = "success";
+            if (user.account_status === "pending") statusVariant = "pending";
+            if (user.account_status === "rejected" || user.account_status === "suspended") statusVariant = "destructive";
 
-            <tbody className="divide-y">
-              {result.users.map((user) => {
-                let statusVariant: "default" | "success" | "warning" | "destructive" | "pending" | "secondary" = "secondary";
-                if (user.account_status === "approved") statusVariant = "success";
-                if (user.account_status === "pending") statusVariant = "pending";
-                if (user.account_status === "rejected" || user.account_status === "suspended") statusVariant = "destructive";
-
-                return (
-                  <tr key={user.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50">
-                    <td className="px-5 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300 font-medium">
-                          {user.first_name?.[0] || user.email[0].toUpperCase()}
-                        </div>
-                        <div>
-                          <p className="font-medium">
-                            {user.first_name} {user.last_name}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            {user.email}
-                          </p>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td className="px-5 py-4">
-                      <div className="flex flex-wrap gap-1">
-                        {user.roles.map(r => (
-                          <Badge key={r.name} variant="outline" className="font-normal">
-                            {r.display_name}
-                          </Badge>
-                        ))}
-                        {user.roles.length === 0 && (
-                          <span className="text-muted-foreground text-xs italic">Unassigned</span>
-                        )}
-                      </div>
-                    </td>
-
-                    <td className="px-5 py-4">
-                      <Badge variant={statusVariant} className="capitalize">
-                        {user.account_status}
-                      </Badge>
-                    </td>
-
-                    <td className="px-5 py-4 text-muted-foreground">
-                      {new Date(user.created_at).toLocaleDateString()}
-                    </td>
-
-                    <td className="px-5 py-4 text-right">
-                      <Link href={`/admin/users/${user.id}`}>
-                        <Button variant="ghost" size="sm">View Details</Button>
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
-              {result.users.length === 0 && (
-                <tr>
-                  <td colSpan={5} className="px-5 py-12 text-center text-muted-foreground">
-                    No users found matching your criteria.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+            return (
+              <Link
+                key={user.id}
+                href={`/admin/users/${user.id}`}
+                className="group flex flex-col justify-between rounded-xl border bg-white p-6 shadow-sm transition-all hover:shadow-md dark:bg-slate-950"
+              >
+                <div>
+                  <div className="flex items-start justify-between">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/5 text-primary dark:bg-indigo-900/50 dark:text-indigo-400 font-semibold text-lg">
+                      {user.first_name?.[0] || user.email[0].toUpperCase()}
+                    </div>
+                    <Badge variant={statusVariant} className="capitalize">{user.account_status}</Badge>
+                  </div>
+                  <h3 className="mt-4 text-lg font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors line-clamp-1">
+                    {user.first_name} {user.last_name}
+                  </h3>
+                  <p className="mt-1 text-sm text-muted-foreground line-clamp-1">
+                    {user.email}
+                  </p>
+                </div>
+                
+                <div className="mt-4 pt-4 border-t flex flex-wrap gap-1">
+                  {user.roles.map(r => (
+                    <Badge key={r.name} variant="outline" className="font-normal text-xs">
+                      {r.display_name}
+                    </Badge>
+                  ))}
+                  {user.roles.length === 0 && (
+                    <span className="text-muted-foreground text-xs italic">Unassigned</span>
+                  )}
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </Card>
     </div>

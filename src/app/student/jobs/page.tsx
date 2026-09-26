@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Search, Briefcase, MapPin, Building2, ExternalLink } from "lucide-react";
 import { StudentJobFilters } from "./student-job-filters";
 
+import { Card } from "@/components/ui/card";
+
 export default async function Page({
   searchParams,
 }: {
@@ -27,13 +29,14 @@ export default async function Page({
         description="Find and apply for opportunities matching your profile."
       />
 
-      <StudentJobFilters 
-        defaultSearch={q.q}
-        defaultRole={q.role}
-        defaultWorkplace={q.workplace}
-      />
+      <Card>
+        <StudentJobFilters 
+          defaultSearch={q.q}
+          defaultRole={q.role}
+          defaultWorkplace={q.workplace}
+        />
 
-      <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4">
         {r.jobs.length === 0 && (
           <div className="col-span-full rounded-xl border border-dashed bg-slate-50/50 p-12 text-center text-muted-foreground">
             No live jobs found matching your criteria.
@@ -88,6 +91,7 @@ export default async function Page({
           </Link>
         ))}
       </div>
+      </Card>
     </main>
   );
 }

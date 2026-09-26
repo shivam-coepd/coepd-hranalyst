@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Calendar, Video, MapPin, Clock, Building2 } from "lucide-react";
 
+import { Card } from "@/components/ui/card";
+
 export default async function StudentInterviewsPage() {
   const user = await requireRole(["student"]);
 
@@ -28,7 +30,8 @@ export default async function StudentInterviewsPage() {
         description="View scheduled client interview rounds."
       />
 
-      <div className="mt-8 grid gap-4 md:grid-cols-2">
+      <Card className="mt-8">
+      <div className="grid gap-4 md:grid-cols-2 p-4">
         {interviews.length === 0 && (
           <div className="col-span-full rounded-xl border border-dashed bg-slate-50/50 p-12 text-center text-muted-foreground">
             No interviews scheduled.
@@ -113,6 +116,7 @@ export default async function StudentInterviewsPage() {
           );
         })}
       </div>
+      </Card>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import "server-only";
 import { createClient } from "@/lib/supabase/server";
 import { requireRole } from "@/lib/auth/guards";
+import { AppError } from "@/lib/http/route-error";
 import {
   confirmPlacementSchema,
   markPlacementJoinedSchema,
@@ -18,7 +19,7 @@ export async function confirmPlacement(input: {
     p_offer_id: parsed.offerId,
     p_notes: parsed.notes ?? null,
   });
-  if (error) throw new Error(error.message);
+  if (error) throw new AppError(error.message, 400);
   return { placementId: data as string };
 }
 export async function markPlacementJoined(input: {
@@ -32,7 +33,7 @@ export async function markPlacementJoined(input: {
     p_placement_id: parsed.placementId,
     p_joined_at: parsed.joinedAt ?? new Date().toISOString(),
   });
-  if (error) throw new Error(error.message);
+  if (error) throw new AppError(error.message, 400);
   return { success: true };
 }
 export async function closePlacement(input: {
@@ -46,7 +47,7 @@ export async function closePlacement(input: {
     p_placement_id: parsed.placementId,
     p_reason: parsed.reason,
   });
-  if (error) throw new Error(error.message);
+  if (error) throw new AppError(error.message, 400);
   return { success: true };
 }
 export async function transitionPlacement(input: {
@@ -69,6 +70,6 @@ export async function transitionPlacement(input: {
     p_reason: parsed.reason ?? null,
     p_effective_at: parsed.effectiveAt ?? new Date().toISOString(),
   });
-  if (error) throw new Error(error.message);
+  if (error) throw new AppError(error.message, 400);
   return { success: true };
 }

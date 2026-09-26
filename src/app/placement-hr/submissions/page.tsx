@@ -5,6 +5,8 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Users, Building2, Briefcase } from "lucide-react";
 
+import { Card } from "@/components/ui/card";
+
 export default async function Page() {
   const user = await requireRole(["placement_hr", "admin", "super_admin"]);
   const rows = await listPlacementSubmissions(
@@ -19,7 +21,8 @@ export default async function Page() {
         description="Verified candidates submitted to Client HR."
       />
 
-      <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <Card className="mt-8">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4">
         {rows.length === 0 && (
           <div className="col-span-full rounded-xl border border-dashed bg-slate-50/50 p-12 text-center text-muted-foreground">
             No submissions found.
@@ -67,6 +70,7 @@ export default async function Page() {
           );
         })}
       </div>
+      </Card>
     </div>
   );
 }

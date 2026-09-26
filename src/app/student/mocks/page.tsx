@@ -49,7 +49,8 @@ export default async function Page() {
             <h2 className="text-xl font-bold tracking-tight text-foreground">My mocks</h2>
           </div>
           
-          <div className="grid gap-4 md:grid-cols-2">
+          <Card>
+          <div className="grid gap-4 md:grid-cols-2 p-4">
             {mocks.map((mock) => {
               const job = Array.isArray(mock.applications?.jobs)
                 ? mock.applications.jobs[0]
@@ -152,6 +153,7 @@ export default async function Page() {
               </div>
             )}
           </div>
+          </Card>
         </section>
       </div>
     </main>

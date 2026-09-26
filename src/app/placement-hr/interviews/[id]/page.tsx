@@ -70,25 +70,27 @@ export default async function PlacementInterviewDetailPage({
               </p>
             )}
           </div>
-          <InterviewFeedbackRevisionForm
-            feedbackId={feedback.id}
-            current={{
-              rating: feedback.rating,
-              decision: feedback.decision as
-                "selected" | "rejected" | "on_hold",
-              reasonCode: feedback.reason_code,
-              comments: feedback.comments,
-              visibleToStudent: feedback.client_visible_to_student,
-            }}
-          />
-          {feedback.decision === "selected" && (
-            <Link
-              className={cn(buttonVariants({ variant: "create" }), "mt-4")}
-              href={`/placement-hr/offers/new?applicationId=${interview.application_id}&feedbackId=${feedback.id}`}
-            >
-              Create Offer
-            </Link>
-          )}
+          <div className="flex flex-wrap items-center gap-3 pt-4">
+            <InterviewFeedbackRevisionForm
+              feedbackId={feedback.id}
+              current={{
+                rating: feedback.rating,
+                decision: feedback.decision as
+                  "selected" | "rejected" | "on_hold",
+                reasonCode: feedback.reason_code,
+                comments: feedback.comments,
+                visibleToStudent: feedback.client_visible_to_student,
+              }}
+            />
+            {feedback.decision === "selected" && (
+              <Link
+                className={cn(buttonVariants({ variant: "default" }))}
+                href={`/placement-hr/offers/new?applicationId=${interview.application_id}&feedbackId=${feedback.id}`}
+              >
+                Create Offer
+              </Link>
+            )}
+          </div>
           {revisions.length > 0 && (
             <div className="border-t pt-4">
               <h3 className="font-medium">Revision History</h3>
