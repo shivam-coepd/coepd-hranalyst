@@ -39,7 +39,7 @@ export default async function Page() {
             >
               <div>
                 <div className="flex items-start justify-between">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 dark:bg-indigo-900/50 dark:text-indigo-400">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/5 text-primary dark:bg-indigo-900/50 dark:text-indigo-400">
                     <Users className="h-5 w-5" />
                   </div>
                   <Badge variant={statusVariant} className="capitalize">{r.status}</Badge>

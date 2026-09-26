@@ -29,7 +29,7 @@ export default async function Page({
           {j.status === "published" && j.candidates_count > 0 && (
             <Link
               href={`/placement-hr/submissions/new?jobId=${j.id}`}
-              className="flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
+              className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90 transition-colors"
             >
               Submit Candidates
             </Link>

@@ -15,7 +15,7 @@ export async function setPrimaryCv(cvId: string) {
 
   const { data, error } = await supabaseAdmin.rpc("set_primary_student_cv", {
     p_cv_id: cvId,
-    p_student_id: student.id,
+    p_actor_id: user.id,
   });
   if (error) throw new Error(error.message);
   return data;

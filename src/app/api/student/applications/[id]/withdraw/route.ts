@@ -21,7 +21,7 @@ export async function POST(
       throw new Error("Student profile not found");
     }
 
-    const { error } = await supabaseAdmin.rpc("withdraw_student_application", {
+    const { error } = await supabaseAdmin.rpc("withdraw_student_application" as any, {
       p_application_id: applicationId,
       p_student_id: student.id,
     });

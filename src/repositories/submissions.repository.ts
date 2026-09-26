@@ -79,7 +79,7 @@ export async function getSubmission(id: string) {
   const { data, error } = await supabaseAdmin
     .from("submissions")
     .select(
-      `id,submission_code,job_id,company_id,status,notes,candidate_count,submitted_at,created_by,companies(id,name,logo),jobs(id,job_code,job_title,assigned_placement_hr,role_type,location,workplace_type),submission_candidates(id,application_id,student_id,cv_id,status,candidate_snapshot,submitted_match_score,submitted_ats_score,current_mock_score,created_at)`,
+      `id,submission_code,job_id,company_id,status,notes,candidate_count,submitted_at,submitted_by,companies(id,name,logo),jobs(id,job_code,job_title,assigned_placement_hr,role_type,location,workplace_type),submission_candidates(id,application_id,student_id,cv_id,status,candidate_snapshot,submitted_match_score,submitted_ats_score,current_mock_score,created_at)`
     )
     .eq("id", id)
     .single();

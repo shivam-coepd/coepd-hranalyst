@@ -17,7 +17,8 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
-        create: "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md hover:shadow-lg hover:from-blue-700 hover:to-indigo-700 hover:-translate-y-0.5 transition-all duration-200 border-none !h-10 !px-6 !text-sm !font-semibold rounded-lg",
+        create: "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors border-transparent font-medium",
+        success: "bg-green-600 text-white hover:bg-green-700 shadow-sm transition-colors border-transparent font-medium",
       },
       size: {
         default:

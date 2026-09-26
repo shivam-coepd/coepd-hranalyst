@@ -62,7 +62,7 @@ export default function JobDetailsView({
         </Card>
 
         <Card className="p-4 flex items-start gap-4 shadow-sm border-slate-200/60 bg-slate-50/50">
-          <div className="rounded-lg bg-indigo-100 p-2 text-indigo-700">
+          <div className="rounded-lg bg-primary/10 p-2 text-primary">
             <Globe className="h-5 w-5" />
           </div>
           <div>

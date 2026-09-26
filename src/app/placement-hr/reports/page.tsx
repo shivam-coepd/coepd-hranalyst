@@ -37,7 +37,7 @@ export default async function ReportsPage() {
           <Card key={report.href} className="group relative flex flex-col justify-between transition-all hover:shadow-md">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded bg-indigo-50 text-indigo-600 dark:bg-indigo-900/50 dark:text-indigo-400">
+                <div className="flex h-8 w-8 items-center justify-center rounded bg-primary/5 text-primary dark:bg-indigo-900/50 dark:text-indigo-400">
                   <FileBarChart className="h-4 w-4" />
                 </div>
                 {report.title}

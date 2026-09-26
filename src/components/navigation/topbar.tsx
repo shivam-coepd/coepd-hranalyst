@@ -46,7 +46,7 @@ export function Topbar({
           <SheetContent side="left" className="w-64 p-0">
             <div className="flex h-16 shrink-0 items-center border-b px-6">
               <Link href="/" className="flex items-center gap-2 font-bold tracking-tight">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-white">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                   <span className="text-lg">H</span>
                 </div>
                 HRAnalyst
