@@ -29,8 +29,7 @@ export function FunnelChart({ data }: Props) {
           <YAxis allowDecimals={false} />
 
           <Tooltip />
-
-          <Bar dataKey="value" />
+          <Bar dataKey="value" fill="var(--primary)" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>

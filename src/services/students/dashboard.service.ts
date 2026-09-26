@@ -16,6 +16,8 @@ export async function getStudentDashboard() {
     { count: cvCount },
     { count: applicationCount },
     { count: publishedJobs },
+    { data: recentApplications },
+    { data: upcomingInterviews },
   ] = await Promise.all([
     supabaseAdmin
       .from("student_cvs")
@@ -31,11 +33,27 @@ export async function getStudentDashboard() {
       .select("id", { count: "exact", head: true })
       .eq("status", "published")
       .is("deleted_at", null),
+    supabaseAdmin
+      .from("applications")
+      .select("id, status, created_at, jobs(job_code, job_title)")
+      .eq("student_id", student.id)
+      .order("created_at", { ascending: false })
+      .limit(5),
+    supabaseAdmin
+      .from("interviews")
+      .select("id, scheduled_at, status, round_number, applications!inner(student_id, jobs(job_title))")
+      .eq("applications.student_id", student.id)
+      .gte("scheduled_at", new Date().toISOString())
+      .in("status", ["scheduled"])
+      .order("scheduled_at", { ascending: true })
+      .limit(5),
   ]);
   return {
     student,
     cvCount: cvCount ?? 0,
     applicationCount: applicationCount ?? 0,
     publishedJobs: publishedJobs ?? 0,
+    recentApplications: recentApplications ?? [],
+    upcomingInterviews: upcomingInterviews ?? [],
   };
 }
