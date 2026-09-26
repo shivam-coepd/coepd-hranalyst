@@ -94,7 +94,9 @@ export async function createUser(
       .like("enrollment_id", `${searchPrefix}%`);
 
     if (studentsError) {
-      throw new Error(`Failed to generate enrollment ID: ${studentsError.message}`);
+      throw new Error(
+        `Failed to generate enrollment ID: ${studentsError.message}`,
+      );
     }
 
     let nextSerial = 1;
@@ -111,7 +113,7 @@ export async function createUser(
       }
       nextSerial = maxSerial + 1;
     }
-    
+
     generatedEnrollmentId = `${prefix}${nextSerial.toString().padStart(3, "0")}`;
   }
   /*
@@ -200,44 +202,65 @@ export async function createUser(
    * --------------------------------------------------------
    */
   try {
-    const { error: profileError } = await supabaseAdmin.from("profiles").upsert({
-      id: userId,
-      first_name: parsed.firstName,
-      last_name: parsed.lastName,
-      email: parsed.email,
-      phone: parsed.phone || null,
-    });
-    if (profileError) throw new Error(`Profile creation failed: ${profileError.message}`);
+    const { error: profileError } = await supabaseAdmin
+      .from("profiles")
+      .upsert({
+        id: userId,
+        first_name: parsed.firstName,
+        last_name: parsed.lastName,
+        email: parsed.email,
+        phone: parsed.phone || null,
+      });
+    if (profileError)
+      throw new Error(`Profile creation failed: ${profileError.message}`);
 
-    const { error: userRoleError } = await supabaseAdmin.from("user_roles").insert({
-      user_id: userId,
-      role_id: role.id,
-      assigned_by: admin.id,
-    });
-    if (userRoleError) throw new Error(`User role creation failed: ${userRoleError.message}`);
+    const { error: userRoleError } = await supabaseAdmin
+      .from("user_roles")
+      .insert({
+        user_id: userId,
+        role_id: role.id,
+        assigned_by: admin.id,
+      });
+    if (userRoleError)
+      throw new Error(`User role creation failed: ${userRoleError.message}`);
 
     if (parsed.role === "student") {
-      const { error: studentProfileError } = await supabaseAdmin.from("student_profiles").insert({
-        user_id: userId,
-        enrollment_id: enrollmentId!,
-        verification_status: "verified",
-        // @ts-ignore: the live database uses verified_at instead of verification_at
-        verified_at: new Date().toISOString(),
-      } as any);
-      if (studentProfileError) throw new Error(`Student profile creation failed: ${studentProfileError.message}`);
+      const { error: studentProfileError } = await supabaseAdmin
+        .from("student_profiles")
+        .insert({
+          user_id: userId,
+          enrollment_id: enrollmentId!,
+          verification_status: "verified",
+          // @ts-ignore: the live database uses verified_at instead of verification_at
+          verified_at: new Date().toISOString(),
+        } as any);
+      if (studentProfileError)
+        throw new Error(
+          `Student profile creation failed: ${studentProfileError.message}`,
+        );
     } else if (parsed.role === "client_hr") {
-      const { error: clientHrError } = await supabaseAdmin.from("client_hr_profiles").insert({
-        user_id: userId,
-        company_id: companyId!,
-        work_email: workEmail,
-      });
-      if (clientHrError) throw new Error(`Client HR profile creation failed: ${clientHrError.message}`);
+      const { error: clientHrError } = await supabaseAdmin
+        .from("client_hr_profiles")
+        .insert({
+          user_id: userId,
+          company_id: companyId!,
+          work_email: workEmail,
+        });
+      if (clientHrError)
+        throw new Error(
+          `Client HR profile creation failed: ${clientHrError.message}`,
+        );
     } else if (parsed.role === "placement_hr") {
-      const { error: placementHrError } = await supabaseAdmin.from("placement_hr_profiles").insert({
-        user_id: userId,
-        work_email: workEmail,
-      });
-      if (placementHrError) throw new Error(`Placement HR profile creation failed: ${placementHrError.message}`);
+      const { error: placementHrError } = await supabaseAdmin
+        .from("placement_hr_profiles")
+        .insert({
+          user_id: userId,
+          work_email: workEmail,
+        });
+      if (placementHrError)
+        throw new Error(
+          `Placement HR profile creation failed: ${placementHrError.message}`,
+        );
     }
 
     /*
