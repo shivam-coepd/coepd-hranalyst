@@ -35,7 +35,7 @@ export async function generateJobChecklist(jobId: string) {
       "JOB_NOT_ASSIGNED",
     );
   }
-  const model = process.env.GEMINI_CHECKLIST_MODEL?.trim();
+  const model = process.env.OPENAI_MODEL?.trim() || "gpt-6-sol";
   if (!model)
     throw new AppError(
       "AI checklist model is not configured",
@@ -48,7 +48,7 @@ export async function generateJobChecklist(jobId: string) {
       entity_type: "job",
       entity_id: jobId,
       operation: "generate_checklist",
-      provider: "gemini",
+      provider: "openai",
       model,
       prompt_version: "checklist-v2",
       status: "started",
@@ -121,7 +121,7 @@ export async function generateJobChecklist(jobId: string) {
       entity_id: created.id,
       action: "CHECKLIST_AI_GENERATED",
       new_values: { job_id: jobId, version: nextVersion },
-      metadata: {}
+      metadata: {},
     });
     await supabaseAdmin
       .from("ai_generation_runs")

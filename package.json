@@ -35,7 +35,6 @@
     "@aws-sdk/client-s3": "^3.1135.0",
     "@aws-sdk/s3-request-presigner": "^3.1135.0",
     "@base-ui/react": "^1.8.0",
-    "@google/genai": "^2.23.0",
     "@hookform/resolvers": "^5.9.1",
     "@hugeicons/core-free-icons": "^4.3.2",
     "@hugeicons/react": "^1.1.10",
@@ -48,6 +47,7 @@
     "mammoth": "^1.12.2",
     "next": "16.3.4",
     "nodemailer": "^10.0.1",
+    "openai": "^7.23.0",
     "pdf-parse": "^2.4.5",
     "react": "19.2.8",
     "react-dom": "19.2.8",
@@ -80,7 +80,6 @@
   "allowScripts": {
     "esbuild@0.28.2": true,
     "unrs-resolver@1.12.2": true,
-    "@google/genai@2.23.0": true,
     "protobufjs@7.6.6": true
   }
 }
