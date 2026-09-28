@@ -16,60 +16,47 @@ export default async function AdminOperationsPage() {
       />
 
       <Card>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-slate-50/50 dark:bg-slate-900/50">
-              <tr>
-                <th className="px-5 py-3 font-medium text-muted-foreground">Alert</th>
-                <th className="px-5 py-3 font-medium text-muted-foreground">Severity</th>
-                <th className="px-5 py-3 font-medium text-muted-foreground">Entity</th>
-                <th className="px-5 py-3 font-medium text-muted-foreground">Created</th>
-                <th className="px-5 py-3 font-medium text-muted-foreground">Status</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y">
-              {alerts.map((alert) => {
-                let severityVariant: "default" | "warning" | "destructive" | "secondary" = "secondary";
-                if (alert.severity === "high" || alert.severity === "critical") severityVariant = "destructive";
-                if (alert.severity === "medium") severityVariant = "warning";
-                if (alert.severity === "low") severityVariant = "default";
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4">
+          {alerts.length === 0 && (
+            <div className="col-span-full rounded-xl border border-dashed bg-slate-50/50 p-12 text-center text-muted-foreground">
+              No active operational alerts. System is healthy.
+            </div>
+          )}
+          {alerts.map((alert) => {
+            let severityVariant: "default" | "warning" | "destructive" | "secondary" = "secondary";
+            if (alert.severity === "high" || alert.severity === "critical") severityVariant = "destructive";
+            if (alert.severity === "medium") severityVariant = "warning";
+            if (alert.severity === "low") severityVariant = "default";
 
-                return (
-                  <tr key={alert.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50">
-                    <td className="px-5 py-4">
-                      <p className="font-medium text-foreground">{alert.title}</p>
-                      {alert.description && (
-                        <p className="mt-1 text-xs text-muted-foreground">
-                          {alert.description}
-                        </p>
-                      )}
-                    </td>
-                    <td className="px-5 py-4">
-                      <Badge variant={severityVariant} className="capitalize">{alert.severity}</Badge>
-                    </td>
-                    <td className="px-5 py-4">
-                      <Badge variant="outline">{alert.entity_type}</Badge>
-                    </td>
-                    <td className="px-5 py-4 text-muted-foreground">
-                      {new Date(alert.created_at).toLocaleString("en-IN")}
-                    </td>
-                    <td className="px-5 py-4">
-                      <Badge variant={alert.status === 'open' ? 'pending' : 'secondary'} className="capitalize">
-                        {alert.status}
-                      </Badge>
-                    </td>
-                  </tr>
-                );
-              })}
-              {alerts.length === 0 && (
-                <tr>
-                  <td colSpan={5} className="px-5 py-12 text-center text-muted-foreground">
-                    No active operational alerts. System is healthy.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+            return (
+              <div
+                key={alert.id}
+                className="group flex flex-col justify-between rounded-xl border bg-white p-6 shadow-sm transition-all hover:shadow-md dark:bg-slate-950"
+              >
+                <div>
+                  <div className="flex items-start justify-between">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/5 text-primary dark:bg-indigo-900/50 dark:text-indigo-400">
+                      <span className="font-semibold text-lg">!</span>
+                    </div>
+                    <Badge variant={severityVariant} className="capitalize">{alert.severity}</Badge>
+                  </div>
+                  <h3 className="mt-4 text-lg font-semibold tracking-tight text-foreground transition-colors">
+                    {alert.title}
+                  </h3>
+                  {alert.description && (
+                    <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
+                      {alert.description}
+                    </p>
+                  )}
+                </div>
+                
+                <div className="mt-4 pt-4 border-t flex items-center justify-between text-xs font-medium text-muted-foreground">
+                  <Badge variant="outline">{alert.entity_type}</Badge>
+                  <span>{new Date(alert.created_at).toLocaleString("en-IN")}</span>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </Card>
     </div>

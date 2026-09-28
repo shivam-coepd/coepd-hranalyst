@@ -8,16 +8,26 @@ export const createUserSchema = z
     password: z.string().min(8, "Password must be at least 8 characters"),
     phone: z.string().trim().max(30).optional().or(z.literal("")),
     role: z.enum(["admin", "placement_hr", "client_hr", "student"]),
-    enrollmentId: z.string().trim().max(100).optional().or(z.literal("")),
+    location: z.enum(["PU", "MU", "BG", "DL"]).optional().or(z.literal("")),
+    batchDate: z.string().trim().optional().or(z.literal("")),
     companyId: z.string().uuid().optional().or(z.literal("")),
   })
   .superRefine((data, ctx) => {
-    if (data.role === "student" && !data.enrollmentId) {
-      ctx.addIssue({
-        code: "custom",
-        path: ["enrollmentId"],
-        message: "Enrollment ID is required for students",
-      });
+    if (data.role === "student") {
+      if (!data.location) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["location"],
+          message: "Location is required for students",
+        });
+      }
+      if (!data.batchDate) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["batchDate"],
+          message: "Batch date is required for students",
+        });
+      }
     }
 
     if (data.role === "client_hr" && !data.companyId) {

@@ -8,7 +8,7 @@ const PLACEMENT_SELECT = `
   joining_date, placement_status, placed_at, joined_at, closed_at, closure_reason, notes,
   companies(id,name,logo),
   jobs!inner(id,job_code,job_title,assigned_placement_hr),
-  student_profiles(id,first_name,last_name,enrollment_id),
+  student_profiles(id,user_id,enrollment_id,profiles(first_name,last_name)),
   placement_status_history(id,old_status,new_status,reason,changed_at)
 `;
 

@@ -22,7 +22,7 @@ const schema = z
 
     OPENAI_API_KEY: z.string().min(20),
 
-    OPENAI_CHECKLIST_MODEL: z.string().min(2),
+    OPENAI_MODEL: z.string().min(2).optional(),
 
     SMTP_HOST: z.string().min(1),
 

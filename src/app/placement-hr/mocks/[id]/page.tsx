@@ -21,13 +21,15 @@ export default async function Page({
     m.evaluator_user_id === u.id ||
     job?.assigned_placement_hr === u.id;
   if (!can) notFound();
-  const cards = [...(m.mock_scorecards ?? [])].sort(
-    (a, b) =>
+  const rawSc = m.mock_scorecards;
+  const scList = Array.isArray(rawSc) ? rawSc : (rawSc ? [rawSc] : []);
+  const cards = [...scList].sort(
+    (a: any, b: any) =>
       parseInt(b.scoring_version || "0") - parseInt(a.scoring_version || "0"),
   );
   const profile = "profile" in m ? m.profile : null;
   return (
-    <main className="mx-auto max-w-5xl space-y-6 p-6">
+    <main className="p-8 space-y-6">
       <div>
         <h1 className="text-2xl font-bold">{m.mock_code}</h1>
         <p className="text-gray-500">

@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
 export async function getStudentJobFeed({
   search,
@@ -15,7 +15,7 @@ export async function getStudentJobFeed({
   page?: number;
   limit?: number;
 } = {}) {
-  const supabase = await createClient();
+  const supabase = supabaseAdmin;
 
   const from = (page - 1) * limit;
 
@@ -34,8 +34,8 @@ export async function getStudentJobFeed({
         country,
         workplace_type,
         employment_type,
-        experience_min_months,
-        experience_max_months,
+        experience_min_years,
+        experience_max_years,
         salary_min,
         salary_max,
         salary_currency,

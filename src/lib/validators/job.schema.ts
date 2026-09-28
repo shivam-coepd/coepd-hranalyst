@@ -12,8 +12,8 @@ export const jobSchema = z
       .enum(["full_time", "part_time", "contract", "internship"])
       .default("full_time"),
     workplaceType: z.enum(["onsite", "remote", "hybrid"]).default("onsite"),
-    experienceMinMonths: z.coerce.number().int().min(0),
-    experienceMaxMonths: z.coerce.number().int().min(0).optional(),
+    experienceMinYears: z.coerce.number().int().min(0),
+    experienceMaxYears: z.coerce.number().int().min(0).optional(),
     salaryMin: z.coerce.number().min(0).optional(),
     salaryMax: z.coerce.number().min(0).optional(),
     salaryCurrency: z.string().trim().min(3).max(10).default("INR"),
@@ -30,12 +30,12 @@ export const jobSchema = z
   })
   .superRefine((data, ctx) => {
     if (
-      data.experienceMaxMonths !== undefined &&
-      data.experienceMaxMonths < data.experienceMinMonths
+      data.experienceMaxYears !== undefined &&
+      data.experienceMaxYears < data.experienceMinYears
     ) {
       ctx.addIssue({
         code: "custom",
-        path: ["experienceMaxMonths"],
+        path: ["experienceMaxYears"],
         message: "Maximum experience cannot be less than minimum experience",
       });
     }

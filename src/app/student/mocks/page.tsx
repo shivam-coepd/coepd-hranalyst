@@ -41,7 +41,7 @@ export default async function Page() {
             <h2 className="text-xl font-bold tracking-tight text-foreground">Available slots</h2>
             <Badge variant="outline" className="font-normal">{slots.length} available</Badge>
           </div>
-          <StudentBookingPanel applications={applications} slots={slots} />
+          <StudentBookingPanel applications={applications as any} slots={slots as any} />
         </section>
 
         <section>
@@ -49,14 +49,19 @@ export default async function Page() {
             <h2 className="text-xl font-bold tracking-tight text-foreground">My mocks</h2>
           </div>
           
-          <div className="grid gap-4 md:grid-cols-2">
+          <Card>
+          <div className="grid gap-4 md:grid-cols-2 p-4">
             {mocks.map((mock) => {
               const job = Array.isArray(mock.applications?.jobs)
                 ? mock.applications.jobs[0]
                 : mock.applications?.jobs;
 
-              const cards = [...(mock.mock_scorecards ?? [])].sort(
-                (a, b) => parseInt(b.scoring_version || "0") - parseInt(a.scoring_version || "0"),
+              const rawSc = mock.mock_scorecards;
+              const scList = Array.isArray(rawSc) ? rawSc : (rawSc ? [rawSc] : []);
+              const cards = [...scList].sort(
+                (a: any, b: any) =>
+                  parseInt(b.scoring_version || "0") -
+                  parseInt(a.scoring_version || "0"),
               );
               const scorecard = cards.find((x) => x.status === "submitted");
 
@@ -70,7 +75,7 @@ export default async function Page() {
                   <div>
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 dark:bg-indigo-900/50 dark:text-indigo-400">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/5 text-primary dark:bg-indigo-900/50 dark:text-indigo-400">
                           <ClipboardCheck className="h-5 w-5" />
                         </div>
                         <div>
@@ -148,6 +153,7 @@ export default async function Page() {
               </div>
             )}
           </div>
+          </Card>
         </section>
       </div>
     </main>

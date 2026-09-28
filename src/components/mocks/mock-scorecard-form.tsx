@@ -31,6 +31,7 @@ export function MockScorecardForm({ mockId }: { mockId: string }) {
       setBusy(false);
       return;
     }
+    (e.target as HTMLFormElement).reset();
     r.refresh();
     setBusy(false);
   }

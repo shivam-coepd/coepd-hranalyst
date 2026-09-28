@@ -2,14 +2,27 @@ import Link from "next/link";
 import { requireActiveClientHr } from "@/services/client/client-profile.service";
 import { getJobs } from "@/repositories/jobs.repository";
 import { PageHeader } from "@/components/ui/page-header";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Plus, Briefcase, MapPin } from "lucide-react";
+import { JobFilters } from "@/components/jobs/job-filters";
 
-export default async function Page() {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ search?: string; status?: string; roleType?: string }>;
+}) {
   const { clientProfile } = await requireActiveClientHr();
-  const r = await getJobs({ companyId: clientProfile.company_id });
-
+  const p = await searchParams;
+  console.log("CLIENT JOBS PAGE: Fetching jobs for company:", clientProfile.company_id);
+  const r = await getJobs({ 
+    companyId: clientProfile.company_id,
+    search: p.search,
+    status: p.status,
+    roleType: p.roleType,
+  });
+  
   return (
     <main className="p-8">
       <PageHeader 
@@ -17,7 +30,7 @@ export default async function Page() {
         description="Your company requisitions."
         actions={
           <Link href="/client/jobs/new">
-            <Button>
+            <Button variant="create">
               <Plus className="mr-2 h-4 w-4" />
               Create job
             </Button>
@@ -25,7 +38,13 @@ export default async function Page() {
         }
       />
 
-      <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <Card>
+        <JobFilters 
+          defaultSearch={p.search}
+          defaultStatus={p.status}
+          defaultRoleType={p.roleType}
+        />
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4">
         {r.jobs.length === 0 && (
           <div className="col-span-full rounded-xl border border-dashed bg-slate-50/50 p-12 text-center text-muted-foreground">
             No jobs found. Create one to get started.
@@ -46,7 +65,7 @@ export default async function Page() {
             >
               <div>
                 <div className="flex items-start justify-between">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 dark:bg-indigo-900/50 dark:text-indigo-400">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/5 text-primary dark:bg-indigo-900/50 dark:text-indigo-400">
                     <Briefcase className="h-5 w-5" />
                   </div>
                   <Badge variant={statusVariant} className="capitalize">{j.status.replace('_', ' ')}</Badge>
@@ -66,7 +85,8 @@ export default async function Page() {
             </Link>
           );
         })}
-      </div>
+        </div>
+      </Card>
     </main>
   );
 }

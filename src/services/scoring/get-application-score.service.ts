@@ -11,7 +11,7 @@ export async function getApplicationScore(applicationId: string) {
   const { data: app, error } = await supabaseAdmin
     .from("applications")
     .select(
-      "id,job_id,status,match_score,ats_score,score_status,scoring_error,jobs(job_title,job_code,assigned_placement_hr),student_profiles(first_name,last_name,enrollment_id)",
+      "id,job_id,status,match_score,ats_score,score_status,scoring_error,jobs(job_title,job_code,assigned_placement_hr),student_profiles(user_id,enrollment_id,profiles(first_name,last_name))",
     )
     .eq("id", applicationId)
     .single();
@@ -21,10 +21,11 @@ export async function getApplicationScore(applicationId: string) {
   if (
     user.roles.includes("placement_hr") &&
     !user.roles.some((r) => r === "admin" || r === "super_admin") &&
+    job?.assigned_placement_hr && 
     job?.assigned_placement_hr !== user.id
   )
     throw new AppError(
-      "This application is not assigned to you",
+      "This application is assigned to another HR",
       403,
       "FORBIDDEN",
     );

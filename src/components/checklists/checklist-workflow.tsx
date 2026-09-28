@@ -226,7 +226,7 @@ export default function ChecklistWorkflow({
               <h3 className="font-medium">Must-have requirements</h3>
               {editable && (
                 <button
-                  className="text-sm text-indigo-700"
+                  className="text-sm text-primary"
                   onClick={() =>
                     setMustHave((v) => [
                       ...v,
@@ -337,7 +337,7 @@ export default function ChecklistWorkflow({
               <h3 className="font-medium">Good-to-have</h3>
               {editable && (
                 <button
-                  className="text-sm text-indigo-700"
+                  className="text-sm text-primary"
                   onClick={() =>
                     setGoodToHave((v) => [
                       ...v,
@@ -404,7 +404,7 @@ export default function ChecklistWorkflow({
               <h3 className="font-medium">Tools</h3>
               {editable && (
                 <button
-                  className="text-sm text-indigo-700"
+                  className="text-sm text-primary"
                   onClick={() =>
                     setTools((v) => [
                       ...v,

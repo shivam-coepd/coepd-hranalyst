@@ -78,8 +78,8 @@ export async function getInterviewById(interviewId: string) {
   return data;
 }
 
-export async function getClientInterviews(companyId: string) {
-  const { data, error } = await supabaseAdmin
+export async function getClientInterviews(companyId: string, filters?: { search?: string; status?: string; mode?: string }) {
+  let query = supabaseAdmin
     .from("interviews")
     .select(
       `
@@ -113,6 +113,17 @@ export async function getClientInterviews(companyId: string) {
     .order("scheduled_at", {
       ascending: true,
     });
+
+  if (filters?.status) query = query.eq("status", filters.status);
+  if (filters?.mode) query = query.eq("mode", filters.mode);
+  if (filters?.search?.trim()) {
+    const term = filters.search.trim();
+    query = query.or(
+      `interview_code.ilike.%${term}%,round_name.ilike.%${term}%`
+    );
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     throw new Error(error.message);

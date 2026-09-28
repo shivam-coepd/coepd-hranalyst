@@ -3,6 +3,9 @@ import "server-only";
 import crypto from "node:crypto";
 
 import { supabaseAdmin } from "@/lib/supabase/admin";
+import { s3Client } from "@/lib/supabase/s3";
+import { PutObjectCommand, DeleteObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const MAX_OFFER_SIZE = 10 * 1024 * 1024;
 
@@ -47,16 +50,16 @@ export async function uploadOfferFile({
 
   const path = `${applicationId}/${offerFileId}/offer.pdf`;
 
-  const { error } = await supabaseAdmin.storage
-    .from("offer-letters")
-    .upload(path, validated.buffer, {
-      contentType: validated.mimeType,
-      cacheControl: "3600",
-      upsert: false,
-    });
-
-  if (error) {
-    throw new Error(error.message);
+  try {
+    await s3Client.send(new PutObjectCommand({
+      Bucket: "offer-letters",
+      Key: path,
+      Body: validated.buffer,
+      ContentType: validated.mimeType,
+      CacheControl: "max-age=3600",
+    }));
+  } catch (error: any) {
+    throw new Error(error.message || "Failed to upload offer letter");
   }
 
   return {
@@ -70,17 +73,20 @@ export async function uploadOfferFile({
 }
 
 export async function deleteOfferFile(storagePath: string) {
-  await supabaseAdmin.storage.from("offer-letters").remove([storagePath]);
+  await s3Client.send(new DeleteObjectCommand({
+    Bucket: "offer-letters",
+    Key: storagePath,
+  }));
 }
 
 export async function createOfferSignedUrl(storagePath: string) {
-  const { data, error } = await supabaseAdmin.storage
-    .from("offer-letters")
-    .createSignedUrl(storagePath, 300);
-
-  if (error || !data) {
+  try {
+    const command = new GetObjectCommand({
+      Bucket: "offer-letters",
+      Key: storagePath,
+    });
+    return await getSignedUrl(s3Client, command, { expiresIn: 300 });
+  } catch (error) {
     throw new Error("Unable to generate offer letter URL");
   }
-
-  return data.signedUrl;
 }

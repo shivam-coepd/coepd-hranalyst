@@ -34,7 +34,7 @@ export default async function PlacementHRDashboardPage() {
         />
         <StatCard
           title="Active Jobs"
-          value="24" // Placeholder until job metrics are added
+          value={metrics.activeJobs}
           icon={Briefcase}
         />
       </div>
@@ -45,7 +45,24 @@ export default async function PlacementHRDashboardPage() {
             <CardTitle>Recent Job Postings</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">Recent jobs will appear here.</p>
+            {metrics.recentJobs.length === 0 ? (
+              <p className="text-sm text-muted-foreground">Recent jobs will appear here.</p>
+            ) : (
+              <ul className="space-y-4">
+                {metrics.recentJobs.map((job: any) => {
+                  const company = Array.isArray(job.companies) ? job.companies[0] : job.companies;
+                  return (
+                    <li key={job.id} className="flex flex-col gap-1 border-b pb-3 last:border-0 last:pb-0">
+                      <span className="font-medium">{job.job_title} <span className="text-muted-foreground text-xs font-normal">({job.job_code})</span></span>
+                      <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>{company?.name}</span>
+                        <span>{new Date(job.created_at).toLocaleDateString()}</span>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </CardContent>
         </Card>
         <Card>
@@ -53,7 +70,24 @@ export default async function PlacementHRDashboardPage() {
             <CardTitle>Upcoming Interviews</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">No upcoming interviews scheduled.</p>
+            {metrics.upcomingInterviews.length === 0 ? (
+              <p className="text-sm text-muted-foreground">No upcoming interviews scheduled.</p>
+            ) : (
+              <ul className="space-y-4">
+                {metrics.upcomingInterviews.map((int: any) => {
+                  const app = Array.isArray(int.applications) ? int.applications[0] : int.applications;
+                  const job = app && (Array.isArray(app.jobs) ? app.jobs[0] : app.jobs);
+                  return (
+                    <li key={int.id} className="flex flex-col gap-1 border-b pb-3 last:border-0 last:pb-0">
+                      <span className="font-medium">{job?.job_title} - Round {int.round_number}</span>
+                      <div className="text-xs text-muted-foreground">
+                        {new Date(int.scheduled_at).toLocaleString()}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </CardContent>
         </Card>
       </div>

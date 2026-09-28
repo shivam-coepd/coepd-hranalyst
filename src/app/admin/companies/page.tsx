@@ -5,16 +5,17 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Plus, Search, Filter } from "lucide-react";
+import { Plus } from "lucide-react";
+import { CompanyFilters } from "./company-filters";
 
 export default async function Page({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; status?: string }>;
+  searchParams: Promise<{ search?: string; status?: string; isActive?: string }>;
 }) {
   await requireAdmin();
   const p = await searchParams;
-  const r = await getCompanies({ search: p.q, status: p.status });
+  const r = await getCompanies({ search: p.search, status: p.status, isActive: p.isActive });
   
   return (
     <main className="p-8">
@@ -23,7 +24,7 @@ export default async function Page({
         description="Verify and manage client organizations."
         actions={
           <Link href="/admin/companies/new">
-            <Button>
+            <Button variant="create">
               <Plus className="mr-2 h-4 w-4" />
               Add company
             </Button>
@@ -32,83 +33,52 @@ export default async function Page({
       />
       
       <Card>
-        <form className="flex items-center gap-4 border-b p-4">
-          <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <input 
-              name="q"
-              defaultValue={p.q}
-              placeholder="Search companies..." 
-              className="w-full rounded-md border pl-9 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
-            />
-          </div>
-          <select 
-            name="status"
-            defaultValue={p.status ?? ""}
-            className="rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
-          >
-            <option value="">All statuses</option>
-            <option value="pending">Pending</option>
-            <option value="verified">Verified</option>
-            <option value="rejected">Rejected</option>
-          </select>
-          <Button type="submit" variant="outline" size="sm">
-            <Filter className="mr-2 h-4 w-4" />
-            Filter
-          </Button>
-        </form>
+        <CompanyFilters 
+          defaultSearch={p.search} 
+          defaultStatus={p.status} 
+          defaultIsActive={p.isActive}
+        />
         
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-slate-50/50 dark:bg-slate-900/50">
-              <tr>
-                <th className="p-4 font-medium text-muted-foreground">Company</th>
-                <th className="p-4 font-medium text-muted-foreground">Domain</th>
-                <th className="p-4 font-medium text-muted-foreground">Status</th>
-                <th className="p-4 font-medium text-muted-foreground">Active</th>
-                <th className="p-4 font-medium text-right text-muted-foreground">Action</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y">
-              {r.companies.map((c) => {
-                let statusVariant: "default" | "success" | "warning" | "destructive" | "pending" | "secondary" = "secondary";
-                if (c.verification_status === "verified") statusVariant = "success";
-                if (c.verification_status === "pending") statusVariant = "pending";
-                if (c.verification_status === "rejected") statusVariant = "destructive";
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4">
+        {r.companies.length === 0 && (
+          <div className="col-span-full rounded-xl border border-dashed bg-slate-50/50 p-12 text-center text-muted-foreground">
+            No companies found. Add one to get started.
+          </div>
+        )}
+        {r.companies.map((c) => {
+          let statusVariant: "default" | "success" | "warning" | "destructive" | "pending" | "secondary" = "secondary";
+          if (c.verification_status === "verified") statusVariant = "success";
+          if (c.verification_status === "pending") statusVariant = "pending";
+          if (c.verification_status === "rejected") statusVariant = "destructive";
 
-                return (
-                  <tr key={c.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50">
-                    <td className="p-4">
-                      <div className="font-medium text-foreground">{c.name}</div>
-                    </td>
-                    <td className="p-4 text-muted-foreground">{c.domain ?? "—"}</td>
-                    <td className="p-4">
-                      <Badge variant={statusVariant} className="capitalize">
-                        {c.verification_status}
-                      </Badge>
-                    </td>
-                    <td className="p-4">
-                      <Badge variant={c.is_active ? "success" : "secondary"}>
-                        {c.is_active ? "Yes" : "No"}
-                      </Badge>
-                    </td>
-                    <td className="p-4 text-right">
-                      <Link href={`/admin/companies/${c.id}`}>
-                        <Button variant="ghost" size="sm">Open</Button>
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
-              {r.companies.length === 0 && (
-                <tr>
-                  <td colSpan={5} className="p-12 text-center text-muted-foreground">
-                    No companies found matching your criteria.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+          return (
+            <Link
+              href={`/admin/companies/${c.id}`}
+              key={c.id}
+              className="group flex flex-col justify-between rounded-xl border bg-white p-6 shadow-sm transition-all hover:shadow-md dark:bg-slate-950"
+            >
+              <div>
+                <div className="flex items-start justify-between">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/5 text-primary dark:bg-indigo-900/50 dark:text-indigo-400">
+                    <span className="font-semibold text-lg">{c.name?.[0]?.toUpperCase()}</span>
+                  </div>
+                  <Badge variant={statusVariant} className="capitalize">{c.verification_status}</Badge>
+                </div>
+                <h3 className="mt-4 text-lg font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors">
+                  {c.name}
+                </h3>
+                <p className="mt-1 text-sm text-muted-foreground line-clamp-1">
+                  {c.domain ?? "—"}
+                </p>
+              </div>
+              <div className="mt-4 pt-4 border-t flex items-center justify-between text-xs font-medium text-muted-foreground">
+                <Badge variant={c.is_active ? "success" : "secondary"}>
+                  {c.is_active ? "Active" : "Inactive"}
+                </Badge>
+              </div>
+            </Link>
+          );
+        })}
         </div>
       </Card>
     </main>

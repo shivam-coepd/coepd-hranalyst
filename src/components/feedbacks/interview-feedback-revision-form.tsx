@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   feedbackId: string;
@@ -54,13 +55,13 @@ export function InterviewFeedbackRevisionForm({ feedbackId, current }: Props) {
 
   if (!open) {
     return (
-      <button
+      <Button
+        variant="outline"
         type="button"
         onClick={() => setOpen(true)}
-        className="rounded-md border px-4 py-2 text-sm font-medium"
       >
         Revise Feedback
-      </button>
+      </Button>
     );
   }
 

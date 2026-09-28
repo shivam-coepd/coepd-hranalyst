@@ -5,6 +5,8 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Badge } from "@/components/ui/badge";
 import { FileText } from "lucide-react";
 
+import { Card } from "@/components/ui/card";
+
 export default async function Page() {
   const [scoring, verification] = await Promise.all([
     listScoringApplications(),
@@ -26,7 +28,8 @@ export default async function Page() {
         description="Scoring failures, pending scores and HR verification work in one queue."
       />
 
-      <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <Card className="mt-8">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4">
         {merged.length === 0 && (
           <div className="col-span-full rounded-xl border border-dashed bg-slate-50/50 p-12 text-center text-muted-foreground">
             No applications awaiting action.
@@ -48,14 +51,14 @@ export default async function Page() {
             >
               <div>
                 <div className="flex justify-between items-start">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 dark:bg-indigo-900/50 dark:text-indigo-400">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/5 text-primary dark:bg-indigo-900/50 dark:text-indigo-400">
                     <FileText className="h-5 w-5" />
                   </div>
                   <Badge variant={statusVariant} className="capitalize">{a.status.replaceAll('_', ' ')}</Badge>
                 </div>
                 
                 <h3 className="mt-4 text-lg font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors">
-                  {s?.first_name} {s?.last_name}
+                  {s?.profiles?.first_name} {s?.profiles?.last_name}
                 </h3>
                 <p className="mt-1 text-sm text-muted-foreground line-clamp-1">
                   {s?.enrollment_id} · {j?.job_title}
@@ -73,6 +76,7 @@ export default async function Page() {
           );
         })}
       </div>
+      </Card>
     </main>
   );
 }

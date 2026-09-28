@@ -4,6 +4,7 @@ import { getUsers } from "@/repositories/users.repository";
 export async function listUsers(params?: {
   status?: string;
   search?: string;
+  role?: string;
   page?: number;
   limit?: number;
 }) {

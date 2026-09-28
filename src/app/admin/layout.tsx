@@ -13,7 +13,6 @@ export default async function AdminLayout({
   const navItems = [
     { title: "Dashboard", href: "/admin", icon: <BarChart className="h-4 w-4" />, exact: true },
     { title: "Users", href: "/admin/users", icon: <Users className="h-4 w-4" /> },
-    { title: "Pending Approval", href: "/admin/users/pending", icon: <Clock className="h-4 w-4" /> },
     { title: "Companies", href: "/admin/companies", icon: <Building2 className="h-4 w-4" /> },
     { title: "Jobs", href: "/admin/jobs", icon: <Briefcase className="h-4 w-4" /> },
     { title: "Analytics", href: "/admin/analytics", icon: <BarChart className="h-4 w-4" /> },

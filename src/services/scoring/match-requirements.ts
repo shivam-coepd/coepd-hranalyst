@@ -12,13 +12,25 @@ type Evidence = {
   confidence: number | null | undefined;
 };
 type BestMatch = Evidence & { sim: number; exact: boolean };
-function similarity(a: string, b: string) {
-  const A = termTokens(a),
-    B = termTokens(b);
-  if (!A.size || !B.size) return 0;
+function similarity(req: string, cvSkill: string) {
+  const reqTokens = termTokens(req),
+    cvTokens = termTokens(cvSkill);
+  if (!reqTokens.size || !cvTokens.size) return 0;
+  
   let common = 0;
-  for (const x of A) if (B.has(x)) common++;
-  return common / Math.max(A.size, B.size);
+  for (const x of cvTokens) if (reqTokens.has(x)) common++;
+  
+  const baseSim = common / Math.max(reqTokens.size, cvTokens.size);
+  
+  // If the requirement is a compound sentence/phrase, check if the CV skill is a subset
+  if (reqTokens.size >= 3) {
+    const subsetSim = common / cvTokens.size;
+    // If the CV skill is at least 1 token and fully contained in the requirement, it's a strong match
+    if (subsetSim === 1) return 1;
+    return Math.max(baseSim, subsetSim * 0.8);
+  }
+  
+  return baseSim;
 }
 export function matchRequirements(
   requirements: unknown[],

@@ -31,15 +31,15 @@ export default async function NotificationsPage() {
             <div
               key={item.id}
               className={`p-6 transition-colors hover:bg-slate-50 dark:hover:bg-slate-900/50 ${
-                item.is_read ? "" : "bg-indigo-50/50 dark:bg-indigo-950/20 relative"
+                item.is_read ? "" : "bg-primary/5/50 dark:bg-indigo-950/20 relative"
               }`}
             >
               {!item.is_read && (
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-500 rounded-r" />
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-r" />
               )}
               <div className="flex justify-between items-start gap-4">
                 <div className="flex items-start gap-4">
-                  <div className={`mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${item.is_read ? 'bg-slate-100 text-slate-500 dark:bg-slate-800' : 'bg-indigo-100 text-indigo-600 dark:bg-indigo-900'}`}>
+                  <div className={`mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${item.is_read ? 'bg-slate-100 text-slate-500 dark:bg-slate-800' : 'bg-primary/10 text-primary dark:bg-indigo-900'}`}>
                     <Bell className="h-4 w-4" />
                   </div>
                   <div>

@@ -24,8 +24,8 @@ export async function publishJob(
         role_type,
         location,
         workplace_type,
-        experience_min_months,
-        experience_max_months,
+        experience_min_years,
+        experience_max_years,
         application_deadline,
         status,
 
@@ -95,8 +95,8 @@ export async function publishJob(
     exp:
       checklist.exp_required ||
       formatExperience(
-        job.experience_min_months ?? 0,
-        job.experience_max_months ?? 0,
+        job.experience_min_years ?? 0,
+        job.experience_max_years ?? 0,
       ),
 
     location: job.location,

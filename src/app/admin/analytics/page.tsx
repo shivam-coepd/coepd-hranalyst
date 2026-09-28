@@ -39,7 +39,6 @@ export default async function AdminAnalyticsPage() {
           title="Total Placements" 
           value={placement.total_placements ?? 0}
           icon={CheckCircle2}
-          trend={{ value: 12, label: "from last month" }}
         />
         <StatCard
           title="JD → Submission SLA"

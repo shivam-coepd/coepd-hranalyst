@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   applicationId: string;
@@ -41,6 +42,7 @@ export function OfferUploadForm({ applicationId, feedbackId }: Props) {
         throw new Error(result.error ?? "Unable to upload offer");
       }
 
+      router.push(`/placement-hr/offers/${result.offerId}`);
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to upload offer");
@@ -167,13 +169,13 @@ export function OfferUploadForm({ applicationId, feedbackId }: Props) {
         />
       </div>
 
-      <button
+      <Button
         type="submit"
         disabled={loading}
-        className="rounded-md bg-black px-5 py-2.5 text-sm font-medium text-white disabled:opacity-50"
+        variant="create"
       >
         {loading ? "Uploading..." : "Upload Offer"}
-      </button>
+      </Button>
     </form>
   );
 }

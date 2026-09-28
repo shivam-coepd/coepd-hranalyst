@@ -6,7 +6,7 @@ export default async function ClientAnalyticsPage() {
   const data = await getClientAnalytics();
 
   return (
-    <div className="mx-auto max-w-7xl space-y-6 p-6">
+    <div className="p-8 space-y-6">
       <div>
         <h1 className="text-2xl font-bold">Recruitment Analytics</h1>
 
@@ -16,20 +16,20 @@ export default async function ClientAnalyticsPage() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        <KpiCard label="Open Jobs" value={data.open_jobs} />
+        <KpiCard label="Open Jobs" value={data.metrics.open_jobs} />
 
         <KpiCard
           label="Candidates Submitted"
-          value={data.submitted_candidates}
+          value={data.metrics.submitted_candidates}
         />
 
-        <KpiCard label="Shortlisted" value={data.shortlisted} />
+        <KpiCard label="Shortlisted" value={data.metrics.shortlisted} />
 
-        <KpiCard label="Active Interviews" value={data.interviews} />
+        <KpiCard label="Active Interviews" value={data.metrics.interviews} />
 
-        <KpiCard label="Selected" value={data.selected} />
+        <KpiCard label="Selected" value={data.metrics.selected} />
 
-        <KpiCard label="Placements" value={data.placements} />
+        <KpiCard label="Placements" value={data.metrics.placements} />
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 interface GetUsersOptions {
   status?: string;
   search?: string;
+  role?: string;
   page?: number;
   limit?: number;
 }
@@ -11,6 +12,7 @@ interface GetUsersOptions {
 export async function getUsers({
   status,
   search,
+  role,
   page = 1,
   limit = 25,
 }: GetUsersOptions = {}) {
@@ -52,6 +54,29 @@ export async function getUsers({
     query = query.or(
       `first_name.ilike.%${term}%,last_name.ilike.%${term}%,email.ilike.%${term}%`,
     );
+  }
+
+  if (role) {
+    const { data: roleData } = await supabase
+      .from("roles")
+      .select("id")
+      .eq("name", role)
+      .single();
+      
+    if (roleData) {
+      const { data: userRoles } = await supabase
+        .from("user_roles")
+        .select("user_id")
+        .eq("role_id", roleData.id);
+        
+      if (userRoles && userRoles.length > 0) {
+        query = query.in("id", userRoles.map(ur => ur.user_id));
+      } else {
+        query = query.in("id", []);
+      }
+    } else {
+      query = query.in("id", []);
+    }
   }
 
   const { data: users, error, count } = await query;
@@ -116,6 +141,10 @@ export async function getUserById(userId: string) {
       rejection_reason,
       approved_at,
       created_at,
+      avatar_url,
+      approved_by,
+      last_login_at,
+      updated_at,
 
       user_roles!user_id (
         roles (

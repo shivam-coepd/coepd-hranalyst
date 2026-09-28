@@ -49,7 +49,24 @@ export default async function AdminDashboardPage() {
             <CardTitle>Recent Activity</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">Activity feed will appear here.</p>
+            {metrics.recentJobs.length === 0 ? (
+              <p className="text-sm text-muted-foreground">Activity feed will appear here.</p>
+            ) : (
+              <ul className="space-y-4">
+                {metrics.recentJobs.map((job: any) => {
+                  const company = Array.isArray(job.companies) ? job.companies[0] : job.companies;
+                  return (
+                    <li key={job.id} className="flex flex-col gap-1 border-b pb-3 last:border-0 last:pb-0">
+                      <span className="font-medium text-sm">New job published: {job.job_title}</span>
+                      <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>{company?.name}</span>
+                        <span>{new Date(job.created_at).toLocaleDateString()}</span>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </CardContent>
         </Card>
         <Card>

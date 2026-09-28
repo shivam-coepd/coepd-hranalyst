@@ -1,5 +1,4 @@
 import "server-only";
-
 import OpenAI from "openai";
 
 export function getOpenAIClient() {

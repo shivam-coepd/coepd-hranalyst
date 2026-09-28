@@ -12,27 +12,54 @@ export async function applyToJob(jobId: string) {
       409,
       "APPLICATION_NOT_ELIGIBLE",
     );
-  const { data, error } = await supabaseAdmin.rpc(
-    "create_student_application",
-    {
-      p_job_id: jobId,
-      p_student_id: eligibility.studentId,
-      p_cv_id: eligibility.cvId,
-      p_actor_id: user.id,
-    },
-  );
-  if (error) {
-    const msg = error.message || "Unable to create application";
+  const { data: checklist } = await supabaseAdmin
+    .from("job_checklists")
+    .select("id")
+    .eq("job_id", jobId)
+    .eq("status", "approved")
+    .order("version", { ascending: false })
+    .limit(1)
+    .single();
+
+  if (!checklist) {
+    throw new AppError("No active checklist found for this job", 422, "APPLICATION_CREATE_FAILED");
+  }
+
+  const { data: appInsert, error } = await supabaseAdmin
+    .from("applications")
+    .insert({
+      job_id: jobId,
+      student_id: eligibility.studentId,
+      cv_id: eligibility.cvId,
+      checklist_id: checklist.id,
+      status: "scoring_pending",
+      score_status: "pending",
+    })
+    .select("id")
+    .single();
+
+  if (error || !appInsert) {
+    const msg = error?.message || "Unable to create application";
     throw new AppError(
       msg,
-      msg.includes("already applied") ? 409 : 422,
+      msg.includes("already applied") || msg.includes("unique") ? 409 : 422,
       "APPLICATION_CREATE_FAILED",
     );
   }
+
+  const appId = appInsert.id;
+
+  await supabaseAdmin.from("audit_logs").insert({
+    actor_id: user.id,
+    entity_type: "application",
+    entity_id: appId,
+    action: "APPLICATION_CREATED",
+    new_values: { job_id: jobId },
+  });
   const { data: application, error: readError } = await supabaseAdmin
     .from("applications")
     .select("*")
-    .eq("id", data as string)
+    .eq("id", appId)
     .single();
   if (readError) throw new Error(readError.message);
   return application;

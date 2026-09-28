@@ -8,6 +8,8 @@ import {
 } from "@/repositories/feedbacks.repository";
 import { InterviewFeedbackForm } from "@/components/feedbacks/interview-feedback-form";
 import { InterviewFeedbackRevisionForm } from "@/components/feedbacks/interview-feedback-revision-form";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default async function PlacementInterviewDetailPage({
   params,
@@ -33,7 +35,7 @@ export default async function PlacementInterviewDetailPage({
     Record<string, unknown> | undefined;
 
   return (
-    <div className="mx-auto max-w-5xl space-y-6 p-6">
+    <div className="p-8 space-y-6">
       <div className="rounded-xl border bg-white p-6">
         <p className="text-sm text-gray-500">{interview.interview_code}</p>
         <h1 className="mt-2 text-2xl font-bold">{interview.round_name}</h1>
@@ -68,25 +70,27 @@ export default async function PlacementInterviewDetailPage({
               </p>
             )}
           </div>
-          <InterviewFeedbackRevisionForm
-            feedbackId={feedback.id}
-            current={{
-              rating: feedback.rating,
-              decision: feedback.decision as
-                "selected" | "rejected" | "on_hold",
-              reasonCode: feedback.reason_code,
-              comments: feedback.comments,
-              visibleToStudent: feedback.client_visible_to_student,
-            }}
-          />
-          {feedback.decision === "selected" && (
-            <Link
-              className="inline-flex rounded-md bg-black px-4 py-2 text-sm font-medium text-white"
-              href={`/placement-hr/offers/new?applicationId=${interview.application_id}&feedbackId=${feedback.id}`}
-            >
-              Create Offer
-            </Link>
-          )}
+          <div className="flex flex-wrap items-center gap-3 pt-4">
+            <InterviewFeedbackRevisionForm
+              feedbackId={feedback.id}
+              current={{
+                rating: feedback.rating,
+                decision: feedback.decision as
+                  "selected" | "rejected" | "on_hold",
+                reasonCode: feedback.reason_code,
+                comments: feedback.comments,
+                visibleToStudent: feedback.client_visible_to_student,
+              }}
+            />
+            {feedback.decision === "selected" && (
+              <Link
+                className={cn(buttonVariants({ variant: "default" }))}
+                href={`/placement-hr/offers/new?applicationId=${interview.application_id}&feedbackId=${feedback.id}`}
+              >
+                Create Offer
+              </Link>
+            )}
+          </div>
           {revisions.length > 0 && (
             <div className="border-t pt-4">
               <h3 className="font-medium">Revision History</h3>

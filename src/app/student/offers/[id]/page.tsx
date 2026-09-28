@@ -38,7 +38,7 @@ export default async function StudentOfferDetailPage({ params }: Props) {
     : offer.companies;
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6 p-6">
+    <div className="p-8 space-y-6">
       <div className="rounded-xl border bg-white p-6">
         <p className="text-sm text-gray-500">{offer.offer_code}</p>
 

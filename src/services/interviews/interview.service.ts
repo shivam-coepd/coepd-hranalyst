@@ -2,6 +2,7 @@ import "server-only";
 import { createClient } from "@/lib/supabase/server";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { requireRole } from "@/lib/auth/guards";
+import { AppError } from "@/lib/http/route-error";
 import {
   scheduleInterviewSchema,
   rescheduleInterviewSchema,
@@ -27,19 +28,23 @@ export async function scheduleInterview(input: ScheduleInterviewInput) {
       .eq("id", parsed.submissionCandidateId)
       .single();
   if (submissionCandidateError || !submissionCandidate) {
-    throw new Error("Submitted candidate not found");
+    throw new AppError("Submitted candidate not found", 404, "NOT_FOUND");
   }
   if (submissionCandidate.status !== "shortlisted") {
-    throw new Error(
+    throw new AppError(
       "Candidate must be shortlisted before scheduling an interview",
+      400,
+      "INVALID_STATUS",
     );
   }
   const eligibility = await getInterviewEligibility(
     submissionCandidate.application_id,
   );
   if (!eligibility.eligible) {
-    throw new Error(
+    throw new AppError(
       eligibility.reason ?? "Candidate is not eligible for client interview",
+      400,
+      "NOT_ELIGIBLE",
     );
   }
   const supabase = await createClient();
@@ -58,7 +63,7 @@ export async function scheduleInterview(input: ScheduleInterviewInput) {
     p_instructions: parsed.instructions ?? null,
   });
   if (error) {
-    throw new Error(error.message);
+    throw new AppError(error.message, 400, "INTERVIEW_SCHEDULING_FAILED");
   }
   return {
     interviewId: data as string,

@@ -9,11 +9,7 @@ import {
 import { mockScorecardSchema } from "@/lib/validators/mock-scorecard.schema";
 async function rpc<T>(name: string, args: Record<string, unknown>): Promise<T> {
   const supabase = await createClient();
-  const call = supabase.rpc as unknown as (
-    rpcName: string,
-    rpcArgs: Record<string, unknown>,
-  ) => Promise<{ data: T; error: { message: string } | null }>;
-  const { data, error } = await call(name, args);
+  const { data, error } = await supabase.rpc(name as any, args as any);
   if (error) throw new AppError(error.message, 422, "MOCK_OPERATION_FAILED");
   return data;
 }
@@ -64,14 +60,18 @@ export async function startMockInterview(mockId: string) {
 export async function submitMockScorecard(input: unknown) {
   const v = mockScorecardSchema.parse(input);
   const score = buildMockScore(v);
+  
+  const strengthsArray = v.strengths ? v.strengths.split("\n").map(s => s.trim()).filter(Boolean) : null;
+  const improvementsArray = v.improvementAreas ? v.improvementAreas.split("\n").map(s => s.trim()).filter(Boolean) : null;
+
   return rpc<string>("submit_mock_scorecard", {
     p_mock_id: v.mockId,
     p_communication: score.communicationScore,
     p_technical: score.technicalScore,
     p_domain: score.domainScore,
     p_overall: score.overallScore,
-    p_strengths: v.strengths ?? null,
-    p_improvement_areas: v.improvementAreas ?? null,
+    p_strengths: strengthsArray?.length ? strengthsArray : null,
+    p_improvement_areas: improvementsArray?.length ? improvementsArray : null,
     p_evaluator_notes: v.evaluatorNotes ?? null,
     p_student_visible_notes: v.studentVisibleNotes ?? null,
     p_recommendation: v.recommendation,

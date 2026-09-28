@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import type { CompanyFormState } from "@/app/admin/companies/new/actions";
+import { Button } from "@/components/ui/button";
 
 type CompanyDefaults = Partial<{
   companyName: string;
@@ -89,12 +90,13 @@ export default function CompanyForm({
         </p>
       )}
       <div className="md:col-span-2">
-        <button
+        <Button
+          type="submit"
           disabled={pending}
-          className="rounded-md bg-slate-950 px-4 py-2 text-white disabled:opacity-50 transition-opacity"
+          variant="create"
         >
           {pending ? "Saving..." : submitLabel}
-        </button>
+        </Button>
       </div>
     </form>
   );

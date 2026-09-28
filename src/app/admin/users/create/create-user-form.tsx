@@ -3,6 +3,7 @@
 import { useActionState, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { createUserAction, type CreateUserState } from "./actions";
+import { Button } from "@/components/ui/button";
 
 interface CompanyOption {
   id: string;
@@ -85,13 +86,39 @@ export default function CreateUserForm({
       </div>
 
       {role === "student" ? (
-        <Field
-          label="Enrollment ID"
-          name="enrollmentId"
-          required
-          defaultValue={state.fields?.enrollmentId}
-          error={state.fieldErrors?.enrollmentId?.[0]}
-        />
+        <div className="grid gap-5 md:grid-cols-2">
+          <div>
+            <label className="mb-2 block text-sm font-medium" htmlFor="location">
+              Location
+            </label>
+            <select
+              id="location"
+              name="location"
+              required
+              defaultValue={state.fields?.location || ""}
+              className="w-full rounded-lg border px-3 py-2.5"
+            >
+              <option value="">Select location</option>
+              <option value="PU">Pune (PU)</option>
+              <option value="MU">Mumbai (MU)</option>
+              <option value="BG">Bangalore (BG)</option>
+              <option value="DL">Delhi (DL)</option>
+            </select>
+            {state.fieldErrors?.location?.[0] ? (
+              <p className="mt-1 text-sm text-red-600">
+                {state.fieldErrors.location[0]}
+              </p>
+            ) : null}
+          </div>
+          <Field
+            label="Batch Date"
+            name="batchDate"
+            type="date"
+            required
+            defaultValue={state.fields?.batchDate}
+            error={state.fieldErrors?.batchDate?.[0]}
+          />
+        </div>
       ) : null}
 
       {role === "client_hr" ? (
@@ -126,13 +153,14 @@ export default function CreateUserForm({
           {state.message}
         </div>
       ) : null}
-      <button
+      <Button
         type="submit"
         disabled={pending}
-        className="rounded-lg bg-slate-900 px-5 py-2.5 font-medium text-white disabled:opacity-50 transition-opacity"
+        variant="create"
+        className="w-full sm:w-auto"
       >
         {pending ? "Creating..." : "Create user"}
-      </button>
+      </Button>
     </form>
   );
 }
