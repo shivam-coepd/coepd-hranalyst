@@ -28,3 +28,22 @@ export function SkeletonRow({ columns = 4 }: { columns?: number }) {
     </div>
   )
 }
+
+export function SkeletonCard() {
+  return (
+    <div className="flex flex-col justify-between rounded-xl border bg-white p-6 shadow-sm dark:bg-slate-950">
+      <div>
+        <div className="flex items-start justify-between">
+          <div className="h-10 w-10 animate-pulse rounded-lg bg-slate-200 dark:bg-slate-800" />
+          <div className="h-5 w-20 animate-pulse rounded-full bg-slate-200 dark:bg-slate-800" />
+        </div>
+        <div className="mt-4 h-6 w-3/4 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
+        <div className="mt-2 h-4 w-1/2 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
+      </div>
+      <div className="mt-4 flex items-center gap-4">
+        <div className="h-3 w-16 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
+        <div className="h-3 w-16 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
+      </div>
+    </div>
+  )
+}
