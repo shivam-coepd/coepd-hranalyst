@@ -25,39 +25,57 @@ export async function updateStudentProfile(input: unknown) {
     throw new Error("Student profile not found");
   }
 
+  const fieldsToCheck = [
+    values.firstName,
+    values.lastName,
+    values.phone,
+    values.headline,
+    values.city,
+    values.country,
+    values.qualification,
+    values.specialization,
+    values.preferredRole,
+    values.availabilityStatus,
+    values.skills && values.skills.length > 0 ? "has_skills" : null,
+    values.summary,
+    values.linkedinUrl,
+  ];
+
+  const filledCount = fieldsToCheck.filter(
+    (v) => v !== null && v !== undefined && String(v).trim() !== ""
+  ).length;
+
+  const profileCompletion = Math.round((filledCount / fieldsToCheck.length) * 100);
+
   const { error } = await supabaseAdmin
     .from("student_profiles")
     .update({
       first_name: values.firstName,
-
       last_name: values.lastName,
-
       phone: values.phone,
-
+      headline: values.headline || null,
       city: values.city,
-
       state: values.state || null,
-
       country: values.country,
-
-      total_experience_months: values.totalExperienceMonths,
-
+      highest_qualification: values.qualification || null,
+      graduation_year: values.graduationYear ?? null,
+      specialization: values.specialization || null,
+      total_experience_months: values.totalExperienceMonths ?? 0,
       current_company: values.currentCompany || null,
-
       current_designation: values.currentDesignation || null,
-
       current_ctc: values.currentCtc ?? null,
-
       expected_ctc: values.expectedCtc ?? null,
-
       notice_period_days: values.noticePeriodDays ?? null,
-
-      preferred_role: values.preferredRole ?? null,
-
+      preferred_role: values.preferredRole || null,
+      preferred_locations: values.preferredLocation ? [values.preferredLocation] : [],
+      preferred_location_type: values.preferredWorkplaceType || null,
+      willing_to_relocate: values.willingToRelocate ?? null,
+      current_employment_status: values.availabilityStatus || 'available',
       linkedin_url: values.linkedinUrl || null,
-
+      github_url: values.githubUrl || null,
+      portfolio_url: values.portfolioUrl || null,
       summary: values.summary || null,
-
+      profile_completion: profileCompletion,
       updated_at: new Date().toISOString(),
     })
     .eq("id", student.id);
@@ -68,5 +86,6 @@ export async function updateStudentProfile(input: unknown) {
 
   return {
     success: true,
+    profileCompletion,
   };
 }

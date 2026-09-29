@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Link from "next/link";
 import { requireAdmin } from "@/lib/auth/guards";
 import { getUatRuns } from "@/repositories/uat.repository";

@@ -21,15 +21,15 @@ export async function finalizeApplicationVerification(
     {
       p_application_id: parsed.applicationId,
       p_decision: parsed.decision,
-      p_verified_match_score: parsed.verifiedMatchScore ?? null,
-      p_verified_ats_score: parsed.verifiedAtsScore ?? null,
+      p_verified_match_score: parsed.verifiedMatchScore ?? undefined,
+      p_verified_ats_score: parsed.verifiedAtsScore ?? undefined,
       p_must_have_verified: parsed.mustHaveVerified,
       p_cv_verified: parsed.cvVerified,
       p_experience_verified: parsed.experienceVerified,
       p_domain_verified: parsed.domainVerified,
-      p_notes: parsed.notes ?? null,
-      p_reason: parsed.rejectionReason ?? null,
-      p_update_request: parsed.updateRequest ?? null,
+      p_notes: parsed.notes ?? undefined,
+      p_reason: parsed.rejectionReason ?? undefined,
+      p_update_request: parsed.updateRequest ?? undefined,
     },
   );
   if (error)

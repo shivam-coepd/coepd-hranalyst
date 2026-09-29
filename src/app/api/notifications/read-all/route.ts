@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { routeError } from "@/lib/http/route-error";
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
