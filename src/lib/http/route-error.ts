@@ -34,14 +34,15 @@ export function routeError(error: unknown) {
       { status: forbidden ? 403 : 401 },
     );
   }
-  if (error instanceof AppError) {
+  if (error instanceof AppError || (error && typeof error === "object" && (error as any).name === "AppError")) {
+    const err = error as any;
     return NextResponse.json(
       {
         success: false,
-        error: error.status >= 500 ? "Request failed" : error.message,
-        code: error.code,
+        error: err.status >= 500 ? "Request failed" : err.message,
+        code: err.code,
       },
-      { status: error.status },
+      { status: err.status },
     );
   }
 

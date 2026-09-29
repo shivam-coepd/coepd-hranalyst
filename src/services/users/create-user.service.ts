@@ -255,7 +255,6 @@ export async function createUser(
         .from("placement_hr_profiles")
         .insert({
           user_id: userId,
-          work_email: workEmail,
         });
       if (placementHrError)
         throw new Error(

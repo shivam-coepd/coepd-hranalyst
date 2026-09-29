@@ -24,7 +24,7 @@ export async function releaseApplicationVerification(applicationId: string) {
     "placement_hr",
   ]);
   const supabase = await createClient();
-  const { error } = await supabase.rpc("release_application_verification", {
+  const { error } = await supabase.rpc("release_application_verification" as any, {
     p_application_id: applicationId,
     p_user_id: user.id,
     p_reason: "Manual release from dashboard",

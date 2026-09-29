@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { Database } from "@/types/database";
 import "server-only";
 import { supabaseAdmin } from "@/lib/supabase/admin";

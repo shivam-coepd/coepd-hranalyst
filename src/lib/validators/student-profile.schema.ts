@@ -1,33 +1,33 @@
 import { z } from "zod";
 
+const optionalNumber = <T extends z.ZodTypeAny>(schema: T) => 
+  z.preprocess((val) => (val === "" || val === null ? undefined : val), schema.optional());
+
 export const studentProfileSchema = z.object({
-  firstName: z.string().trim().min(2).max(100),
-
-  lastName: z.string().trim().min(1).max(100),
-
-  phone: z.string().trim().min(8).max(30),
-
-  city: z.string().trim().min(2).max(100),
-
-  state: z.string().trim().max(100).optional(),
-
-  country: z.string().trim().min(2).max(100),
-
-  totalExperienceMonths: z.coerce.number().int().min(0).max(720),
-
-  currentCompany: z.string().trim().max(255).optional(),
-
-  currentDesignation: z.string().trim().max(255).optional(),
-
-  currentCtc: z.coerce.number().min(0).optional(),
-
-  expectedCtc: z.coerce.number().min(0).optional(),
-
-  noticePeriodDays: z.coerce.number().int().min(0).max(365).optional(),
-
-  preferredRole: z.enum(["BA", "PO", "PM"]).optional(),
-
+  firstName: z.string().trim().max(100).optional().or(z.literal("")),
+  lastName: z.string().trim().max(100).optional().or(z.literal("")),
+  phone: z.string().trim().max(30).optional().or(z.literal("")),
+  headline: z.string().trim().max(255).optional().or(z.literal("")),
+  city: z.string().trim().max(100).optional().or(z.literal("")),
+  state: z.string().trim().max(100).optional().or(z.literal("")),
+  country: z.string().trim().max(100).optional().or(z.literal("")),
+  qualification: z.string().trim().max(100).optional().or(z.literal("")),
+  graduationYear: optionalNumber(z.coerce.number().int().min(1950).max(2100)),
+  specialization: z.string().trim().max(100).optional().or(z.literal("")),
+  totalExperienceMonths: optionalNumber(z.coerce.number().int().min(0).max(720)),
+  currentCompany: z.string().trim().max(255).optional().or(z.literal("")),
+  currentDesignation: z.string().trim().max(255).optional().or(z.literal("")),
+  currentCtc: optionalNumber(z.coerce.number().min(0)),
+  expectedCtc: optionalNumber(z.coerce.number().min(0)),
+  noticePeriodDays: optionalNumber(z.coerce.number().int().min(0).max(365)),
+  preferredRole: z.enum(["BA", "PO", "PM"]).optional().or(z.literal("")),
+  preferredLocation: z.string().trim().max(255).optional().or(z.literal("")),
+  preferredWorkplaceType: z.enum(["onsite", "hybrid", "remote"]).optional().or(z.literal("")),
+  willingToRelocate: z.boolean().optional(),
+  availabilityStatus: z.enum(["available", "interviewing", "not_available"]).optional().or(z.literal("")),
   linkedinUrl: z.string().url().optional().or(z.literal("")),
-
-  summary: z.string().trim().max(3000).optional(),
+  githubUrl: z.string().url().optional().or(z.literal("")),
+  portfolioUrl: z.string().url().optional().or(z.literal("")),
+  summary: z.string().trim().max(3000).optional().or(z.literal("")),
+  skills: z.array(z.string()).optional(),
 });

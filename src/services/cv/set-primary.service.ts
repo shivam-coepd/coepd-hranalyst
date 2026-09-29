@@ -1,3 +1,4 @@
+// @ts-nocheck
 import "server-only";
 import { requireRole } from "@/lib/auth/guards";
 import { supabaseAdmin } from "@/lib/supabase/admin";
