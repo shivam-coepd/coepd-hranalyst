@@ -98,11 +98,11 @@ export async function buildApplicationsCsv() {
         id,
         status,
         match_score,
-        verified_match_score,
+        
         ats_score,
-        verified_ats_score,
+        
         created_at,
-        submitted_to_client_at,
+        
         shortlisted_at,
         selected_at,
         offer_received_at,
@@ -154,13 +154,13 @@ export async function buildApplicationsCsv() {
         Status: application.status,
 
         MatchScore:
-          application.verified_match_score ?? application.match_score ?? "",
+          application.match_score ?? "",
 
-        ATSScore: application.verified_ats_score ?? application.ats_score ?? "",
+        ATSScore: application.ats_score ?? "",
 
         AppliedAt: application.created_at,
 
-        SubmittedAt: application.submitted_to_client_at ?? "",
+        
 
         ShortlistedAt: application.shortlisted_at ?? "",
 
