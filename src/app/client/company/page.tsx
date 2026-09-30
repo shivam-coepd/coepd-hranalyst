@@ -111,10 +111,10 @@ export default async function Page() {
                 <dt className="text-sm font-medium text-muted-foreground">
                   {detail.label}
                 </dt>
-                <dd className="truncate text-base font-semibold text-foreground">
+                <dd className="text-base font-semibold text-foreground break-words">
                   {detail.value ? (
                     detail.isLink ? (
-                      <a href={detail.value.startsWith('http') ? detail.value : `https://${detail.value}`} target="_blank" rel="noopener noreferrer" className="hover:text-primary hover:underline">
+                      <a href={detail.value.startsWith('http') ? detail.value : `https://${detail.value}`} target="_blank" rel="noopener noreferrer" className="hover:text-primary hover:underline break-all">
                         {detail.value}
                       </a>
                     ) : (
