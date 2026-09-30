@@ -1,0 +1,87 @@
+# COEPD HR Analyst - Complete Project Documentation
+
+## 1. Project Overview & Core Idea
+The **COEPD HR Analyst** system is a comprehensive, end-to-end recruitment lifecycle and placement management platform. It is designed to bridge the gap between trained students, the internal placement team (Placement HR), and external hiring companies (Client HR).
+
+Unlike standard job portals, this system enforces **strict quality gates** to ensure the reputation of the training institute. A student cannot simply apply and directly face an external client. Instead, they must pass through internal verifications, mandatory mock interviews, and curated batch submissions before an external employer ever sees their profile.
+
+The system is built on modern web technologies: Next.js 15 (App Router), React, Tailwind CSS, Shadcn UI, and Supabase (PostgreSQL + Auth).
+
+---
+
+## 2. Core Modules & User Roles
+
+The platform is strictly segregated into four distinct role-based modules, each secured by server-side Role-Based Access Control (RBAC).
+
+### 2.1 Student Module (`/student/*`)
+The candidate-facing interface where students manage their professional identity and track their placement journey.
+*   **Profile Management:** Students maintain their personal details, academic qualifications, past experience, and skills.
+*   **CV Manager:** Students can upload multiple CVs (PDF/DOCX). The system tracks the parsing status and allows them to mark a "Primary" CV for default applications.
+*   **Job Feed:** Students view live jobs. The system automatically calculates a preliminary "Match Score" based on the student's skills vs. the job's required skills.
+*   **Applications & Tracking:** Students apply to jobs and can track their real-time status through the pipeline (Applied -> Verified -> Submitted to Client -> Shortlisted -> Interview -> Offered).
+
+### 2.2 Placement HR Module (`/placement-hr/*`)
+The operational heart of the system. Placement HRs act as the gatekeepers and facilitators between students and clients.
+*   **Job Management:** Can create internal placement drives or post jobs on behalf of clients who do not use the system directly.
+*   **Application Verification:** Before a student is submitted to a client, Placement HR reviews their application, updates their Match/ATS scores based on manual review, and marks them as "Verified".
+*   **Mock Interviews (Quality Gate):** A critical system constraint. Placement HR schedules internal mock interviews for students. After the mock, the HR submits a "Mock Scorecard" with ratings and feedback. *A student cannot proceed to client interviews without clearing a mock interview.*
+*   **Client Submissions:** Placement HR groups verified candidates and creates a "Submission" batch to send to the Client HR. The system captures a "snapshot" of the student's profile at this exact moment so the client sees stable data.
+*   **Reports & Analytics:** Placement HR can download CSV reports covering Applications, Placements, and Feedback SLAs (Service Level Agreements) to track operational efficiency.
+
+### 2.3 Client HR Module (`/client/*`)
+The employer-facing interface designed for external companies hiring from the institute.
+*   **Company Profile:** Client HRs manage their company details, branding, and verification status.
+*   **Job Posting:** Employers can post their requirements, specifying required skills, locations, and CTC ranges.
+*   **Submissions Review:** Employers receive batches of curated candidates from the Placement team. They review these profiles and make decisions: **Shortlist** or **Reject**.
+*   **Interview Scheduling:** For shortlisted candidates, Client HR schedules interviews specifying the date, time, and mode (Virtual/In-person).
+*   **Feedback & Offers:** Post-interview, Client HR submits feedback (Ratings, Comments) and logs the final decision (Selected/Rejected). If selected, it unlocks the Offer generation phase.
+*   **Analytics Dashboard:** A real-time KPI dashboard showing the company's recruitment pipeline (Open Jobs, Submissions, Shortlists, Active Interviews, and Total Placements).
+
+### 2.4 Admin / Super Admin Module (`/admin/*`)
+System-level oversight.
+*   **User & Role Management:** Admins can view all registered users and assign specific RBAC roles (`student`, `placement_hr`, `client_hr`).
+*   **Security & System Health:** Monitoring system configurations, authentication logs, and ensuring platform integrity.
+
+---
+
+## 3. The Complete Flow of Operations (Lifecycle)
+
+The entire system is connected through a rigid, sequential database pipeline. Below is the step-by-step journey of a placement:
+
+### Phase 1: Initiation
+1.  **Company Onboarding:** Client HR signs up, creates a company profile, and is marked as `verified` by Admins.
+2.  **Job Creation:** Client HR posts a new `Job`.
+3.  **Student Application:** A Student views the job and clicks Apply. A record is created in the `applications` table with status `applied`.
+
+### Phase 2: Internal Quality Gate
+4.  **Verification:** Placement HR sees the application. They verify the student's details, generating an `application_verifications` record, changing the status to `verified`.
+5.  **Mock Interview:** Placement HR schedules a `mock_interviews` record.
+6.  **Clearance:** The mock interview is conducted. Placement HR fills out a `mock_scorecards` record. Once submitted with a passing score, the quality gate is cleared.
+
+### Phase 3: External Client Engagement
+7.  **Submission creation:** Placement HR creates a `submissions` batch and adds the student as a `submission_candidates`. The student is now visible to the Client HR.
+8.  **Client Review:** Client HR reviews the submission batch and marks the student as `shortlisted`.
+9.  **Client Interview:** Client HR uses the platform to schedule an `interviews` record for the shortlisted student.
+10. **Feedback:** Client HR conducts the interview and submits `interview_feedbacks` with a decision of `selected`.
+
+### Phase 4: Finalization
+11. **Offer Extended:** With the candidate selected, an `offers` record is generated detailing the CTC and joining date.
+12. **Placement Complete:** Once the student accepts the offer, a `placements` record is created, and the student's global status becomes `Placed`.
+
+*(Note: Every status change triggers an automatic audit log in `application_status_history` and `interview_status_history`, powering the real-time timeline UI components across the app).*
+
+---
+
+## 4. UI/UX & Technical Dependencies
+
+### UI/UX Design System
+The entire application strictly adheres to a unified "Premium" aesthetic:
+*   **PageHeaders:** Standardized title/description blocks across all modules.
+*   **Card Grids:** Uniform Shadcn `<Card>` layouts that wrap flex-grids for displaying jobs, submissions, and interviews.
+*   **Hover States & Micro-interactions:** Consistent hover effects (`hover:shadow-md`, `group-hover:text-primary`) and Lucide icon badges to ensure a responsive, dynamic feel.
+*   **Shimmer Loading:** Usage of `<SkeletonCard>` layouts during asynchronous data fetching to prevent layout shift and UI freezing, optimizing perceived latency.
+
+### Key Technical Dependencies
+*   **Authentication & Data Security:** Powered by Supabase Auth and strictly enforced via `src/lib/auth/guards.ts`. Server-side functions (`requireRole`, `requireActiveClientHr`) validate JWTs and role claims before rendering any page or executing any Server Action.
+*   **Database Constraints:** Supabase Row Level Security (RLS) policies and internal Postgres functions (RPCs) handle complex transactional logic (e.g., ensuring a student can't be scheduled for a client interview if their mock interview isn't completed).
+*   **Performance Optimization:** React `cache()` and `Promise.all()` are heavily utilized in the data-fetching layer to parallelize queries and minimize database roundtrips, ensuring instantaneous module switching.

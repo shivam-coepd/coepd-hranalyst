@@ -1,0 +1,118 @@
+# The Complete Student Placement Journey: End-to-End Flow
+
+This document details the exact chronological step-by-step process of a student moving from initial onboarding to finally accepting an offer and getting placed. It covers the exact actions taken by all roles (Student, Placement HR, and Client HR) at every stage of the pipeline.
+
+---
+
+## Phase 1: Preparation & Job Creation
+
+### Step 1: Student Onboarding
+**Role:** `Student`
+*   **Action:** The student registers on the platform and accesses the **Student Module**.
+*   **Process:** 
+    *   They fill out their comprehensive Placement Profile, including personal details, academic qualifications, past experience, current/expected CTC, and specific skill sets.
+    *   They navigate to the **CV Manager** and upload their resumes (PDF/DOCX).
+    *   They mark one CV as "Primary" which will be attached to all future applications.
+*   **System Backend:** The system automatically parses the CV and prepares the student's profile to be matched against upcoming job requirements.
+
+### Step 2: Job Posting
+**Role:** `Client HR` (or `Placement HR` on their behalf)
+*   **Action:** The Client HR logs into the **Client Module** to hire candidates.
+*   **Process:** 
+    *   They create a new Job Requirement, specifying the Job Title, required Top 3 Skills, Workplace Type (Remote/Hybrid/Onsite), and CTC range.
+*   **System Backend:** The job becomes active. The system algorithm calculates an automated **Match Score** for all students in the database based on how well their profile skills align with the job's required skills.
+
+---
+
+## Phase 3: Application & Internal Verification
+
+### Step 3: Job Application
+**Role:** `Student`
+*   **Action:** The student browses the **Job Feed**.
+*   **Process:** 
+    *   They see jobs relevant to them, alongside the system-generated Match Score.
+    *   They click **Apply**.
+*   **System Backend:** An `application` record is created with the status `applied`.
+
+### Step 4: Placement HR Verification
+**Role:** `Placement HR`
+*   **Action:** The internal placement team acts as the first gatekeeper.
+*   **Process:** 
+    *   Placement HR reviews the incoming application in their dashboard.
+    *   They cross-reference the student's CV and profile against the job requirements.
+    *   They manually adjust the automated Match Score and ATS Score to reflect a realistic human evaluation (creating a `verified_match_score`).
+    *   They check off verification requirements and approve the application.
+*   **System Backend:** The application status moves from `verification_pending` to `verified`. The system creates an `application_verifications` audit trail.
+
+---
+
+## Phase 4: The Quality Gate (Mock Interviews)
+
+### Step 5: Mandatory Mock Interview
+**Role:** `Placement HR` & `Student`
+*   **Action:** To ensure the institute's reputation, the student must pass an internal test before facing the client.
+*   **Process:** 
+    *   Placement HR schedules a **Mock Interview** with the student.
+    *   The student attends the internal mock interview.
+    *   Placement HR logs back into the system and submits a **Mock Scorecard**, evaluating the student's technical and communication skills.
+*   **System Backend:** The system validates that the `mock_interviews` status is `completed` and the scorecard is `submitted`. **CRITICAL:** The system physically blocks any student from being sent to a Client HR if they have not passed this stage.
+
+---
+
+## Phase 5: External Client Engagement
+
+### Step 6: Client Submission
+**Role:** `Placement HR`
+*   **Action:** Pitching the candidates to the employer.
+*   **Process:** 
+    *   Placement HR selects a batch of students who are both `verified` and have passed their mock interviews.
+    *   They bundle these students into a **Submission** and send it directly to the Client HR for that specific job.
+*   **System Backend:** The system creates a `submissions` batch. Crucially, it takes a **JSON Snapshot** of the student's profile at that exact second. This ensures that if the student later changes their profile, the Client HR still sees the exact data they were submitted with.
+
+### Step 7: Client Review & Shortlisting
+**Role:** `Client HR`
+*   **Action:** Reviewing the pitched candidates.
+*   **Process:** 
+    *   Client HR logs in and views the Submission batch on their dashboard.
+    *   They review the snapshots, CVs, and verified scores.
+    *   They make a binary decision on each candidate: **Shortlist** or **Reject**.
+*   **System Backend:** The candidate's submission status updates to `shortlisted`.
+
+---
+
+## Phase 6: Interviewing & Selection
+
+### Step 8: Client Interview Scheduling
+**Role:** `Client HR`
+*   **Action:** Setting up the actual job interview.
+*   **Process:** 
+    *   For every `shortlisted` candidate, the Client HR fills out an Interview Schedule form, specifying the Round Name (e.g., Technical Round 1), Date, Time, and Mode (Virtual meeting link or physical address).
+*   **System Backend:** The system creates an `interviews` record with the status `scheduled`. Real-time notifications are logged so the Student and Placement HR are aware.
+
+### Step 9: Conducting & Feedback
+**Role:** `Client HR`
+*   **Action:** The interview occurs, and results are logged.
+*   **Process:** 
+    *   After conducting the interview, the Client HR submits **Feedback** through the platform.
+    *   They provide ratings, comments, and the final decision: **Selected** or **Rejected**.
+*   **System Backend:** An `interview_feedbacks` record is securely logged. The interview is marked as `completed`.
+
+---
+
+## Phase 7: Offer & Placement
+
+### Step 10: Offer Generation
+**Role:** `Placement HR` (collaborating with Client HR)
+*   **Action:** Formalizing the job offer.
+*   **Process:** 
+    *   Because the candidate's interview decision is `selected`, the system unlocks the **Create Offer** capability.
+    *   Placement HR uploads the Offer Letter document, specifies the Final Offered CTC, and sets the expected Date of Joining.
+*   **System Backend:** An `offers` record is created.
+
+### Step 11: Final Placement & Joining
+**Role:** `Student` & `Placement HR`
+*   **Action:** The journey concludes.
+*   **Process:** 
+    *   The student accepts the offer.
+    *   Placement HR clicks the final **Mark as Placed** button on their dashboard.
+*   **System Backend:** A `placements` record is generated. The student's global profile status changes to **Placed**, effectively removing them from the pool of active job seekers. The Client HR's analytics dashboard updates to reflect the successful hire.
