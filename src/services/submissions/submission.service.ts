@@ -23,7 +23,7 @@ export async function createClientSubmission(input: unknown) {
         ? "One or more candidates have already been submitted"
         : error.message.includes("verified")
           ? "All candidates must be verified before submission"
-          : "Unable to create client submission";
+          : `Unable to create client submission: ${error.message}`;
     throw new AppError(message, 409, "SUBMISSION_FAILED");
   }
   return { submissionId: data as string };

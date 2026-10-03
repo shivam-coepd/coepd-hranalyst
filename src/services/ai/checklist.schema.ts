@@ -10,6 +10,7 @@ const ChecklistSkillSchema = z.object({
     "technical",
     "soft_skill",
     "methodology",
+    "tool",
     "other",
   ]),
 

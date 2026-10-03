@@ -151,7 +151,7 @@ export async function generateJobChecklist(jobId: string) {
     throw error instanceof AppError
       ? error
       : new AppError(
-          "AI checklist generation failed",
+          `AI checklist generation failed: ${error instanceof Error ? error.message : String(error)}`,
           502,
           "AI_GENERATION_FAILED",
         );
