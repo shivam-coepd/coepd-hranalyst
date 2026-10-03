@@ -17,7 +17,8 @@ export async function approveChecklist(checklistId: string) {
         tools,
         domain,
         exp_required,
-        top_3_skills
+        top_3_skills,
+        jobs(assigned_placement_hr, created_by)
       `,
     )
     .eq("id", checklistId)
@@ -25,6 +26,15 @@ export async function approveChecklist(checklistId: string) {
 
   if (!checklist) {
     throw new Error("Checklist not found");
+  }
+
+  if (
+    user.roles.includes("placement_hr") &&
+    !user.roles.some((r) => r === "admin" || r === "super_admin") &&
+    (checklist.jobs as any)?.assigned_placement_hr !== user.id &&
+    (checklist.jobs as any)?.created_by !== user.id
+  ) {
+    throw new Error("This job is not assigned to you");
   }
 
   if (checklist.status !== "draft") {

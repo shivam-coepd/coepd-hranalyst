@@ -12,7 +12,7 @@ export async function generateJobChecklist(jobId: string) {
   const { data: job, error } = await supabaseAdmin
     .from("jobs")
     .select(
-      "id,job_title,role_type,location_type,location,experience_min_years,experience_max_years,jd_text,status,assigned_placement_hr",
+      "id,job_title,role_type,location_type,location,experience_min_years,experience_max_years,jd_text,status,assigned_placement_hr,created_by",
     )
     .eq("id", jobId)
     .is("deleted_at", null)
@@ -27,7 +27,8 @@ export async function generateJobChecklist(jobId: string) {
   if (
     user.roles.includes("placement_hr") &&
     !user.roles.some((r) => r === "admin" || r === "super_admin") &&
-    job.assigned_placement_hr !== user.id
+    job.assigned_placement_hr !== user.id &&
+    job.created_by !== user.id
   ) {
     throw new AppError(
       "This job is not assigned to you",
