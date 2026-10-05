@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
 
 type NotificationItem = {
   id: string;
@@ -19,6 +20,21 @@ export function NotificationBell() {
   const [items, setItems] = useState<NotificationItem[]>([]);
   const [unread, setUnread] = useState(0);
   const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    }
+    if (open) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open]);
 
   const roleBase = pathname.split("/")[1];
   const notificationsLink = roleBase ? `/${roleBase}/notifications` : "/notifications";
@@ -38,13 +54,62 @@ export function NotificationBell() {
   }
 
   useEffect(() => {
-    const initialLoad = window.setTimeout(() => void load(), 0);
+    let channel: any;
 
-    const interval = window.setInterval(load, 30_000);
+    async function initialize() {
+      const response = await fetch("/api/notifications");
+      if (!response.ok) return;
+
+      const result = await response.json();
+      setItems(result.notifications ?? []);
+      setUnread(result.unreadCount ?? 0);
+
+      if (result.userId) {
+        const supabase = createClient();
+        channel = supabase
+          .channel(`bell_notifications:user_id=eq.${result.userId}`)
+          .on(
+            "postgres_changes",
+            {
+              event: "INSERT",
+              schema: "public",
+              table: "notifications",
+              filter: `user_id=eq.${result.userId}`,
+            },
+            (payload) => {
+              setItems((prev) => [payload.new as NotificationItem, ...prev].slice(0, 10));
+              setUnread((prev) => prev + 1);
+            }
+          )
+          .on(
+            "postgres_changes",
+            {
+              event: "UPDATE",
+              schema: "public",
+              table: "notifications",
+              filter: `user_id=eq.${result.userId}`,
+            },
+            (payload) => {
+              setItems((prev) =>
+                prev.map((n) => (n.id === payload.new.id ? (payload.new as NotificationItem) : n))
+              );
+              if (payload.new.is_read && !payload.old?.is_read) {
+                setUnread((prev) => Math.max(0, prev - 1));
+              }
+            }
+          )
+          .subscribe();
+      }
+    }
+
+    const initialLoad = window.setTimeout(initialize, 0);
 
     return () => {
       window.clearTimeout(initialLoad);
-      window.clearInterval(interval);
+      if (channel) {
+        const supabase = createClient();
+        supabase.removeChannel(channel);
+      }
     };
   }, []);
 
@@ -57,7 +122,7 @@ export function NotificationBell() {
   }
 
   return (
-    <div className="relative">
+    <div className="relative" ref={containerRef}>
       <button
         type="button"
         onClick={() => setOpen((value) => !value)}
