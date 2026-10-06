@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState, useRef } from "react";
@@ -39,19 +40,7 @@ export function NotificationBell() {
   const roleBase = pathname.split("/")[1];
   const notificationsLink = roleBase ? `/${roleBase}/notifications` : "/notifications";
 
-  async function load() {
-    const response = await fetch("/api/notifications");
 
-    if (!response.ok) {
-      return;
-    }
-
-    const result = await response.json();
-
-    setItems(result.notifications ?? []);
-
-    setUnread(result.unreadCount ?? 0);
-  }
 
   useEffect(() => {
     let channel: any;
@@ -118,7 +107,10 @@ export function NotificationBell() {
       method: "POST",
     });
 
-    await load();
+    setItems((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, is_read: true } : n))
+    );
+    setUnread((prev) => Math.max(0, prev - 1));
   }
 
   return (
@@ -129,9 +121,9 @@ export function NotificationBell() {
         className="-m-2.5 relative p-2.5 text-muted-foreground hover:text-foreground transition-colors"
       >
         <span className="sr-only">View notifications</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" /></svg>
         {unread > 0 && (
-          <span className="absolute top-2 right-2 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-bold text-destructive-foreground ring-2 ring-white dark:ring-slate-900">
+          <span className="absolute top-2 right-2 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[12px] font-bold text-white ring-2 ring-white dark:ring-slate-900">
             {unread > 9 ? "9+" : unread}
           </span>
         )}
@@ -147,9 +139,8 @@ export function NotificationBell() {
             {items.slice(0, 10).map((item) => (
               <div
                 key={item.id}
-                className={`relative p-4 transition-colors hover:bg-slate-50 dark:hover:bg-slate-900/50 ${
-                  item.is_read ? "bg-white dark:bg-slate-950" : "bg-primary/5 dark:bg-indigo-950/20"
-                }`}
+                className={`relative p-4 transition-colors hover:bg-slate-50 dark:hover:bg-slate-900/50 ${item.is_read ? "bg-white dark:bg-slate-950" : "bg-primary/5 dark:bg-indigo-950/20"
+                  }`}
               >
                 {!item.is_read && (
                   <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-r" />
@@ -188,7 +179,7 @@ export function NotificationBell() {
 
             {items.length === 0 && (
               <div className="flex flex-col items-center justify-center p-8 text-center text-sm text-muted-foreground">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mb-2 h-8 w-8 text-slate-300 dark:text-slate-700"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mb-2 h-8 w-8 text-slate-300 dark:text-slate-700"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" /></svg>
                 No new notifications
               </div>
             )}
