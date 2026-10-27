@@ -57,6 +57,50 @@ export function renderNotification(
       };
     }
 
+    case "JOB_POSTED": {
+      const title = String(payload.job_title ?? "New Job Posted");
+      const companyName = String(payload.company_name ?? "A company");
+      return {
+        title: "New Job Posted",
+        message: `${companyName} has posted a new job: ${title}.`,
+        subject: `New Job Posted: ${title}`,
+        actionUrl: appUrl("/placement-hr/jobs"),
+        html: emailLayout({
+          title: "New Job Posted",
+          body: `
+              <p>
+                <strong>${escapeHtml(companyName)}</strong> has posted a new job:
+                <strong>${escapeHtml(title)}</strong>.
+              </p>
+            `,
+          actionLabel: "View Jobs",
+          actionUrl: appUrl("/placement-hr/jobs"),
+        }),
+      };
+    }
+
+    case "JOB_APPLIED": {
+      const jobTitle = String(payload.job_title ?? "a job");
+      const studentName = String(payload.student_name ?? "A student");
+      return {
+        title: "New Application Received",
+        message: `${studentName} has applied for ${jobTitle}.`,
+        subject: `New Application: ${jobTitle}`,
+        actionUrl: appUrl("/placement-hr/applications"),
+        html: emailLayout({
+          title: "New Application",
+          body: `
+              <p>
+                <strong>${escapeHtml(studentName)}</strong> has applied for
+                <strong>${escapeHtml(jobTitle)}</strong>.
+              </p>
+            `,
+          actionLabel: "View Applications",
+          actionUrl: appUrl("/placement-hr/applications"),
+        }),
+      };
+    }
+
     case "JOB_PUBLISHED": {
       const title = String(payload.job_title ?? "New Job Opportunity");
 
@@ -85,6 +129,58 @@ export function renderNotification(
 
           actionLabel: "View Job",
 
+          actionUrl,
+        }),
+      };
+    }
+
+    case "APPLICATION_REJECTED": {
+      const actionUrl = appUrl("/student/applications");
+      const jobTitle = payload.job_title ? ` for ${payload.job_title}` : "";
+      const reason = payload.reason ? String(payload.reason) : "Verification criteria not met";
+
+      return {
+        title: "Application Verification Update",
+        message: `Your application${jobTitle} was not approved: ${reason}`,
+        subject: `Application Update${jobTitle}`,
+        actionUrl,
+        html: emailLayout({
+          title: "Application Update",
+          body: `
+              <p>
+                Your application${escapeHtml(jobTitle)} was reviewed by the Placement HR team and could not be verified at this stage.
+              </p>
+              <p>
+                <strong>Reason:</strong> ${escapeHtml(reason)}
+              </p>
+            `,
+          actionLabel: "View Applications",
+          actionUrl,
+        }),
+      };
+    }
+
+    case "APPLICATION_UPDATE_REQUESTED": {
+      const actionUrl = appUrl("/student/applications");
+      const jobTitle = payload.job_title ? ` for ${payload.job_title}` : "";
+      const details = payload.update_request ? String(payload.update_request) : "Please update your CV or details";
+
+      return {
+        title: "Application Updates Requested",
+        message: `Action required on your application${jobTitle}: ${details}`,
+        subject: `Action Required: Application Update${jobTitle}`,
+        actionUrl,
+        html: emailLayout({
+          title: "Action Required: Update Application",
+          body: `
+              <p>
+                The Placement HR team reviewed your application${escapeHtml(jobTitle)} and requested updates before finalizing verification.
+              </p>
+              <p>
+                <strong>Requested Updates:</strong> ${escapeHtml(details)}
+              </p>
+            `,
+          actionLabel: "Update Application",
           actionUrl,
         }),
       };

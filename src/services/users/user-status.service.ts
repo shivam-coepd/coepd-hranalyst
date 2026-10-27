@@ -4,6 +4,8 @@ import "server-only";
 import { requireAdmin } from "@/lib/auth/guards";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { writeAuditLog } from "@/services/audit/audit.service";
+import { queueNotification } from "@/services/notifications/queue.service";
+import { queueNotification } from "@/services/notifications/queue.service";
 import type { AccountStatus } from "@/types/auth";
 async function assertApprovalPrerequisites(userId: string): Promise<void> {
   const { data: roleRows, error } = await supabaseAdmin
@@ -109,5 +111,15 @@ export async function changeUserStatus(
     oldData: { status: profile.account_status },
     newData: { status: nextStatus, reason: reason?.trim() || null },
   });
+  if (nextStatus === "approved") {
+    await queueNotification({
+      eventType: "USER_APPROVED",
+      channel: "email",
+      recipientUserId: userId,
+      entityType: "user",
+      entityId: userId,
+    });
+  }
+
   return { success: true as const };
 }

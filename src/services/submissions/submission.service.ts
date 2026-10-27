@@ -3,6 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 import { requireRole } from "@/lib/auth/guards";
 import { createSubmissionSchema } from "@/lib/validators/submission.schema";
 import { AppError } from "@/lib/http/route-error";
+import { queueNotification } from "@/services/notifications/queue.service";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
 export async function createClientSubmission(input: unknown) {
   const user = await requireRole(["super_admin", "admin", "placement_hr"]);
@@ -26,5 +28,37 @@ export async function createClientSubmission(input: unknown) {
           : `Unable to create client submission: ${error.message}`;
     throw new AppError(message, 409, "SUBMISSION_FAILED");
   }
+
+  const { data: jobInfo } = await supabaseAdmin
+    .from("jobs")
+    .select("company_id")
+    .eq("id", parsed.data.jobId)
+    .single();
+
+  if (jobInfo) {
+    const { data: clientHRs } = await supabaseAdmin
+      .from("client_hr_profiles")
+      .select("user_id")
+      .eq("company_id", jobInfo.company_id)
+      .eq("is_active", true);
+
+    if (clientHRs) {
+      for (const hr of clientHRs) {
+        await queueNotification({
+          eventType: "CLIENT_SUBMISSION_CREATED",
+          channel: "email",
+          recipientUserId: hr.user_id,
+          entityType: "submission",
+          entityId: data as string,
+          payload: {
+            submission_id: data as string,
+            candidate_count: parsed.data.applicationIds.length
+          },
+        });
+      }
+    }
+  }
+
   return { submissionId: data as string };
+
 }

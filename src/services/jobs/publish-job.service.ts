@@ -3,6 +3,7 @@ import { requireRole } from "@/lib/auth/guards";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
 import { formatExperience } from "@/lib/jobs/experience";
+import { queueNotification } from "@/services/notifications/queue.service";
 
 export async function publishJob(
   jobId: string,
@@ -200,6 +201,27 @@ export async function publishJob(
       },
     }),
   ]);
+
+
+  if (options.email) {
+    const { data: students } = await supabaseAdmin
+      .from("student_profiles")
+      .select("user_id")
+      .eq("verification_status", "verified")
+      .eq("is_active", true);
+
+    if (students && students.length > 0) {
+      const outboxEntries = students.map(s => ({
+        event_type: "JOB_PUBLISHED",
+        channel: "email",
+        recipient_user_id: s.user_id,
+        entity_type: "job",
+        entity_id: jobId,
+        payload: { job_title: job.job_title, job_id: jobId }
+      }));
+      await supabaseAdmin.from("notification_outbox").insert(outboxEntries);
+    }
+  }
 
   return {
     success: true,

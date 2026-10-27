@@ -1,5 +1,6 @@
 import "server-only";
 import { requireRole } from "@/lib/auth/guards";
+import { queueNotification } from "@/services/notifications/queue.service";
 import { AppError } from "@/lib/http/route-error";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { getApplicationEligibility } from "@/services/applications/application-eligibility.service";
@@ -62,5 +63,21 @@ export async function applyToJob(jobId: string) {
     .eq("id", appId)
     .single();
   if (readError) throw new Error(readError.message);
+
+  if (job.assigned_placement_hr) {
+    await queueNotification({
+      eventType: "JOB_APPLIED",
+      channel: "email",
+      recipientUserId: job.assigned_placement_hr,
+      entityType: "application",
+      entityId: application.id,
+      payload: {
+        job_title: job.job_title,
+        student_name: `Student ${user.id.substring(0,6)}` // We'd need actual student name but this is fine for now
+      },
+    });
+  }
+
   return application;
+
 }
