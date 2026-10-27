@@ -114,8 +114,12 @@ export default function ChecklistWorkflow({
         headers: body ? { "Content-Type": "application/json" } : undefined,
         body: body ? JSON.stringify(body) : undefined,
       });
-      const j = await r.json().catch(() => ({}));
-      if (!r.ok) throw new Error(j.error ?? "Request failed");
+      const j = await r.json().catch(() => null);
+      if (!r.ok) {
+        console.error("API Error Response:", r.status, j);
+        const errorMsg = j?.error || j?.message || `Request failed with status ${r.status}`;
+        throw new Error(errorMsg);
+      }
       return j;
     } finally {
       setBusy("");

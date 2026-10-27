@@ -8,6 +8,7 @@ import ChangePasswordModal from "@/components/auth/change-password-modal";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import type { NavItem } from "./sidebar";
 import { NavLink } from "./nav-link";
+import { NotificationBell } from "@/components/notifications/notification-bell";
 
 export function Topbar({
   user,
@@ -83,10 +84,7 @@ export function Topbar({
       <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
         <div className="flex flex-1"></div>
         <div className="flex items-center gap-x-4 lg:gap-x-6">
-          <Link href="/notifications" className="-m-2.5 p-2.5 text-muted-foreground hover:text-muted-foreground">
-            <span className="sr-only">View notifications</span>
-            <Bell className="h-6 w-6" aria-hidden="true" />
-          </Link>
+          <NotificationBell />
 
           <div className="hidden lg:block lg:h-6 lg:w-px lg:bg-muted dark:bg-primary" aria-hidden="true" />
 

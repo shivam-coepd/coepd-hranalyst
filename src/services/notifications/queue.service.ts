@@ -47,4 +47,17 @@ export async function queueNotification({
   if (error && error.code !== "23505") {
     throw new Error(error.message);
   }
+
+  // Trigger worker asynchronously so the user receives the live notification immediately
+  // without having to wait for the next cron job cycle.
+  if (process.env.NEXT_PUBLIC_APP_URL && process.env.CRON_SECRET) {
+    fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/cron/notifications`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.CRON_SECRET}`,
+      },
+    }).catch((e) => {
+      console.error("Failed to trigger immediate notification processing", e);
+    });
+  }
 }

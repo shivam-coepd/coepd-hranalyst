@@ -13,6 +13,7 @@ import {
   type CancelInterviewInput,
 } from "@/lib/validators/interview.schema";
 import { getInterviewEligibility } from "./interview-eligibility.service";
+import { queueNotification } from "@/services/notifications/queue.service";
 export async function scheduleInterview(input: ScheduleInterviewInput) {
   await requireRole(["client_hr"]);
   const parsed = scheduleInterviewSchema.parse(input);
@@ -66,6 +67,46 @@ export async function scheduleInterview(input: ScheduleInterviewInput) {
   if (error) {
     throw new AppError(error.message, 400, "INTERVIEW_SCHEDULING_FAILED");
   }
+
+  if (data) {
+    // Notify Student
+    if (submissionCandidate && submissionCandidate.application_id) {
+      const { data: application } = await supabaseAdmin.from("job_applications").select("student_id").eq("id", submissionCandidate.application_id).single();
+      if (application && application.student_id) {
+        await queueNotification({
+          eventType: "CLIENT_INTERVIEW_SCHEDULED",
+          channel: "email",
+          recipientUserId: application.student_id,
+          entityType: "interview",
+          entityId: data as string,
+          payload: {
+            interview_id: data as string,
+            scheduled_at: parsed.scheduledAt,
+            round_name: parsed.roundName,
+            timezone: parsed.timezone
+          }
+        });
+      }
+    }
+    // Notify Admin
+    const { data: adminRoles } = await supabaseAdmin.from("roles").select("id").in("name", ["admin", "super_admin"]);
+    if (adminRoles && adminRoles.length > 0) {
+      const { data: admins } = await supabaseAdmin.from("user_roles").select("user_id").in("role_id", adminRoles.map(r => r.id));
+      if (admins) {
+        for (const adminUser of admins) {
+          await queueNotification({
+            eventType: "HRANALYST_UPDATE",
+            channel: "email",
+            recipientUserId: adminUser.user_id,
+            entityType: "interview",
+            entityId: data as string,
+            payload: { message: "A client interview has been scheduled." }
+          });
+        }
+      }
+    }
+  }
+
   return {
     interviewId: data as string,
     mockScore: eligibility.mockScore,

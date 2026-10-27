@@ -1,5 +1,6 @@
 import "server-only";
 import { supabaseAdmin } from "@/lib/supabase/admin";
+
 export async function listEligibleApplications(jobId: string) {
   const { data: applications, error } = await supabaseAdmin
     .from("applications")
@@ -15,7 +16,7 @@ export async function listEligibleApplications(jobId: string) {
   );
   const studentProfileIds = [...new Set(eligible.map((row) => row.student_id))];
   if (!studentProfileIds.length) return [];
-  
+
   const { data: students, error: studentError } = await supabaseAdmin
     .from("student_profiles")
     .select(
@@ -44,6 +45,7 @@ export async function listEligibleApplications(jobId: string) {
     };
   });
 }
+
 export async function listPlacementSubmissions(
   userId: string,
   isAdmin: boolean,
@@ -63,6 +65,7 @@ export async function listPlacementSubmissions(
     return !job?.assigned_placement_hr || job.assigned_placement_hr === userId;
   });
 }
+
 export async function listClientSubmissions(companyId: string) {
   const { data, error } = await supabaseAdmin
     .from("submissions")
@@ -75,11 +78,12 @@ export async function listClientSubmissions(companyId: string) {
   if (error) throw new Error(error.message);
   return data ?? [];
 }
+
 export async function getSubmission(id: string) {
   const { data, error } = await supabaseAdmin
     .from("submissions")
     .select(
-      `id,submission_code,job_id,company_id,status,notes,candidate_count,submitted_at,submitted_by,companies(id,name,logo),jobs(id,job_code,job_title,assigned_placement_hr,role_type,location,workplace_type),submission_candidates(id,application_id,student_id,cv_id,status,candidate_snapshot,submitted_match_score,submitted_ats_score,current_mock_score,created_at)`
+      `id,submission_code,job_id,company_id,status,notes,candidate_count,submitted_at,created_by,companies(id,name,logo),jobs(id,job_code,job_title,assigned_placement_hr,role_type,location,workplace_type),submission_candidates(id,application_id,student_id,cv_id,status,candidate_snapshot,submitted_match_score,submitted_ats_score,current_mock_score,created_at)`,
     )
     .eq("id", id)
     .single();

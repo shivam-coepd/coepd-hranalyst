@@ -39,7 +39,7 @@ export function routeError(error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        error: err.status >= 500 ? "Request failed" : err.message,
+        error: err.message,
         code: err.code,
       },
       { status: err.status },
@@ -48,11 +48,13 @@ export function routeError(error: unknown) {
 
   console.error("Request failed", {
     name: error instanceof Error ? error.name : "UnknownError",
+    message: error instanceof Error ? error.message : String(error),
+    stack: error instanceof Error ? error.stack : undefined,
   });
   return NextResponse.json(
     {
       success: false,
-      error: "An unexpected server error occurred",
+      error: error instanceof Error ? error.message : "An unexpected server error occurred",
       code: "INTERNAL_ERROR",
     },
     { status: 500 },

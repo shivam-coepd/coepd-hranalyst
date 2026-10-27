@@ -19,7 +19,8 @@ export async function updateChecklist(checklistId: string, input: unknown) {
       `
         id,
         status,
-        source
+        source,
+        jobs(assigned_placement_hr, created_by)
       `,
     )
     .eq("id", checklistId)
@@ -27,6 +28,15 @@ export async function updateChecklist(checklistId: string, input: unknown) {
 
   if (!existing) {
     throw new Error("Checklist not found");
+  }
+
+  if (
+    user.roles.includes("placement_hr") &&
+    !user.roles.some((r) => r === "admin" || r === "super_admin") &&
+    (existing.jobs as any)?.assigned_placement_hr !== user.id &&
+    (existing.jobs as any)?.created_by !== user.id
+  ) {
+    throw new Error("This job is not assigned to you");
   }
 
   if (existing.status !== "draft") {

@@ -32,7 +32,7 @@ export function StudentJobFilters({
 
   const applyFilters = useCallback((overrideRole?: string, overrideWorkplace?: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    
+
     if (search) {
       params.set("q", search);
     } else {
@@ -69,19 +69,19 @@ export function StudentJobFilters({
   };
 
   return (
-    <div className="mt-8 flex items-center gap-4 border-b pb-4">
+    <div className="flex items-center gap-4 border-b p-4">
       <div className="relative flex-1 max-w-sm">
         <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-        <input 
-          type="text" 
-          placeholder="Search title, location, or code..." 
+        <input
+          type="text"
+          placeholder="Search title, location, or code..."
           className="h-9 w-full rounded-md border border-input bg-background pl-9 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onKeyDown={handleKeyDown}
         />
       </div>
-      <select 
+      <select
         className="h-9 rounded-md border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer"
         value={role}
         onChange={handleRoleChange}
@@ -92,7 +92,7 @@ export function StudentJobFilters({
         <option value="PM">Project Manager</option>
         <option value="SM">Scrum Master</option>
       </select>
-      
+
       <Sheet>
         <SheetTrigger render={<Button variant="outline" className="h-9 px-4 py-2 text-sm font-normal" />}>
           <Filter className="mr-2 h-4 w-4" />
@@ -105,13 +105,13 @@ export function StudentJobFilters({
               Filter jobs by your preferred working environment.
             </SheetDescription>
           </SheetHeader>
-          
+
           <div className="p-6">
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <label className="text-sm font-semibold text-foreground tracking-tight">Workplace Type</label>
                 {workplace && (
-                  <button 
+                  <button
                     onClick={() => {
                       setWorkplace("");
                       applyFilters(role, "");
@@ -122,7 +122,7 @@ export function StudentJobFilters({
                   </button>
                 )}
               </div>
-              
+
               <div className="grid grid-cols-2 gap-3">
                 {[
                   { id: "", label: "All Types", icon: "🌍" },
@@ -138,8 +138,8 @@ export function StudentJobFilters({
                     }}
                     className={`
                       flex flex-col items-start gap-2 rounded-xl border p-3 text-left transition-all duration-200
-                      ${workplace === w.id 
-                        ? "border-primary bg-primary/5 ring-1 ring-primary shadow-sm" 
+                      ${workplace === w.id
+                        ? "border-primary bg-primary/5 ring-1 ring-primary shadow-sm"
                         : "border-border bg-card hover:border-primary/50 hover:bg-accent/50 hover:shadow-sm"
                       }
                     `}

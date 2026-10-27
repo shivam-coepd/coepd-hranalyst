@@ -22,6 +22,7 @@ export async function GET() {
       success: true,
       notifications,
       unreadCount,
+      userId: user.id,
     });
   } catch (error) {
     return routeError(error);

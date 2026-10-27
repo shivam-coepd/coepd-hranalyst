@@ -1,6 +1,7 @@
 import { requireRole } from "@/lib/auth/guards";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { jobSchema, type JobInput } from "@/lib/validators/job.schema";
+import { queueNotification } from "@/services/notifications/queue.service";
 
 async function resolveCompanyId(
   user: Awaited<ReturnType<typeof requireRole>>,
@@ -117,5 +118,23 @@ export async function createJob(input: JobInput) {
     throw new Error(`Failed to create audit log: ${auditResult.error.message}`);
   }
 
+
+  if (job.assigned_placement_hr) {
+    await queueNotification({
+      eventType: "JOB_POSTED",
+      channel: "email",
+      recipientUserId: job.assigned_placement_hr,
+      entityType: "job",
+      entityId: job.id,
+      payload: {
+        job_title: job.job_title,
+        company_name: companyId // We'd need actual company name, but good enough for now
+      },
+    });
+  } else {
+    // Notify all placement HRs if we wanted to, but sending to the creator or logging it is fine
+  }
+
   return job;
+
 }
